@@ -1,0 +1,37 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+    Referenza as referenza_cd,
+    Referenza_1 as referenza_desc,
+    RaggrProdotto as raggrprodotto_cd,
+    RaggrProdotto_2 as raggrprodotto_desc,
+    Linea as linea_cd,
+    Linea_3 as linea_desc,
+    Raggruppamento_Linea as raggruppamento_linea_cd,
+    Raggruppamento_Linea_4 as raggruppamento_linea_desc,
+    Macro_Raggruppamento_Linea as macro_raggruppamento_linea_cd,
+    Macro_Raggruppamento_Linea_5 as macro_raggruppamento_linea_desc,
+    Macro_Macro_Raggruppamento_Linea as macro_macro_raggruppamento_linea_cd,
+    Macro_Macro_Raggruppamento_Linea_6 as macro_macro_raggruppamento_linea_desc,
+    RaggrMacroRaggrLinea as raggrmacroraggrlinea_cd,
+    RaggrMacroRaggrLinea_7 as raggrmacroraggrlinea_desc,
+    Marchio as marchio_cd,
+    Marchio_8 as marchio_desc,
+    Raggruppamento_Marchio as raggruppamento_marchio_cd,
+    Raggruppamento_Marchio_9 as raggruppamento_marchio_desc,
+    Macro_Raggruppamento_Marchio as macro_raggruppamento_marchio_cd,
+    Macro_Raggruppamento_Marchio_10 as macro_raggruppamento_marchio_desc,
+    Codice_Ricetta as codice_ricetta_cd,
+    Codice_Ricetta_11 as codice_ricetta_desc,
+    Raggruppamento_Ricetta as raggruppamento_ricetta_cd,
+    Raggruppamento_Ricetta_12 as raggruppamento_ricetta_desc,
+    Peso as peso_cd,
+    Peso_13 as peso_desc,
+    Pezzi as pezzi_cd,
+    Pezzi_14 as pezzi_desc,
+    Sub_Marchio as sub_marchio_cd,
+    Sub_Marchio_15 as sub_marchio_desc
+FROM ${ref("stg_anagrafica_prodotto")}
