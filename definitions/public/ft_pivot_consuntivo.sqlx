@@ -14,6 +14,8 @@ select
     act.tipo_ce_cd,
     act.mese_cd,
     prod.macro_macro_raggruppamento_linea_cd,
+	bu.business_cd,
+	bu.business_unit_cd,
 
     -- Actuals
 	IFNULL(act.B030_DIV_ACT, 0) AS B030_DIV_ACT,
@@ -145,6 +147,10 @@ left join ${ref("wrk_pivot_consuntivo_py_end")} as py_end
     on act.surrogate_key = py_end.surrogate_key
 inner join ${ref("md_prodotto")} as prod
     on act.referenza_cd = prod.referenza_cd
+left join ${ref("lu_business_unit")} as bu
+	on act.divisione_cd = bu.divisione_cd
+	and substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd
+	and prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
 
 
 
