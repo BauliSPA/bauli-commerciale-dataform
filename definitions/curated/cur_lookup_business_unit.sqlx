@@ -1,0 +1,16 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+    divisione_cd,
+    divisione_ds,
+    campagna_cd,
+    macro_raggruppamento_linea_cd,
+    macro_raggruppamento_linea_ds,
+    business_unit_cd,
+    business_unit_ds,
+    business_cd,
+    business_ds
+FROM ${ref("stg_lookup_business_unit")}
