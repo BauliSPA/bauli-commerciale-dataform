@@ -1,0 +1,211 @@
+config {
+  schema: "public",
+  type: "table",
+}
+
+
+with 
+-- Pivot sono fatte per righe_ce_cd (B030,B080,B190,B320) e tipo_valuta_cd (DIV, SOC, GRP)
+pivot_consuntivo AS ( 
+
+    SELECT
+        SHA256(
+			cliente_cd ||
+			referenza_cd ||
+			campagna_canvass_cd ||
+			nazione_cd ||
+			divisione_cd ||
+			flag_promo_fl ||
+			fuori_catalogo_fl ||
+			tipo_ce_cd ||
+			mese_cd
+        ) AS surrogate_key,
+        *
+	FROM (
+		SELECT 
+			cliente_cd,
+			referenza_cd,
+			campagna_canvass_cd,
+			nazione_cd,
+			divisione_cd,
+			flag_promo_fl,
+			fuori_catalogo_fl,
+			tipo_ce_cd,
+			mese_cd,
+			CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+			val_cons
+		FROM ${ref("cur_consuntivo")}
+	) 
+	PIVOT (
+		SUM(val_cons)
+		FOR righe_valuta_cd IN (
+			'B030_DIV' AS B030_DIV_ACT,
+			'B030_SOC' AS B030_SOC_ACT,
+			'B030_GRP' AS B030_GRP_ACT,
+			'B080_DIV' AS B080_DIV_ACT,
+			'B080_SOC' AS B080_SOC_ACT,
+			'B080_GRP' AS B080_GRP_ACT,
+			'B190_DIV' AS B190_DIV_ACT,
+			'B190_SOC' AS B190_SOC_ACT,
+			'B190_GRP' AS B190_GRP_ACT,
+			'B320_DIV' AS B320_DIV_ACT,
+			'B320_SOC' AS B320_SOC_ACT,
+			'B320_GRP' AS B320_GRP_ACT
+		)
+	)
+),
+
+pivot_consuntivo_py AS (
+
+    SELECT
+        SHA256(
+			cliente_cd ||
+			referenza_cd ||
+			campagna_canvass_cd ||
+			nazione_cd ||
+			divisione_cd ||
+			flag_promo_fl ||
+			fuori_catalogo_fl ||
+			tipo_ce_cd ||
+			mese_cd
+        ) AS surrogate_key,
+        *
+	FROM (
+		SELECT 
+			cliente_cd,
+			referenza_cd,
+			campagna_canvass_cd,
+			nazione_cd,
+			divisione_cd,
+			flag_promo_fl,
+			fuori_catalogo_fl,
+			tipo_ce_cd,
+			mese_cd,
+			CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+			val_cons
+		FROM ${ref("cur_consuntivo_ap_al")}
+	) 
+	PIVOT (
+		SUM(val_cons)
+		FOR righe_valuta_cd IN (
+			'B030_DIV' AS B030_DIV_PY,
+			'B030_SOC' AS B030_SOC_PY,
+			'B030_GRP' AS B030_GRP_PY,
+			'B080_DIV' AS B080_DIV_PY,
+			'B080_SOC' AS B080_SOC_PY,
+			'B080_GRP' AS B080_GRP_PY,
+			'B190_DIV' AS B190_DIV_PY,
+			'B190_SOC' AS B190_SOC_PY,
+			'B190_GRP' AS B190_GRP_PY,
+			'B320_DIV' AS B320_DIV_PY,
+			'B320_SOC' AS B320_SOC_PY,
+			'B320_GRP' AS B320_GRP_PY
+		)
+	)
+),
+
+pivot_consuntivo_py_end AS ( -- Porta avanti di un anno il dato di consuntivo
+
+    SELECT
+        SHA256(
+			cliente_cd ||
+			referenza_cd ||
+			campagna_canvass_cd ||
+			nazione_cd ||
+			divisione_cd ||
+			flag_promo_fl ||
+			fuori_catalogo_fl ||
+			tipo_ce_cd ||
+			mese_cd
+        ) AS surrogate_key,
+        *
+	FROM (
+		SELECT 
+			cliente_cd,
+			referenza_cd,
+			-- Campagna anno +1
+			(CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd,
+			nazione_cd,
+			divisione_cd,
+			flag_promo_fl,
+			fuori_catalogo_fl,
+			tipo_ce_cd,
+			-- Mese anno +1
+			FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m', mese_cd), INTERVAL 1 YEAR)) as mese_cd,
+			CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+			val_cons
+		FROM ${ref("cur_consuntivo")}
+	) 
+	PIVOT (
+		SUM(val_cons)
+		FOR righe_valuta_cd IN (
+			'B030_DIV' AS B030_DIV_PY_END,
+			'B030_SOC' AS B030_SOC_PY_END,
+			'B030_GRP' AS B030_GRP_PY_END,
+			'B080_DIV' AS B080_DIV_PY_END,
+			'B080_SOC' AS B080_SOC_PY_END,
+			'B080_GRP' AS B080_GRP_PY_END,
+			'B190_DIV' AS B190_DIV_PY_END,
+			'B190_SOC' AS B190_SOC_PY_END,
+			'B190_GRP' AS B190_GRP_PY_END,
+			'B320_DIV' AS B320_DIV_PY_END,
+			'B320_SOC' AS B320_SOC_PY_END,
+			'B320_GRP' AS B320_GRP_PY_END
+		)
+	)
+)
+
+select
+    act.cliente_cd,
+    act.referenza_cd,
+    act.campagna_canvass_cd,
+    act.nazione_cd,
+    act.divisione_cd,
+    act.flag_promo_fl,
+    act.fuori_catalogo_fl,
+    act.tipo_ce_cd,
+    act.mese_cd,
+    -- Actual
+    IFNULL(act.B030_DIV_ACT, 0) AS B030_DIV_ACT,
+    IFNULL(act.B030_SOC_ACT, 0) AS B030_SOC_ACT,
+    IFNULL(act.B030_GRP_ACT, 0) AS B030_GRP_ACT,
+    IFNULL(act.B080_DIV_ACT, 0) AS B080_DIV_ACT,
+    IFNULL(act.B080_SOC_ACT, 0) AS B080_SOC_ACT,
+    IFNULL(act.B080_GRP_ACT, 0) AS B080_GRP_ACT,
+    IFNULL(act.B190_DIV_ACT, 0) AS B190_DIV_ACT,
+    IFNULL(act.B190_SOC_ACT, 0) AS B190_SOC_ACT,
+    IFNULL(act.B190_GRP_ACT, 0) AS B190_GRP_ACT,
+    IFNULL(act.B320_DIV_ACT, 0) AS B320_DIV_ACT,
+    IFNULL(act.B320_SOC_ACT, 0) AS B320_SOC_ACT,
+    IFNULL(act.B320_GRP_ACT, 0) AS B320_GRP_ACT,
+    -- PY
+    IFNULL(py.B030_DIV_PY, 0) AS B030_DIV_PY,
+    IFNULL(py.B030_SOC_PY, 0) AS B030_SOC_PY,
+    IFNULL(py.B030_GRP_PY, 0) AS B030_GRP_PY,
+    IFNULL(py.B080_DIV_PY, 0) AS B080_DIV_PY,
+    IFNULL(py.B080_SOC_PY, 0) AS B080_SOC_PY,
+    IFNULL(py.B080_GRP_PY, 0) AS B080_GRP_PY,
+    IFNULL(py.B190_DIV_PY, 0) AS B190_DIV_PY,
+    IFNULL(py.B190_SOC_PY, 0) AS B190_SOC_PY,
+    IFNULL(py.B190_GRP_PY, 0) AS B190_GRP_PY,
+    IFNULL(py.B320_DIV_PY, 0) AS B320_DIV_PY,
+    IFNULL(py.B320_SOC_PY, 0) AS B320_SOC_PY,
+    IFNULL(py.B320_GRP_PY, 0) AS B320_GRP_PY,
+    -- PY End
+    IFNULL(py_end.B030_DIV_PY_END, 0) AS B030_DIV_PY_END,
+    IFNULL(py_end.B030_SOC_PY_END, 0) AS B030_SOC_PY_END,
+    IFNULL(py_end.B030_GRP_PY_END, 0) AS B030_GRP_PY_END,
+    IFNULL(py_end.B080_DIV_PY_END, 0) AS B080_DIV_PY_END,
+    IFNULL(py_end.B080_SOC_PY_END, 0) AS B080_SOC_PY_END,
+    IFNULL(py_end.B080_GRP_PY_END, 0) AS B080_GRP_PY_END,
+    IFNULL(py_end.B190_DIV_PY_END, 0) AS B190_DIV_PY_END,
+    IFNULL(py_end.B190_SOC_PY_END, 0) AS B190_SOC_PY_END,
+    IFNULL(py_end.B190_GRP_PY_END, 0) AS B190_GRP_PY_END,
+    IFNULL(py_end.B320_DIV_PY_END, 0) AS B320_DIV_PY_END,
+    IFNULL(py_end.B320_SOC_PY_END, 0) AS B320_SOC_PY_END,
+    IFNULL(py_end.B320_GRP_PY_END, 0) AS B320_GRP_PY_END
+from pivot_consuntivo as act
+left join pivot_consuntivo_py as py
+    on act.surrogate_key = py.surrogate_key
+left join pivot_consuntivo_py_end as py_end
+    on act.surrogate_key = py_end.surrogate_key

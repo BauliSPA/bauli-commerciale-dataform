@@ -1,0 +1,8 @@
+config {
+  schema: "staging",
+  type: "incremental",
+  uniqueKey: ["div_consegnamerce", "referenza", "campagna_canvass", "nazione", "divisione", "righe_ce", "flag_promo", "fuori_catalogo", "tipo_valuta", "tipo_ce", "mese"]
+}
+
+SELECT *
+FROM bli-bi-commerciale-test-001.landing.board_ce_consuntivo
