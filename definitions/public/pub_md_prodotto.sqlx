@@ -1,6 +1,6 @@
 config {
   schema: "public",
-  type: "table",
+  type: "table"
 }
 
 SELECT *
