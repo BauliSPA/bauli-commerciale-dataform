@@ -1,0 +1,6 @@
+config {
+  schema: "staging",
+  type: "table"}
+
+SELECT *
+FROM bli-bi-commerciale-test-001.landing.board_anagrafica_cliente
