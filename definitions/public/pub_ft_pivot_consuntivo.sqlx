@@ -484,5 +484,5 @@ INNER JOIN ${ref("cur_md_cliente")} AS cli
     ON act.cliente_cd = cli.cliente_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
-	and substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
-	and prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+	AND substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
