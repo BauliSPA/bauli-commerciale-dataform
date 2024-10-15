@@ -4,5 +4,5 @@ config {
 
 SELECT
   *,
-    CURRENT_TIMESTAMP() as load_timestamp
+  CURRENT_TIMESTAMP() as load_timestamp
 FROM bli-bi-commerciale-test-001.landing.file_business_unit
