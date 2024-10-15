@@ -11,7 +11,7 @@ config {
 
 */
 
-with 
+WITH 
 pivot_consuntivo AS (
 
     SELECT
@@ -293,7 +293,7 @@ pivot_consuntivo_py_end AS (
             flag_promo_fl,
             fuori_catalogo_fl,
             tipo_ce_cd,
-            FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m', mese_cd), INTERVAL 1 YEAR)) as mese_cd, -- Mese anno +1
+            FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m', mese_cd), INTERVAL 1 YEAR)) AS mese_cd, -- Mese anno +1
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
             val_cons
         FROM ${ref("cur_ft_consuntivo")}
@@ -473,16 +473,16 @@ select
 	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS best_price_GRP_PY_END
 
 
-from pivot_consuntivo as act
-left join pivot_consuntivo_py as py
-    on act.surrogate_key = py.surrogate_key
-left join pivot_consuntivo_py_end as py_end
-    on act.surrogate_key = py_end.surrogate_key
-inner join ${ref("cur_md_prodotto")} as prod
-    on act.referenza_cd = prod.referenza_cd
-inner join ${ref("cur_md_cliente")} as cli
-    on act.cliente_cd = cli.cliente_cd
-left join ${ref("cur_lu_business_unit")} as bu
-	on act.divisione_cd = bu.divisione_cd
+FROM pivot_consuntivo AS act
+LEFT JOIN pivot_consuntivo_py AS py
+    ON act.surrogate_key = py.surrogate_key
+LEFT JOIN pivot_consuntivo_py_end AS py_end
+    ON act.surrogate_key = py_end.surrogate_key
+INNER JOIN ${ref("cur_md_prodotto")} AS prod
+    ON act.referenza_cd = prod.referenza_cd
+INNER JOIN ${ref("cur_md_cliente")} AS cli
+    ON act.cliente_cd = cli.cliente_cd
+LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
+	ON act.divisione_cd = bu.divisione_cd
 	and substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
 	and prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
