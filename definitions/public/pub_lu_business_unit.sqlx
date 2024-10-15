@@ -4,4 +4,4 @@ config {
 }
 
 SELECT *
-FROM ${ref("cur_lookup_business_unit")}
+FROM ${ref("cur_lu_business_unit")}

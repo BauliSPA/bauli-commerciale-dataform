@@ -4,4 +4,4 @@ config {
 }
 
 SELECT *
-FROM ${ref("cur_anagrafica_prodotto")}
+FROM ${ref("cur_md_prodotto")}

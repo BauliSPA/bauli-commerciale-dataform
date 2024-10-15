@@ -13,4 +13,4 @@ SELECT
     business_unit_ds,
     business_cd,
     business_ds
-FROM ${ref("stg_lookup_business_unit")}
+FROM ${ref("stg_file_business_unit")}

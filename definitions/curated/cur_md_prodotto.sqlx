@@ -34,4 +34,4 @@ SELECT
     Pezzi_14 as pezzi_ds,
     Sub_Marchio as sub_marchio_cd,
     Sub_Marchio_15 as sub_marchio_ds
-FROM ${ref("stg_anagrafica_prodotto")}
+FROM ${ref("stg_board_anagrafica_prodotto")}
