@@ -480,9 +480,9 @@ left join pivot_consuntivo_py_end as py_end
     on act.surrogate_key = py_end.surrogate_key
 inner join ${ref("cur_md_prodotto")} as prod
     on act.referenza_cd = prod.referenza_cd
-inner join ${ref("cur_md_cliente")} as prod
-    on act.cliente_cd = prod.cliente_cd
+inner join ${ref("cur_md_cliente")} as cli
+    on act.cliente_cd = cli.cliente_cd
 left join ${ref("cur_lu_business_unit")} as bu
 	on act.divisione_cd = bu.divisione_cd
-	and substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd
+	and substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
 	and prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
