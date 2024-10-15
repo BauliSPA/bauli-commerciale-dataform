@@ -1,0 +1,18 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  Referenza AS referenza_cd,
+  Div_Cliente_Piano AS cliente_cd,
+  Nazione AS nazione_cd,
+  Divisione AS divisione_cd,
+  Righe_CE as righe_ce_cd,
+  Campagna_Anno AS campagna_anno_cd,
+  Scenario AS scenario_cd,
+  Tipo_Valuta AS tipo_valuta_cd,
+  Processo AS processo_cd,
+  Mese AS mese_cd,
+  COALESCE(cast(REPLACE(ce_finale, ",", ".") AS NUMERIC),0) AS val_cons
+FROM ${ref("stg_board_budget")}
