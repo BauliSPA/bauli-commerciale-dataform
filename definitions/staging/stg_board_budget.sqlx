@@ -4,5 +4,7 @@ config {
   uniqueKey: ["referenza", "div_cliente_piano", "nazione", "divisione", "righe_ce", "campagna_anno", "scenario", "tipo_valuta", "processo", "mese"]
 }
 
-SELECT *
+SELECT
+    *,
+    CURRENT_TIMESTAMP() as load_timestamp
 FROM bli-bi-commerciale-test-001.landing.board_budget

@@ -2,5 +2,7 @@ config {
   schema: "staging",
   type: "table"}
 
-SELECT *
+SELECT
+  *,
+  CURRENT_TIMESTAMP() as load_timestamp
 FROM bli-bi-commerciale-test-001.landing.board_anagrafica_prodotto
