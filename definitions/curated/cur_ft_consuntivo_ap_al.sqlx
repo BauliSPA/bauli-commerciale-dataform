@@ -4,16 +4,16 @@ config {
 }
 
 SELECT 
-    div_consegnamerce AS cliente_cd,
-    referenza AS referenza_cd,
-    campagna_canvass AS campagna_canvass_cd,
-    nazione AS nazione_cd,
-    divisione AS divisione_cd,
-    righe_ce AS righe_ce_cd,
-    flag_promo AS flag_promo_fl,
-    fuori_catalogo AS fuori_catalogo_fl,
-    tipo_valuta AS tipo_valuta_cd,
-    tipo_ce AS tipo_ce_cd,
-    mese AS mese_cd,
-    COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons
+  div_consegnamerce AS cliente_cd,
+  referenza AS referenza_cd,
+  campagna_canvass AS campagna_canvass_cd,
+  nazione AS nazione_cd,
+  divisione AS divisione_cd,
+  righe_ce AS righe_ce_cd,
+  flag_promo AS flag_promo_fl,
+  fuori_catalogo AS fuori_catalogo_fl,
+  tipo_valuta AS tipo_valuta_cd,
+  tipo_ce AS tipo_ce_cd,
+  mese AS mese_cd,
+  COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons
 FROM ${ref("stg_board_cns_ap_al")}
