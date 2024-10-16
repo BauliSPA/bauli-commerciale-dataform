@@ -36,6 +36,7 @@ pivot_consuntivo AS (
         fuori_catalogo_fl,
         tipo_ce_cd,
         mese_cd,
+        load_timestamp,
 
         -- Colonne pivot
         IFNULL(B030_DIV_ACT, 0) AS B030_DIV_ACT,
@@ -79,7 +80,8 @@ pivot_consuntivo AS (
             tipo_ce_cd,
             mese_cd,
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons
+            val_cons,
+            load_timestamp
         FROM ${ref("cur_ft_consuntivo")}
 
     ) 
@@ -144,6 +146,7 @@ pivot_consuntivo_py AS (
         fuori_catalogo_fl,
         tipo_ce_cd,
         mese_cd,
+        load_timestamp,
 
         -- Colonne pivot
         IFNULL(B030_DIV_PY, 0) AS B030_DIV_PY,
@@ -187,7 +190,8 @@ pivot_consuntivo_py AS (
             tipo_ce_cd,
             mese_cd,
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons
+            val_cons,
+            load_timestamp
         FROM ${ref("cur_ft_consuntivo_ap_al")}
 
     ) 
@@ -252,6 +256,7 @@ pivot_consuntivo_py_end AS (
         fuori_catalogo_fl,
         tipo_ce_cd,
         mese_cd,
+        load_timestamp,
 
         -- Colonne pivot
         IFNULL(B030_DIV_PY_END, 0) AS B030_DIV_PY_END,
@@ -295,7 +300,8 @@ pivot_consuntivo_py_end AS (
             tipo_ce_cd,
             FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m', mese_cd), INTERVAL 1 YEAR)) AS mese_cd, -- Mese anno +1
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons
+            val_cons,
+            load_timestamp
         FROM ${ref("cur_ft_consuntivo")}
 
     ) 
@@ -472,7 +478,7 @@ select
 	IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_SOC_PY_END,
 	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS best_price_GRP_PY_END,
 
-    load_timestamp
+    act.load_timestamp
 
 
 FROM pivot_consuntivo AS act

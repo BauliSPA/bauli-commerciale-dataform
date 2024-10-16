@@ -34,6 +34,7 @@ pivot_budget AS (
         scenario_cd,
         processo_cd,
         mese_cd,
+        load_timestamp,
 
         -- Colonne pivot
         IFNULL(B030_DIV_ACT, 0) AS B030_DIV_ACT,
@@ -76,7 +77,8 @@ pivot_budget AS (
             processo_cd,
             mese_cd,
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons
+            val_cons,
+            load_timestamp
         FROM ${ref("cur_ft_budget")}
 
     ) 
@@ -191,7 +193,7 @@ select
 	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_ACT,
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_ACT,
 
-    load_timestamp
+    bdg.load_timestamp
 
 FROM pivot_budget AS bdg
 INNER JOIN ${ref("cur_md_prodotto")} AS prod
