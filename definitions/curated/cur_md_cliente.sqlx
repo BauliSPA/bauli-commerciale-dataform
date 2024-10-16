@@ -4,8 +4,8 @@ config {
 }
 
 SELECT DISTINCT
-  Div_ConsegnaMerce AS cliente_cd,
-  Div_ConsegnaMerce_4 AS cliente_ds,
+  Div_ConsegnaMerce AS div_consegna_merce_cd,
+  Div_ConsegnaMerce_4 AS div_consegna_merce_ds,
   Insegna AS insegna_cd,
   Insegna_5 AS insegna_ds,
   Canale AS canale_cd,
@@ -61,5 +61,6 @@ SELECT DISTINCT
   Centrale_CP AS centrale_cp_cd,
   Centrale_CP_31 AS centrale_cp_ds,
   SuperCentrale_CP AS supercentrale_cp_cd,
-  SuperCentrale_CP_32 AS supercentrale_cp_ds
+  SuperCentrale_CP_32 AS supercentrale_cp_ds,
+  CURRENT_TIMESTAMP() as batched_at
 FROM ${ref("stg_board_anagrafica_cliente")}

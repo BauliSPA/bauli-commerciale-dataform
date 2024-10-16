@@ -6,5 +6,5 @@ config {
 
 SELECT
   *,
-  CURRENT_TIMESTAMP() as load_timestamp
+  CURRENT_TIMESTAMP() as batched_at
 FROM bli-bi-commerciale-test-001.landing.board_cns_ap_al

@@ -4,7 +4,7 @@ config {
 }
 
 SELECT 
-  div_consegnamerce AS cliente_cd,
+  div_consegnamerce AS div_consegna_merce_cd,
   referenza AS referenza_cd,
   campagna_canvass AS campagna_canvass_cd,
   nazione AS nazione_cd,
@@ -15,5 +15,6 @@ SELECT
   tipo_valuta AS tipo_valuta_cd,
   tipo_ce AS tipo_ce_cd,
   mese AS mese_cd,
-  COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons
+  COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
+  CURRENT_TIMESTAMP() as batched_at
 FROM ${ref("stg_board_cns_ap_al")}

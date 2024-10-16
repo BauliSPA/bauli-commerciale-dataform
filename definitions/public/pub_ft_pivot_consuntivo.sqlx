@@ -16,7 +16,7 @@ pivot_consuntivo AS (
 
     SELECT
         SHA256(
-            cliente_cd ||
+            div_consegna_merce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -27,7 +27,7 @@ pivot_consuntivo AS (
             mese_cd
         ) AS surrogate_key,
 
-        cliente_cd,
+        div_consegna_merce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -69,7 +69,7 @@ pivot_consuntivo AS (
     FROM (
 
         SELECT 
-            cliente_cd,
+            div_consegna_merce_cd,
             referenza_cd,
             campagna_canvass_cd,
             nazione_cd,
@@ -124,7 +124,7 @@ pivot_consuntivo_py AS (
 
     SELECT
         SHA256(
-            cliente_cd ||
+            div_consegna_merce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -135,7 +135,7 @@ pivot_consuntivo_py AS (
             mese_cd
         ) AS surrogate_key,
 
-        cliente_cd,
+        div_consegna_merce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -177,7 +177,7 @@ pivot_consuntivo_py AS (
     FROM (
 
         SELECT 
-            cliente_cd,
+            div_consegna_merce_cd,
             referenza_cd,
             campagna_canvass_cd,
             nazione_cd,
@@ -232,7 +232,7 @@ pivot_consuntivo_py_end AS (
 
     SELECT
         SHA256(
-            cliente_cd ||
+            div_consegna_merce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -243,7 +243,7 @@ pivot_consuntivo_py_end AS (
             mese_cd
         ) AS surrogate_key,
 
-        cliente_cd,
+        div_consegna_merce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -285,7 +285,7 @@ pivot_consuntivo_py_end AS (
     FROM (
 
         SELECT 
-            cliente_cd,
+            div_consegna_merce_cd,
             referenza_cd,
             (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
             nazione_cd,
@@ -337,7 +337,7 @@ pivot_consuntivo_py_end AS (
 )
 
 select
-    act.cliente_cd,
+    act.div_consegna_merce_cd,
     act.referenza_cd,
     act.campagna_canvass_cd,
     act.nazione_cd,
@@ -470,7 +470,9 @@ select
 	-- Best Price Previous Year (PY End)
 	IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_DIV_PY_END,
 	IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_SOC_PY_END,
-	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS best_price_GRP_PY_END
+	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS best_price_GRP_PY_END,
+
+    CURRENT_TIMESTAMP() as batched_at
 
 
 FROM pivot_consuntivo AS act
@@ -481,7 +483,7 @@ LEFT JOIN pivot_consuntivo_py_end AS py_end
 INNER JOIN ${ref("cur_md_prodotto")} AS prod
     ON act.referenza_cd = prod.referenza_cd
 INNER JOIN ${ref("cur_md_cliente")} AS cli
-    ON act.cliente_cd = cli.cliente_cd
+    ON act.div_consegna_merce_cd = cli.div_consegna_merce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
 	AND substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd

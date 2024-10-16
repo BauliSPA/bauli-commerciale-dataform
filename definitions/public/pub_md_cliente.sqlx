@@ -3,5 +3,7 @@ config {
   type: "table"
 }
 
-SELECT *
+SELECT 
+  *,
+  CURRENT_TIMESTAMP() as batched_at
 FROM ${ref("cur_md_cliente")}

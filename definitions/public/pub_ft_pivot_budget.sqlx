@@ -16,7 +16,7 @@ pivot_budget AS (
 
     SELECT
         SHA256(
-            cliente_cd ||
+            div_cliente_piano_cd ||
             referenza_cd ||
             campagna_anno_cd ||
             nazione_cd ||
@@ -26,7 +26,7 @@ pivot_budget AS (
             mese_cd
         ) AS surrogate_key,
 
-        cliente_cd,
+        div_cliente_piano_cd,
         referenza_cd,
         campagna_anno_cd,
         nazione_cd,
@@ -67,7 +67,7 @@ pivot_budget AS (
     FROM (
 
         SELECT 
-            cliente_cd,
+            div_cliente_piano_cd,
             referenza_cd,
             campagna_anno_cd,
             nazione_cd,
@@ -118,7 +118,7 @@ pivot_budget AS (
 )
 
 select
-    bdg.cliente_cd,
+    bdg.div_cliente_piano_cd,
     bdg.referenza_cd,
     bdg.campagna_anno_cd,
     bdg.nazione_cd,
@@ -191,12 +191,13 @@ select
 	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_ACT,
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_ACT,
 
+    CURRENT_TIMESTAMP() as batched_at
 
 FROM pivot_budget AS bdg
 INNER JOIN ${ref("cur_md_prodotto")} AS prod
     ON bdg.referenza_cd = prod.referenza_cd
 INNER JOIN ${ref("cur_md_cliente")} AS cli
-    ON bdg.cliente_cd = cli.cliente_cd
+    ON bdg.div_cliente_piano_cd = cli.div_cliente_piano_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON bdg.divisione_cd = bu.divisione_cd
 	AND substr(bdg.campagna_anno_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd

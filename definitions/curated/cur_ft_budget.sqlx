@@ -5,7 +5,7 @@ config {
 
 SELECT
   Referenza AS referenza_cd,
-  Div_Cliente_Piano AS cliente_cd,
+  Div_Cliente_Piano AS div_cliente_piano_cd,
   Nazione AS nazione_cd,
   Divisione AS divisione_cd,
   Righe_CE as righe_ce_cd,
@@ -14,5 +14,6 @@ SELECT
   Tipo_Valuta AS tipo_valuta_cd,
   Processo AS processo_cd,
   Mese AS mese_cd,
-  COALESCE(cast(REPLACE(ce_finale, ",", ".") AS NUMERIC),0) AS val_cons
+  COALESCE(cast(REPLACE(ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
+  CURRENT_TIMESTAMP() as batched_at
 FROM ${ref("stg_board_budget")}
