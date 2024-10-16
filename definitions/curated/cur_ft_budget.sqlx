@@ -15,5 +15,5 @@ SELECT
   Processo AS processo_cd,
   Mese AS mese_cd,
   COALESCE(cast(REPLACE(ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
-  CURRENT_TIMESTAMP() as batched_at
+  load_timestamp
 FROM ${ref("stg_board_budget")}

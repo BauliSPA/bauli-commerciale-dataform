@@ -34,5 +34,5 @@ SELECT
   Pezzi_14 AS pezzi_ds,
   Sub_Marchio AS sub_marchio_cd,
   Sub_Marchio_15 AS sub_marchio_ds,
-  CURRENT_TIMESTAMP() as batched_at
+  load_timestamp
 FROM ${ref("stg_board_anagrafica_prodotto")}

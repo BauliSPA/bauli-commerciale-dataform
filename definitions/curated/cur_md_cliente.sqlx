@@ -62,5 +62,5 @@ SELECT DISTINCT
   Centrale_CP_31 AS centrale_cp_ds,
   SuperCentrale_CP AS supercentrale_cp_cd,
   SuperCentrale_CP_32 AS supercentrale_cp_ds,
-  CURRENT_TIMESTAMP() as batched_at
+  load_timestamp
 FROM ${ref("stg_board_anagrafica_cliente")}

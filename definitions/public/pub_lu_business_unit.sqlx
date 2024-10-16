@@ -4,6 +4,5 @@ config {
 }
 
 SELECT 
-  *,
-  CURRENT_TIMESTAMP() as batched_at
+  *
 FROM ${ref("cur_lu_business_unit")}

@@ -4,5 +4,5 @@ config {
 
 SELECT 
     *,
-    CURRENT_TIMESTAMP() as batched_at
+    CURRENT_TIMESTAMP() AS load_timestamp
 FROM bli-bi-commerciale-test-001.landing.board_anagrafica_cliente

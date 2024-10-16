@@ -13,5 +13,5 @@ SELECT
   business_unit_ds,
   business_cd,
   business_ds,
-  CURRENT_TIMESTAMP() as batched_at
+  load_timestamp
 FROM ${ref("stg_file_business_unit")}

@@ -16,5 +16,5 @@ SELECT
   tipo_ce AS tipo_ce_cd,
   mese AS mese_cd,
   COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
-  CURRENT_TIMESTAMP() as batched_at
+  load_timestamp
 FROM ${ref("stg_board_cns_ap_al")}

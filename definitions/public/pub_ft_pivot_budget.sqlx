@@ -191,7 +191,7 @@ select
 	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_ACT,
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_ACT,
 
-    CURRENT_TIMESTAMP() as batched_at
+    load_timestamp
 
 FROM pivot_budget AS bdg
 INNER JOIN ${ref("cur_md_prodotto")} AS prod
