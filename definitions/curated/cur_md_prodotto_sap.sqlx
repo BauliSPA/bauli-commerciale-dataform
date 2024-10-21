@@ -1,0 +1,32 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+  Linea AS linea,
+  Marchio AS marchio,
+  Raggr_marchio AS macroraggruppamento_marchio,
+  -- Tipo prodotto (Cat_int_art_n)
+
+  -- peso prodotto 
+  Peso_netto AS peso_netto,
+  Peso_lordo AS peso_lordo,
+
+  -- UDM peso prodotto 
+  UdM_base AS udm_peso_prodotto,
+
+  --numero di pezzi (unit volume?)
+  --unità di misura di base (unit weight?)
+  --raggruppamento prodotto (division?)
+
+
+
+  --raggruppamento linea (join LEAF, da_val)
+  --macro linea (join NODE)
+  --macro macro linea (join NODE)
+
+
+  load_timestamp
+FROM ${ref("stg_sap_mara")}
+
