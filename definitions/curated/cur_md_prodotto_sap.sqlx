@@ -3,30 +3,74 @@ config {
   type: "table"
 }
 
+
+WITH 
+linea AS (
+  
+    SELECT DISTINCT
+      mara.linea AS linea,
+      setleaf.linea AS ragg_linea
+    FROM ${ref("stg_sap_mara")} AS mara
+    LEFT JOIN ${ref("stg_sap_setleaf")} AS setleaf
+      ON mara.linea = setleaf.da_val
+    where setleaf.linea LIKE 'GRP-LN%'
+
+),
+
+macro_linea AS (
+
+    SELECT DISTINCT
+      mara.linea AS linea,
+      setnode.macro_linea AS macro_linea
+    FROM ${ref("stg_sap_mara")} AS mara
+    LEFT JOIN ${ref("stg_sap_setleaf")} AS setleaf
+      ON mara.linea = setleaf.da_val
+    LEFT JOIN ${ref("stg_sap_setnode")} AS setnode  
+      ON setleaf.linea = setnode.linea
+    WHERE setnode.macro_linea LIKE 'GRP-MRL%'
+
+),
+
+macro_macro_linea AS (
+
+    SELECT DISTINCT
+      mara.linea AS linea, 
+      setnode.macro_linea AS macro_macro_linea
+    FROM ${ref("stg_sap_mara")} AS mara
+    LEFT JOIN  macro_linea
+      ON mara.linea = macro_linea.linea
+    LEFT JOIN ${ref("stg_sap_setnode")} AS setnode 
+      ON macro_linea.macro_linea = setnode.linea
+    WHERE setnode.macro_linea LIKE 'GRP-MMRL%'
+
+)
+
+
 SELECT 
-  Linea AS linea,
-  Marchio AS marchio,
-  Raggr_marchio AS macroraggruppamento_marchio,
-  -- Tipo prodotto (Cat_int_art_n)
-
-  -- peso prodotto 
-  Peso_netto AS peso_netto,
-  Peso_lordo AS peso_lordo,
-
-  -- UDM peso prodotto 
-  UdM_base AS udm_peso_prodotto,
-
-  --numero di pezzi (unit volume?)
-  --unità di misura di base (unit weight?)
-  --raggruppamento prodotto (division?)
+  mara.Linea AS linea,
+  mara.Marchio AS marchio,
+  mara.Raggr_marchio AS raggruppamento_marchio,
+  RIGHT (linea.ragg_linea , 4) AS raggruppamento_linea, 
+  RIGHT (macro_linea.macro_linea, 3) AS macro_linea ,
+  RIGHT (macro_macro_linea.macro_macro_linea, 2) AS macro_macro_linea,
+  mara.Tipo_materiale AS tipo_materiale,
+  mara.Peso_netto AS peso_netto,
+  mara.Unit_weight AS unit_weight,
+  mara.UdM_base AS udm_base,
+  mara.Listino_UdV AS listino_udv,
+  mara.Data_creaziONe AS data_creaziONe, 
+  mara.load_timestamp
 
 
+FROM ${ref("stg_sap_mara")} AS mara
+LEFT JOIN  linea 
+    ON mara.linea = linea.linea 
+LEFT JOIN  macro_linea
+    ON mara.linea  = macro_linea.linea 
+LEFT JOIN  macro_macro_linea 
+    ON mara.linea =  macro_macro_linea.linea
 
-  --raggruppamento linea (join LEAF, da_val)
-  --macro linea (join NODE)
-  --macro macro linea (join NODE)
 
 
-  load_timestamp
-FROM ${ref("stg_sap_mara")}
+
 

@@ -1,0 +1,8 @@
+config {
+  schema: "public",
+  type: "table"
+}
+
+SELECT 
+  *
+FROM ${ref("cur_md_prodotto_sap")}
