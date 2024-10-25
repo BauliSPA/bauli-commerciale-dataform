@@ -58,7 +58,7 @@ SELECT
   mara.Unit_weight AS unit_weight,
   mara.UdM_base AS udm_base,
   mara.Listino_UdV AS listino_udv,
-  mara.Data_creaziONe AS data_creaziONe, 
+  mara.Data_creazione AS data_creazione, 
   mara.load_timestamp
 
 
