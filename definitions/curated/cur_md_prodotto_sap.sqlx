@@ -47,6 +47,7 @@ macro_macro_linea AS (
 
 
 SELECT 
+  mara.Cod_materiale AS cod_materiale, 
   mara.Linea AS linea,
   mara.Marchio AS marchio,
   mara.Raggr_marchio AS raggruppamento_marchio,
