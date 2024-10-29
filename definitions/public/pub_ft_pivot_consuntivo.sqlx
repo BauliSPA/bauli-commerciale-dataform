@@ -547,9 +547,9 @@ LEFT JOIN pivot_consuntivo_py AS py
     ON act.surrogate_key = py.surrogate_key
 LEFT JOIN pivot_consuntivo_py_end AS py_end
     ON act.surrogate_key = py_end.surrogate_key
-INNER JOIN ${ref("cur_md_prodotto")} AS prod
+LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON act.referenza_cd = prod.referenza_cd
-INNER JOIN ${ref("cur_md_cliente")} AS cli
+LEFT JOIN ${ref("cur_md_cliente")} AS cli
     ON act.div_consegna_merce_cd = cli.div_consegna_merce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
