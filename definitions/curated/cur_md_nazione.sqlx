@@ -1,0 +1,14 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  Nazione AS nazione_cd,
+  Nazione_1 AS nazione_ds,
+  Raggruppamento_Nazione AS raggruppamento_nazione_cd,
+  Raggruppamento_Nazione_2 AS raggruppamento_nazione_ds,
+  Continente AS continente_cd,
+  Continente_3 AS continente_ds,
+  load_timestamp
+FROM ${ref("stg_board_nazione")}
