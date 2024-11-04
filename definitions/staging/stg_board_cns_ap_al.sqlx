@@ -1,7 +1,12 @@
 config {
   schema: "staging",
-  type: "incremental",
-  uniqueKey: ["div_consegnamerce", "referenza", "campagna_canvass", "nazione", "divisione", "righe_ce", "flag_promo", "fuori_catalogo", "tipo_valuta", "tipo_ce", "mese"]
+  type: "incremental"
+}
+-- DELETE+INSERT
+pre_operations {
+  ${when(incremental(),
+    `DELETE FROM ${self()} WHERE mese IN (SELECT DISTINCT mese FROM bli-bi-commerciale-test-001.landing.board_cns_ap_al)`
+  )}
 }
 
 SELECT
