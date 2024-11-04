@@ -352,6 +352,7 @@ select
     act.fuori_catalogo_fl,
     act.tipo_ce_cd,
     act.mese_cd,
+    CONCAT('01/', SUBSTR(act.mese_cd, 5, 2), '/', SUBSTR(act.mese_cd, 1, 4)) AS data_dt,
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
 	bu.business_unit_cd,

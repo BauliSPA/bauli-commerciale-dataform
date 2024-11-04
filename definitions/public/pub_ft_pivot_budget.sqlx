@@ -128,6 +128,7 @@ select
     bdg.scenario_cd,
     bdg.processo_cd,
     bdg.mese_cd,
+    CONCAT('01/', SUBSTR(bdg.mese_cd, 5, 2), '/', SUBSTR(bdg.mese_cd, 1, 4)) AS data_dt,
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
 	bu.business_unit_cd,
