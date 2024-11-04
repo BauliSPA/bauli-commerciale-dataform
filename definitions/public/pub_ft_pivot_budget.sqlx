@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B142, B146, B180, B160
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -52,9 +52,9 @@ pivot_budget AS (
         IFNULL(B151_DIV_ACT, 0) AS B151_DIV_ACT,
         IFNULL(B151_SOC_ACT, 0) AS B151_SOC_ACT,
         IFNULL(B151_GRP_ACT, 0) AS B151_GRP_ACT,
-        IFNULL(B142_DIV_ACT, 0) AS B142_DIV_ACT,
-        IFNULL(B142_SOC_ACT, 0) AS B142_SOC_ACT,
-        IFNULL(B142_GRP_ACT, 0) AS B142_GRP_ACT,
+        IFNULL(B141_DIV_ACT, 0) AS B141_DIV_ACT,
+        IFNULL(B141_SOC_ACT, 0) AS B141_SOC_ACT,
+        IFNULL(B141_GRP_ACT, 0) AS B141_GRP_ACT,
         IFNULL(B146_DIV_ACT, 0) AS B146_DIV_ACT,
         IFNULL(B146_SOC_ACT, 0) AS B146_SOC_ACT,
         IFNULL(B146_GRP_ACT, 0) AS B146_GRP_ACT,
@@ -101,9 +101,9 @@ pivot_budget AS (
             'B151_DIV' AS B151_DIV_ACT,
             'B151_SOC' AS B151_SOC_ACT,
             'B151_GRP' AS B151_GRP_ACT,
-            'B142_DIV' AS B142_DIV_ACT,
-            'B142_SOC' AS B142_SOC_ACT,
-            'B142_GRP' AS B142_GRP_ACT,
+            'B141_DIV' AS B141_DIV_ACT,
+            'B141_SOC' AS B141_SOC_ACT,
+            'B141_GRP' AS B141_GRP_ACT,
             'B146_DIV' AS B146_DIV_ACT,
             'B146_SOC' AS B146_SOC_ACT,
             'B146_GRP' AS B146_GRP_ACT,
@@ -150,33 +150,33 @@ select
   -- Net Sales Lordo Budget
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
-		ELSE IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B142_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+		ELSE IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
 	END AS net_sales_lordo_DIV_BDG,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
-		ELSE IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B142_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+		ELSE IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
 	END AS net_sales_lordo_SOC_BDG,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
-		ELSE IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B142_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+		ELSE IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
 	END AS net_sales_lordo_GRP_BDG,
 
 	-- Gross Margin Lordo Budget
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
-		ELSE IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B142_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+		ELSE IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
 	END AS gross_margin_lordo_DIV_BDG,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
-		ELSE IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B142_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+		ELSE IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
 	END AS gross_margin_lordo_SOC_BDG,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
-		ELSE IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B142_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+		ELSE IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
 	END AS gross_margin_lordo_GRP_BDG,
 
 	-- Net Sales Budget
