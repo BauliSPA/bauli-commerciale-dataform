@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -65,7 +65,36 @@ pivot_consuntivo AS (
         IFNULL(B180_GRP_ACT, 0) AS B180_GRP_ACT,
         IFNULL(B160_DIV_ACT, 0) AS B160_DIV_ACT,
         IFNULL(B160_SOC_ACT, 0) AS B160_SOC_ACT,
-        IFNULL(B160_GRP_ACT, 0) AS B160_GRP_ACT
+        IFNULL(B160_GRP_ACT, 0) AS B160_GRP_ACT,
+        IFNULL(B196_DIV_ACT, 0) AS B196_DIV_ACT,
+        IFNULL(B196_SOC_ACT, 0) AS B196_SOC_ACT,
+        IFNULL(B196_GRP_ACT, 0) AS B196_GRP_ACT,
+        IFNULL(B230_DIV_ACT, 0) AS B230_DIV_ACT,
+        IFNULL(B230_SOC_ACT, 0) AS B230_SOC_ACT,
+        IFNULL(B230_GRP_ACT, 0) AS B230_GRP_ACT,
+        IFNULL(B300_DIV_ACT, 0) AS B300_DIV_ACT,
+        IFNULL(B300_SOC_ACT, 0) AS B300_SOC_ACT,
+        IFNULL(B300_GRP_ACT, 0) AS B300_GRP_ACT,
+        IFNULL(B170_DIV_ACT, 0) AS B170_DIV_ACT,
+        IFNULL(B170_SOC_ACT, 0) AS B170_SOC_ACT,
+        IFNULL(B170_GRP_ACT, 0) AS B170_GRP_ACT,
+        IFNULL(B040_DIV_ACT, 0) AS B040_DIV_ACT,
+        IFNULL(B040_SOC_ACT, 0) AS B040_SOC_ACT,
+        IFNULL(B040_GRP_ACT, 0) AS B040_GRP_ACT,
+        IFNULL(B050_DIV_ACT, 0) AS B050_DIV_ACT,
+        IFNULL(B050_SOC_ACT, 0) AS B050_SOC_ACT,
+        IFNULL(B050_GRP_ACT, 0) AS B050_GRP_ACT,
+        IFNULL(B055_DIV_ACT, 0) AS B055_DIV_ACT,
+        IFNULL(B055_SOC_ACT, 0) AS B055_SOC_ACT,
+        IFNULL(B055_GRP_ACT, 0) AS B055_GRP_ACT,
+        IFNULL(B057_DIV_ACT, 0) AS B057_DIV_ACT,
+        IFNULL(B057_SOC_ACT, 0) AS B057_SOC_ACT,
+        IFNULL(B057_GRP_ACT, 0) AS B057_GRP_ACT,
+        IFNULL(B060_DIV_ACT, 0) AS B060_DIV_ACT,
+        IFNULL(B060_SOC_ACT, 0) AS B060_SOC_ACT,
+        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT
+
+
 
     FROM (
 
@@ -115,7 +144,35 @@ pivot_consuntivo AS (
             'B180_GRP' AS B180_GRP_ACT,
             'B160_DIV' AS B160_DIV_ACT,
             'B160_SOC' AS B160_SOC_ACT,
-            'B160_GRP' AS B160_GRP_ACT
+            'B160_GRP' AS B160_GRP_ACT,
+            'B196_DIV' AS B196_DIV_ACT,
+            'B196_SOC' AS B196_SOC_ACT,
+            'B196_GRP' AS B196_GRP_ACT,
+            'B230_DIV' AS B230_DIV_ACT,
+            'B230_SOC' AS B230_SOC_ACT,
+            'B230_GRP' AS B230_GRP_ACT,
+            'B300_DIV' AS B300_DIV_ACT,
+            'B300_SOC' AS B300_SOC_ACT,
+            'B300_GRP' AS B300_GRP_ACT,
+            'B170_DIV' AS B170_DIV_ACT,
+            'B170_SOC' AS B170_SOC_ACT,
+            'B170_GRP' AS B170_GRP_ACT,
+            'B040_DIV' AS B040_DIV_ACT,
+            'B040_SOC' AS B040_SOC_ACT,
+            'B040_GRP' AS B040_GRP_ACT,
+            'B050_DIV' AS B050_DIV_ACT,
+            'B050_SOC' AS B050_SOC_ACT,
+            'B050_GRP' AS B050_GRP_ACT,
+            'B055_DIV' AS B055_DIV_ACT,
+            'B055_SOC' AS B055_SOC_ACT,
+            'B055_GRP' AS B055_GRP_ACT,
+            'B057_DIV' AS B057_DIV_ACT,
+            'B057_SOC' AS B057_SOC_ACT,
+            'B057_GRP' AS B057_GRP_ACT,
+            'B060_DIV' AS B060_DIV_ACT,
+            'B060_SOC' AS B060_SOC_ACT,
+            'B060_GRP' AS B060_GRP_ACT
+
         )
 
     )
@@ -175,7 +232,34 @@ pivot_consuntivo_py AS (
         IFNULL(B180_GRP_PY, 0) AS B180_GRP_PY,
         IFNULL(B160_DIV_PY, 0) AS B160_DIV_PY,
         IFNULL(B160_SOC_PY, 0) AS B160_SOC_PY,
-        IFNULL(B160_GRP_PY, 0) AS B160_GRP_PY
+        IFNULL(B160_GRP_PY, 0) AS B160_GRP_PY,
+        IFNULL(B196_DIV_PY, 0) AS B196_DIV_PY,
+        IFNULL(B196_SOC_PY, 0) AS B196_SOC_PY,
+        IFNULL(B196_GRP_PY, 0) AS B196_GRP_PY,
+        IFNULL(B230_DIV_PY, 0) AS B230_DIV_PY,
+        IFNULL(B230_SOC_PY, 0) AS B230_SOC_PY,
+        IFNULL(B230_GRP_PY, 0) AS B230_GRP_PY,
+        IFNULL(B300_DIV_PY, 0) AS B300_DIV_PY,
+        IFNULL(B300_SOC_PY, 0) AS B300_SOC_PY,
+        IFNULL(B300_GRP_PY, 0) AS B300_GRP_PY,
+        IFNULL(B170_DIV_PY, 0) AS B170_DIV_PY,
+        IFNULL(B170_SOC_PY, 0) AS B170_SOC_PY,
+        IFNULL(B170_GRP_PY, 0) AS B170_GRP_PY,
+        IFNULL(B040_DIV_PY, 0) AS B040_DIV_PY,
+        IFNULL(B040_SOC_PY, 0) AS B040_SOC_PY,
+        IFNULL(B040_GRP_PY, 0) AS B040_GRP_PY,
+        IFNULL(B050_DIV_PY, 0) AS B050_DIV_PY,
+        IFNULL(B050_SOC_PY, 0) AS B050_SOC_PY,
+        IFNULL(B050_GRP_PY, 0) AS B050_GRP_PY,
+        IFNULL(B055_DIV_PY, 0) AS B055_DIV_PY,
+        IFNULL(B055_SOC_PY, 0) AS B055_SOC_PY,
+        IFNULL(B055_GRP_PY, 0) AS B055_GRP_PY,
+        IFNULL(B057_DIV_PY, 0) AS B057_DIV_PY,
+        IFNULL(B057_SOC_PY, 0) AS B057_SOC_PY,
+        IFNULL(B057_GRP_PY, 0) AS B057_GRP_PY,
+        IFNULL(B060_DIV_PY, 0) AS B060_DIV_PY,
+        IFNULL(B060_SOC_PY, 0) AS B060_SOC_PY,
+        IFNULL(B060_GRP_PY, 0) AS B060_GRP_PY
 
     FROM (
 
@@ -225,7 +309,34 @@ pivot_consuntivo_py AS (
             'B180_GRP' AS B180_GRP_PY,
             'B160_DIV' AS B160_DIV_PY,
             'B160_SOC' AS B160_SOC_PY,
-            'B160_GRP' AS B160_GRP_PY
+            'B160_GRP' AS B160_GRP_PY,
+            'B196_DIV' AS B196_DIV_PY,
+            'B196_SOC' AS B196_SOC_PY,
+            'B196_GRP' AS B196_GRP_PY,
+            'B230_DIV' AS B230_DIV_PY,
+            'B230_SOC' AS B230_SOC_PY,
+            'B230_GRP' AS B230_GRP_PY,
+            'B300_DIV' AS B300_DIV_PY,
+            'B300_SOC' AS B300_SOC_PY,
+            'B300_GRP' AS B300_GRP_PY,
+            'B170_DIV' AS B170_DIV_PY,
+            'B170_SOC' AS B170_SOC_PY,
+            'B170_GRP' AS B170_GRP_PY,
+            'B040_DIV' AS B040_DIV_PY,
+            'B040_SOC' AS B040_SOC_PY,
+            'B040_GRP' AS B040_GRP_PY,
+            'B050_DIV' AS B050_DIV_PY,
+            'B050_SOC' AS B050_SOC_PY,
+            'B050_GRP' AS B050_GRP_PY,
+            'B055_DIV' AS B055_DIV_PY,
+            'B055_SOC' AS B055_SOC_PY,
+            'B055_GRP' AS B055_GRP_PY,
+            'B057_DIV' AS B057_DIV_PY,
+            'B057_SOC' AS B057_SOC_PY,
+            'B057_GRP' AS B057_GRP_PY,
+            'B060_DIV' AS B060_DIV_PY,
+            'B060_SOC' AS B060_SOC_PY,
+            'B060_GRP' AS B060_GRP_PY
         )
 
     )
@@ -285,7 +396,34 @@ pivot_consuntivo_py_end AS (
         IFNULL(B180_GRP_PY_END, 0) AS B180_GRP_PY_END,
         IFNULL(B160_DIV_PY_END, 0) AS B160_DIV_PY_END,
         IFNULL(B160_SOC_PY_END, 0) AS B160_SOC_PY_END,
-        IFNULL(B160_GRP_PY_END, 0) AS B160_GRP_PY_END
+        IFNULL(B160_GRP_PY_END, 0) AS B160_GRP_PY_END,
+        IFNULL(B196_DIV_PY_END, 0) AS B196_DIV_PY_END,
+        IFNULL(B196_SOC_PY_END, 0) AS B196_SOC_PY_END,
+        IFNULL(B196_GRP_PY_END, 0) AS B196_GRP_PY_END,
+        IFNULL(B230_DIV_PY_END, 0) AS B230_DIV_PY_END,
+        IFNULL(B230_SOC_PY_END, 0) AS B230_SOC_PY_END,
+        IFNULL(B230_GRP_PY_END, 0) AS B230_GRP_PY_END,
+        IFNULL(B300_DIV_PY_END, 0) AS B300_DIV_PY_END,
+        IFNULL(B300_SOC_PY_END, 0) AS B300_SOC_PY_END,
+        IFNULL(B300_GRP_PY_END, 0) AS B300_GRP_PY_END,
+        IFNULL(B170_DIV_PY_END, 0) AS B170_DIV_PY_END,
+        IFNULL(B170_SOC_PY_END, 0) AS B170_SOC_PY_END,
+        IFNULL(B170_GRP_PY_END, 0) AS B170_GRP_PY_END,
+        IFNULL(B040_DIV_PY_END, 0) AS B040_DIV_PY_END,
+        IFNULL(B040_SOC_PY_END, 0) AS B040_SOC_PY_END,
+        IFNULL(B040_GRP_PY_END, 0) AS B040_GRP_PY_END,
+        IFNULL(B050_DIV_PY_END, 0) AS B050_DIV_PY_END,
+        IFNULL(B050_SOC_PY_END, 0) AS B050_SOC_PY_END,
+        IFNULL(B050_GRP_PY_END, 0) AS B050_GRP_PY_END,
+        IFNULL(B055_DIV_PY_END, 0) AS B055_DIV_PY_END,
+        IFNULL(B055_SOC_PY_END, 0) AS B055_SOC_PY_END,
+        IFNULL(B055_GRP_PY_END, 0) AS B055_GRP_PY_END,
+        IFNULL(B057_DIV_PY_END, 0) AS B057_DIV_PY_END,
+        IFNULL(B057_SOC_PY_END, 0) AS B057_SOC_PY_END,
+        IFNULL(B057_GRP_PY_END, 0) AS B057_GRP_PY_END,
+        IFNULL(B060_DIV_PY_END, 0) AS B060_DIV_PY_END,
+        IFNULL(B060_SOC_PY_END, 0) AS B060_SOC_PY_END,
+        IFNULL(B060_GRP_PY_END, 0) AS B060_GRP_PY_END
 
     FROM (
 
@@ -335,7 +473,34 @@ pivot_consuntivo_py_end AS (
             'B180_GRP' AS B180_GRP_PY_END,
             'B160_DIV' AS B160_DIV_PY_END,
             'B160_SOC' AS B160_SOC_PY_END,
-            'B160_GRP' AS B160_GRP_PY_END
+            'B160_GRP' AS B160_GRP_PY_END,
+            'B196_DIV' AS B196_DIV_PY_END,
+            'B196_SOC' AS B196_SOC_PY_END,
+            'B196_GRP' AS B196_GRP_PY_END,
+            'B230_DIV' AS B230_DIV_PY_END,
+            'B230_SOC' AS B230_SOC_PY_END,
+            'B230_GRP' AS B230_GRP_PY_END,
+            'B300_DIV' AS B300_DIV_PY_END,
+            'B300_SOC' AS B300_SOC_PY_END,
+            'B300_GRP' AS B300_GRP_PY_END,
+            'B170_DIV' AS B170_DIV_PY_END,
+            'B170_SOC' AS B170_SOC_PY_END,
+            'B170_GRP' AS B170_GRP_PY_END,
+            'B040_DIV' AS B040_DIV_PY_END,
+            'B040_SOC' AS B040_SOC_PY_END,
+            'B040_GRP' AS B040_GRP_PY_END,
+            'B050_DIV' AS B050_DIV_PY_END,
+            'B050_SOC' AS B050_SOC_PY_END,
+            'B050_GRP' AS B050_GRP_PY_END,
+            'B055_DIV' AS B055_DIV_PY_END,
+            'B055_SOC' AS B055_SOC_PY_END,
+            'B055_GRP' AS B055_GRP_PY_END,
+            'B057_DIV' AS B057_DIV_PY_END,
+            'B057_SOC' AS B057_SOC_PY_END,
+            'B057_GRP' AS B057_GRP_PY_END,
+            'B060_DIV' AS B060_DIV_PY_END,
+            'B060_SOC' AS B060_SOC_PY_END,
+            'B060_GRP' AS B060_GRP_PY_END
         )
 
     )  
@@ -356,6 +521,8 @@ select
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
 	bu.business_unit_cd,
+    cc.esercizio_cd,
+    CONCAT('01/01/', SUBSTRING(cc.esercizio_cd, 4, 2)) AS esercizio_data_dt,
 
     -- Actuals
 	IFNULL(act.B030_DIV_ACT, 0) AS B030_DIV_ACT,
@@ -371,37 +538,50 @@ select
 	IFNULL(act.B320_SOC_ACT, 0) AS B320_SOC_ACT,
 	IFNULL(act.B320_GRP_ACT, 0) AS B320_GRP_ACT,
 
-	-- Net Sales Lordo Actuals
+	IFNULL(act.B180_DIV_ACT, 0) AS B180_DIV_ACT,
+	IFNULL(act.B180_SOC_ACT, 0) AS B180_SOC_ACT,
+	IFNULL(act.B180_GRP_ACT, 0) AS B180_GRP_ACT,
+	IFNULL(act.B196_DIV_ACT, 0) AS B196_DIV_ACT,
+	IFNULL(act.B196_SOC_ACT, 0) AS B196_SOC_ACT,
+	IFNULL(act.B196_GRP_ACT, 0) AS B196_GRP_ACT,
+	IFNULL(act.B230_DIV_ACT, 0) AS B230_DIV_ACT,
+	IFNULL(act.B230_SOC_ACT, 0) AS B230_SOC_ACT,
+	IFNULL(act.B230_GRP_ACT, 0) AS B230_GRP_ACT,
+	IFNULL(act.B300_DIV_ACT, 0) AS B300_DIV_ACT,
+	IFNULL(act.B300_SOC_ACT, 0) AS B300_SOC_ACT,
+	IFNULL(act.B300_GRP_ACT, 0) AS B300_GRP_ACT,
+
+	-- Net Sales LLCF Actuals
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B190_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0)
 		ELSE IFNULL(act.B190_DIV_ACT, 0) + IFNULL(act.B141_DIV_ACT, 0) + IFNULL(act.B146_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0)
-	END AS net_sales_lordo_DIV_ACT,
+	END AS net_sales_llcf_DIV_ACT,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B190_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0)
 		ELSE IFNULL(act.B190_SOC_ACT, 0) + IFNULL(act.B141_SOC_ACT, 0) + IFNULL(act.B146_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0)
-	END AS net_sales_lordo_SOC_ACT,
+	END AS net_sales_llcf_SOC_ACT,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B190_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0)
 		ELSE IFNULL(act.B190_GRP_ACT, 0) + IFNULL(act.B141_GRP_ACT, 0) + IFNULL(act.B146_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0)
-	END AS net_sales_lordo_GRP_ACT,
+	END AS net_sales_llcf_GRP_ACT,
 
-	-- Gross Margin Lordo Actuals
+	-- Gross Margin LLCF Actuals
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B320_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0)
 		ELSE IFNULL(act.B320_DIV_ACT, 0) + IFNULL(act.B141_DIV_ACT, 0) + IFNULL(act.B146_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0)
-	END AS gross_margin_lordo_DIV_ACT,
+	END AS gross_margin_llcf_DIV_ACT,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B320_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0)
 		ELSE IFNULL(act.B320_SOC_ACT, 0) + IFNULL(act.B141_SOC_ACT, 0) + IFNULL(act.B146_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0)
-	END AS gross_margin_lordo_SOC_ACT,
+	END AS gross_margin_llcf_SOC_ACT,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(act.B320_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0)
 		ELSE IFNULL(act.B320_GRP_ACT, 0) + IFNULL(act.B141_GRP_ACT, 0) + IFNULL(act.B146_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0)
-	END AS gross_margin_lordo_GRP_ACT,
+	END AS gross_margin_llcf_GRP_ACT,
 
 	-- Net Sales Actuals
 	IFNULL(act.B190_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) AS net_sales_DIV_ACT,
@@ -418,6 +598,16 @@ select
 	IFNULL(act.B190_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0) + IFNULL(act.B160_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) AS best_price_SOC_ACT,
 	IFNULL(act.B190_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0) + IFNULL(act.B160_DIV_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0) AS best_price_GRP_ACT,
 
+    -- Totale Fuori Fattura Actuals
+    IFNULL(act.B170_DIV_ACT, 0) - IFNULL(act.B151_DIV_ACT, 0) AS totale_fuori_fattura_DIV_ACT,
+	IFNULL(act.B170_SOC_ACT, 0) - IFNULL(act.B151_SOC_ACT, 0) AS totale_fuori_fattura_SOC_ACT,
+	IFNULL(act.B170_GRP_ACT, 0) - IFNULL(act.B151_GRP_ACT, 0) AS totale_fuori_fattura_GRP_ACT,
+
+    -- Cifre Fisse Actuals 
+    IFNULL(act.B141_DIV_ACT, 0) + IFNULL(act.B146_DIV_ACT, 0) AS cifre_fisse_DIV_ACT,
+	IFNULL(act.B141_SOC_ACT, 0) + IFNULL(act.B146_SOC_ACT, 0) AS cifre_fisse_SOC_ACT,
+	IFNULL(act.B141_GRP_ACT, 0) + IFNULL(act.B146_GRP_ACT, 0) AS cifre_fisse_GRP_ACT,
+
 	-- Previous Year 
     IFNULL(py.B030_DIV_PY, 0) AS B030_DIV_PY,
 	IFNULL(py.B030_SOC_PY, 0) AS B030_SOC_PY,
@@ -432,52 +622,75 @@ select
 	IFNULL(py.B320_SOC_PY, 0) AS B320_SOC_PY,
 	IFNULL(py.B320_GRP_PY, 0) AS B320_GRP_PY,
 
-	-- Net Sales Lordo Previous Year (PY)
+    IFNULL(py.B180_DIV_PY, 0) AS B180_DIV_PY,
+	IFNULL(py.B180_SOC_PY, 0) AS B180_SOC_PY,
+	IFNULL(py.B180_GRP_PY, 0) AS B180_GRP_PY,
+	IFNULL(py.B196_DIV_PY, 0) AS B196_DIV_PY,
+	IFNULL(py.B196_SOC_PY, 0) AS B196_SOC_PY,
+	IFNULL(py.B196_GRP_PY, 0) AS B196_GRP_PY,
+	IFNULL(py.B230_DIV_PY, 0) AS B230_DIV_PY,
+	IFNULL(py.B230_SOC_PY, 0) AS B230_SOC_PY,
+	IFNULL(py.B230_GRP_PY, 0) AS B230_GRP_PY,
+	IFNULL(py.B300_DIV_PY, 0) AS B300_DIV_PY,
+	IFNULL(py.B300_SOC_PY, 0) AS B300_SOC_PY,
+	IFNULL(py.B300_GRP_PY, 0) AS B300_GRP_PY,
+
+	-- Net Sales LLCF Previous Year (PY)
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
 		ELSE IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
-	END AS net_sales_lordo_DIV_PY,
+	END AS net_sales_llcf_DIV_PY,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
 		ELSE IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
-	END AS net_sales_lordo_SOC_PY,
+	END AS net_sales_llcf_SOC_PY,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
 		ELSE IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
-	END AS net_sales_lordo_GRP_PY,
+	END AS net_sales_llcf_GRP_PY,
 
-	-- Gross Margin Lordo Previous Year (PY)
+	-- Gross Margin LLCF Previous Year (PY)
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
 		ELSE IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
-	END AS gross_margin_lordo_DIV_PY,
+	END AS gross_margin_llcf_DIV_PY,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
 		ELSE IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
-	END AS gross_margin_lordo_SOC_PY,
+	END AS gross_margin_llcf_SOC_PY,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
 		ELSE IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
-	END AS gross_margin_lordo_GRP_PY,
+	END AS gross_margin_llcf_GRP_PY,
 
-	-- Net Sales Actuals (PY)	
+	-- Net Sales Previous Year (PY)	
 	IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS net_sales_DIV_PY,
 	IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS net_sales_SOC_PY,
 	IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS net_sales_GRP_PY,
 
-	-- Gross Sales Actuals (PY)
+	-- Gross Sales Previous Year (PY)
     IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS gross_sales_DIV_PY,
 	IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS gross_sales_SOC_PY,
 	IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS gross_sales_GRP_PY,
 
-   -- Best Price Actuals (PY)
+    -- Best Price Previous Year (PY)
     IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS best_price_DIV_PY,
 	IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS best_price_SOC_PY,
 	IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS best_price_GRP_PY,
+
+    -- Totale Fuori Fattura Previous Year (PY)
+    IFNULL(py.B170_DIV_PY, 0) - IFNULL(py.B151_DIV_PY, 0) AS totale_fuori_fattura_DIV_PY,
+	IFNULL(py.B170_SOC_PY, 0) - IFNULL(py.B151_SOC_PY, 0) AS totale_fuori_fattura_SOC_PY,
+	IFNULL(py.B170_GRP_PY, 0) - IFNULL(py.B151_GRP_PY, 0) AS totale_fuori_fattura_GRP_PY,
+
+    -- Cifre Fisse Previous Year (PY)
+    IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) AS cifre_fisse_DIV_PY,
+	IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) AS cifre_fisse_SOC_PY,
+	IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) AS cifre_fisse_GRP_PY,
     
     -- Previous Year End (PY End)
 	IFNULL(py_end.B030_DIV_PY_END, 0) AS B030_DIV_PY_END,
@@ -493,52 +706,75 @@ select
 	IFNULL(py_end.B320_SOC_PY_END, 0) AS B320_SOC_PY_END,
 	IFNULL(py_end.B320_GRP_PY_END, 0) AS B320_GRP_PY_END,
 
-	-- Net Sales Lordo Previous Year (PY End)
+    IFNULL(py_end.B180_DIV_PY_END, 0) AS B180_DIV_PY_END,
+	IFNULL(py_end.B180_SOC_PY_END, 0) AS B180_SOC_PY_END,
+	IFNULL(py_end.B180_GRP_PY_END, 0) AS B180_GRP_PY_END,
+	IFNULL(py_end.B196_DIV_PY_END, 0) AS B196_DIV_PY_END,
+	IFNULL(py_end.B196_SOC_PY_END, 0) AS B196_SOC_PY_END,
+	IFNULL(py_end.B196_GRP_PY_END, 0) AS B196_GRP_PY_END,
+	IFNULL(py_end.B230_DIV_PY_END, 0) AS B230_DIV_PY_END,
+	IFNULL(py_end.B230_SOC_PY_END, 0) AS B230_SOC_PY_END,
+	IFNULL(py_end.B230_GRP_PY_END, 0) AS B230_GRP_PY_END,
+	IFNULL(py_end.B300_DIV_PY_END, 0) AS B300_DIV_PY_END,
+	IFNULL(py_end.B300_SOC_PY_END, 0) AS B300_SOC_PY_END,
+	IFNULL(py_end.B300_GRP_PY_END, 0) AS B300_GRP_PY_END,
+
+	-- Net Sales LLCF Previous Year End (PY End)
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0)
 		ELSE IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B141_DIV_PY_END, 0) + IFNULL(py_end.B146_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0)
-	END AS net_sales_lordo_DIV_PY_END,
+	END AS net_sales_llcf_DIV_PY_END,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0)
 		ELSE IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B141_SOC_PY_END, 0) + IFNULL(py_end.B146_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0)
-	END AS net_sales_lordo_SOC_PY_END,
+	END AS net_sales_llcf_SOC_PY_END,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0)
 		ELSE IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B141_GRP_PY_END, 0) + IFNULL(py_end.B146_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0)
-	END AS net_sales_lordo_GRP_PY_END,
+	END AS net_sales_llcf_GRP_PY_END,
 
-	-- Gross Margin Lordo Previous Year (PY End)
+	-- Gross Margin LLCF Previous Year End (PY End)
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B320_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0)
 		ELSE IFNULL(py_end.B320_DIV_PY_END, 0) + IFNULL(py_end.B141_DIV_PY_END, 0) + IFNULL(py_end.B146_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0)
-	END AS gross_margin_lordo_DIV_PY_END,
+	END AS gross_margin_llcf_DIV_PY_END,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B320_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0)
 		ELSE IFNULL(py_end.B320_SOC_PY_END, 0) + IFNULL(py_end.B141_SOC_PY_END, 0) + IFNULL(py_end.B146_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0)
-	END AS gross_margin_lordo_SOC_PY_END,
+	END AS gross_margin_llcf_SOC_PY_END,
 
 	CASE
 		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py_end.B320_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0)
 		ELSE IFNULL(py_end.B320_GRP_PY_END, 0) + IFNULL(py_end.B141_GRP_PY_END, 0) + IFNULL(py_end.B146_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0)
-	END AS gross_margin_lordo_GRP_PY_END,
+	END AS gross_margin_llcf_GRP_PY_END,
 
-	-- Net Sales Previous Year (PY End)
+	-- Net Sales Previous Year End (PY End)
 	IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS net_sales_DIV_PY_END,
 	IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) AS net_sales_SOC_PY_END,
 	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS net_sales_GRP_PY_END,
 
-	-- Gross Sales Previous Year (PY End)
+	-- Gross Sales Previous Year End (PY End)
 	IFNULL(py_end.B320_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS gross_sales_DIV_PY_END,
 	IFNULL(py_end.B320_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) AS gross_sales_SOC_PY_END,
 	IFNULL(py_end.B320_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS gross_sales_GRP_PY_END,
 
-	-- Best Price Previous Year (PY End)
+	-- Best Price Previous Year End (PY End)
 	IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_DIV_PY_END,
 	IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_SOC_PY_END,
 	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS best_price_GRP_PY_END,
+
+    -- Totale Fuori Fattura Previous Year End(PY End)
+    IFNULL(py_end.B170_DIV_PY_END, 0) - IFNULL(py_end.B151_DIV_PY_END, 0) AS totale_fuori_fattura_DIV_PY_END,
+	IFNULL(py_end.B170_SOC_PY_END, 0) - IFNULL(py_end.B151_SOC_PY_END, 0) AS totale_fuori_fattura_SOC_PY_END,
+	IFNULL(py_end.B170_GRP_PY_END, 0) - IFNULL(py_end.B151_GRP_PY_END, 0) AS totale_fuori_fattura_GRP_PY_END,
+
+    -- Cifre Fisse Previous Year End (PY End)
+    IFNULL(py_end.B141_DIV_PY_END, 0) + IFNULL(py_end.B146_DIV_PY_END, 0) AS cifre_fisse_DIV_PY_END,
+	IFNULL(py_end.B141_SOC_PY_END, 0) + IFNULL(py_end.B146_SOC_PY_END, 0) AS cifre_fisse_SOC_PY_END,
+	IFNULL(py_end.B141_GRP_PY_END, 0) + IFNULL(py_end.B146_GRP_PY_END, 0) AS cifre_fisse_GRP_PY_END,
 
     act.load_timestamp
 
@@ -556,3 +792,5 @@ LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
 	AND substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
 	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
+    ON act.campagna_canvass_cd = cc.campagna_canvass_cd
