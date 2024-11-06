@@ -537,8 +537,7 @@ select
 	IFNULL(act.B320_DIV_ACT, 0) AS B320_DIV_ACT,
 	IFNULL(act.B320_SOC_ACT, 0) AS B320_SOC_ACT,
 	IFNULL(act.B320_GRP_ACT, 0) AS B320_GRP_ACT,
-
-	IFNULL(act.B180_DIV_ACT, 0) AS B180_DIV_ACT,
+    IFNULL(act.B180_DIV_ACT, 0) AS B180_DIV_ACT,
 	IFNULL(act.B180_SOC_ACT, 0) AS B180_SOC_ACT,
 	IFNULL(act.B180_GRP_ACT, 0) AS B180_GRP_ACT,
 	IFNULL(act.B196_DIV_ACT, 0) AS B196_DIV_ACT,
@@ -603,10 +602,26 @@ select
 	IFNULL(act.B170_SOC_ACT, 0) - IFNULL(act.B151_SOC_ACT, 0) AS totale_fuori_fattura_SOC_ACT,
 	IFNULL(act.B170_GRP_ACT, 0) - IFNULL(act.B151_GRP_ACT, 0) AS totale_fuori_fattura_GRP_ACT,
 
-    -- Cifre Fisse Actuals 
+    -- Cifre Fisse Actuals
     IFNULL(act.B141_DIV_ACT, 0) + IFNULL(act.B146_DIV_ACT, 0) AS cifre_fisse_DIV_ACT,
 	IFNULL(act.B141_SOC_ACT, 0) + IFNULL(act.B146_SOC_ACT, 0) AS cifre_fisse_SOC_ACT,
 	IFNULL(act.B141_GRP_ACT, 0) + IFNULL(act.B146_GRP_ACT, 0) AS cifre_fisse_GRP_ACT,
+
+    -- Sconto Promozionale Actuals
+    CASE 
+        WHEN (IFNULL(act.B040_DIV_ACT, 0) - IFNULL(act.B050_DIV_ACT, 0) - IFNULL(act.B055_DIV_ACT, 0) - IFNULL(act.B057_DIV_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(act.B060_DIV_ACT, 0) / (IFNULL(act.B040_DIV_ACT, 0) - IFNULL(act.B050_DIV_ACT, 0) - IFNULL(act.B055_DIV_ACT, 0) - IFNULL(act.B057_DIV_ACT, 0)) *100
+    END AS sconto_promozionale_DIV_ACT,
+
+    CASE 
+        WHEN (IFNULL(act.B040_SOC_ACT, 0) - IFNULL(act.B050_SOC_ACT, 0) - IFNULL(act.B055_SOC_ACT, 0) - IFNULL(act.B057_SOC_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(act.B060_SOC_ACT, 0) / (IFNULL(act.B040_SOC_ACT, 0) - IFNULL(act.B050_SOC_ACT, 0) - IFNULL(act.B055_SOC_ACT, 0) - IFNULL(act.B057_SOC_ACT, 0)) *100
+    END AS sconto_promozionale_SOC_ACT,
+
+    CASE 
+        WHEN (IFNULL(act.B040_GRP_ACT, 0) - IFNULL(act.B050_GRP_ACT, 0) - IFNULL(act.B055_GRP_ACT, 0) - IFNULL(act.B057_GRP_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(act.B060_GRP_ACT, 0) / (IFNULL(act.B040_GRP_ACT, 0) - IFNULL(act.B050_GRP_ACT, 0) - IFNULL(act.B055_GRP_ACT, 0) - IFNULL(act.B057_GRP_ACT, 0)) *100
+    END AS sconto_promozionale_GRP_ACT,
 
 	-- Previous Year 
     IFNULL(py.B030_DIV_PY, 0) AS B030_DIV_PY,
@@ -621,7 +636,6 @@ select
 	IFNULL(py.B320_DIV_PY, 0) AS B320_DIV_PY,
 	IFNULL(py.B320_SOC_PY, 0) AS B320_SOC_PY,
 	IFNULL(py.B320_GRP_PY, 0) AS B320_GRP_PY,
-
     IFNULL(py.B180_DIV_PY, 0) AS B180_DIV_PY,
 	IFNULL(py.B180_SOC_PY, 0) AS B180_SOC_PY,
 	IFNULL(py.B180_GRP_PY, 0) AS B180_GRP_PY,
@@ -691,6 +705,22 @@ select
     IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) AS cifre_fisse_DIV_PY,
 	IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) AS cifre_fisse_SOC_PY,
 	IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) AS cifre_fisse_GRP_PY,
+
+    -- Sconto Promozionale Previous Year (PY)
+    CASE 
+        WHEN (IFNULL(py.B040_DIV_PY, 0) - IFNULL(py.B050_DIV_PY, 0) - IFNULL(py.B055_DIV_PY, 0) - IFNULL(py.B057_DIV_PY, 0)) = 0 THEN 0  
+        ELSE IFNULL(py.B060_DIV_PY, 0) / (IFNULL(py.B040_DIV_PY, 0) - IFNULL(py.B050_DIV_PY, 0) - IFNULL(py.B055_DIV_PY, 0) - IFNULL(py.B057_DIV_PY, 0)) *100
+    END AS sconto_promozionale_DIV_PY,
+
+    CASE 
+        WHEN (IFNULL(py.B040_SOC_PY, 0) - IFNULL(py.B050_SOC_PY, 0) - IFNULL(py.B055_SOC_PY, 0) - IFNULL(py.B057_SOC_PY, 0)) = 0 THEN 0  
+        ELSE IFNULL(py.B060_SOC_PY, 0) / (IFNULL(py.B040_SOC_PY, 0) - IFNULL(py.B050_SOC_PY, 0) - IFNULL(py.B055_SOC_PY, 0) - IFNULL(py.B057_SOC_PY, 0)) *100
+    END AS sconto_promozionale_SOC_PY,
+
+    CASE 
+        WHEN (IFNULL(py.B040_GRP_PY, 0) - IFNULL(py.B050_GRP_PY, 0) - IFNULL(py.B055_GRP_PY, 0) - IFNULL(py.B057_GRP_PY, 0)) = 0 THEN 0  
+        ELSE IFNULL(py.B060_GRP_PY, 0) / (IFNULL(py.B040_GRP_PY, 0) - IFNULL(py.B050_GRP_PY, 0) - IFNULL(py.B055_GRP_PY, 0) - IFNULL(py.B057_GRP_PY, 0)) *100
+    END AS sconto_promozionale_GRP_PY,
     
     -- Previous Year End (PY End)
 	IFNULL(py_end.B030_DIV_PY_END, 0) AS B030_DIV_PY_END,
@@ -705,7 +735,6 @@ select
 	IFNULL(py_end.B320_DIV_PY_END, 0) AS B320_DIV_PY_END,
 	IFNULL(py_end.B320_SOC_PY_END, 0) AS B320_SOC_PY_END,
 	IFNULL(py_end.B320_GRP_PY_END, 0) AS B320_GRP_PY_END,
-
     IFNULL(py_end.B180_DIV_PY_END, 0) AS B180_DIV_PY_END,
 	IFNULL(py_end.B180_SOC_PY_END, 0) AS B180_SOC_PY_END,
 	IFNULL(py_end.B180_GRP_PY_END, 0) AS B180_GRP_PY_END,
@@ -775,6 +804,22 @@ select
     IFNULL(py_end.B141_DIV_PY_END, 0) + IFNULL(py_end.B146_DIV_PY_END, 0) AS cifre_fisse_DIV_PY_END,
 	IFNULL(py_end.B141_SOC_PY_END, 0) + IFNULL(py_end.B146_SOC_PY_END, 0) AS cifre_fisse_SOC_PY_END,
 	IFNULL(py_end.B141_GRP_PY_END, 0) + IFNULL(py_end.B146_GRP_PY_END, 0) AS cifre_fisse_GRP_PY_END,
+
+    -- Sconto Promozionale Previous Year End (PY End)
+    CASE 
+        WHEN (IFNULL(py_end.B040_DIV_PY_END, 0) - IFNULL(py_end.B050_DIV_PY_END, 0) - IFNULL(py_end.B055_DIV_PY_END, 0) - IFNULL(py_end.B057_DIV_PY_END, 0)) = 0 THEN 0  
+        ELSE IFNULL(py_end.B060_DIV_PY_END, 0) / (IFNULL(py_end.B040_DIV_PY_END, 0) - IFNULL(py_end.B050_DIV_PY_END, 0) - IFNULL(py_end.B055_DIV_PY_END, 0) - IFNULL(py_end.B057_DIV_PY_END, 0)) *100
+    END AS sconto_promozionale_DIV_PY_END,
+
+    CASE 
+        WHEN (IFNULL(py_end.B040_SOC_PY_END, 0) - IFNULL(py_end.B050_SOC_PY_END, 0) - IFNULL(py_end.B055_SOC_PY_END, 0) - IFNULL(py_end.B057_SOC_PY_END, 0)) = 0 THEN 0  
+        ELSE IFNULL(py_end.B060_SOC_PY_END, 0) / (IFNULL(py_end.B040_SOC_PY_END, 0) - IFNULL(py_end.B050_SOC_PY_END, 0) - IFNULL(py_end.B055_SOC_PY_END, 0) - IFNULL(py_end.B057_SOC_PY_END, 0)) *100
+    END AS sconto_promozionale_SOC_PY_END,
+
+    CASE 
+        WHEN (IFNULL(py_end.B040_GRP_PY_END, 0) - IFNULL(py_end.B050_GRP_PY_END, 0) - IFNULL(py_end.B055_GRP_PY_END, 0) - IFNULL(py_end.B057_GRP_PY_END, 0)) = 0 THEN 0  
+        ELSE IFNULL(py_end.B060_GRP_PY_END, 0) / (IFNULL(py_end.B040_GRP_PY_END, 0) - IFNULL(py_end.B050_GRP_PY_END, 0) - IFNULL(py_end.B055_GRP_PY_END, 0) - IFNULL(py_end.B057_GRP_PY_END, 0)) *100
+    END AS sconto_promozionale_GRP_PY_END,
 
     act.load_timestamp
 

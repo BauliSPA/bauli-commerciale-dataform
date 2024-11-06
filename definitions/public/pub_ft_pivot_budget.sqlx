@@ -261,7 +261,7 @@ select
 
 	-- Best Price Budget
 	IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_DIV_BDG,
-	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_BDG,
+	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_BDG, ----typo
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_BDG,
 
     -- Totale Fuori Fattura Budget
@@ -273,6 +273,22 @@ select
     IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) AS cifre_fisse_DIV_BDG,
 	IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) AS cifre_fisse_SOC_BDG,
 	IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) AS cifre_fisse_GRP_BDG,
+
+    -- Sconto Promozionale Budget
+    CASE 
+        WHEN (IFNULL(bdg.B040_DIV_ACT, 0) - IFNULL(bdg.B050_DIV_ACT, 0) - IFNULL(bdg.B055_DIV_ACT, 0) - IFNULL(bdg.B057_DIV_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(bdg.B060_DIV_ACT, 0) / (IFNULL(bdg.B040_DIV_ACT, 0) - IFNULL(bdg.B050_DIV_ACT, 0) - IFNULL(bdg.B055_DIV_ACT, 0) - IFNULL(bdg.B057_DIV_ACT, 0)) *100
+    END AS sconto_promozionale_DIV_BDG,
+
+    CASE 
+        WHEN (IFNULL(bdg.B040_SOC_ACT, 0) - IFNULL(bdg.B050_SOC_ACT, 0) - IFNULL(bdg.B055_SOC_ACT, 0) - IFNULL(bdg.B057_SOC_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(bdg.B060_SOC_ACT, 0) / (IFNULL(bdg.B040_SOC_ACT, 0) - IFNULL(bdg.B050_SOC_ACT, 0) - IFNULL(bdg.B055_SOC_ACT, 0) - IFNULL(bdg.B057_SOC_ACT, 0)) *100
+    END AS sconto_promozionale_SOC_BDG,
+
+    CASE 
+        WHEN (IFNULL(bdg.B040_GRP_ACT, 0) - IFNULL(bdg.B050_GRP_ACT, 0) - IFNULL(bdg.B055_GRP_ACT, 0) - IFNULL(bdg.B057_GRP_ACT, 0)) = 0 THEN 0  
+        ELSE IFNULL(bdg.B060_GRP_ACT, 0) / (IFNULL(bdg.B040_GRP_ACT, 0) - IFNULL(bdg.B050_GRP_ACT, 0) - IFNULL(bdg.B055_GRP_ACT, 0) - IFNULL(bdg.B057_GRP_ACT, 0)) *100
+    END AS sconto_promozionale_GRP_BDG,
 
     bdg.load_timestamp
 
