@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -92,7 +92,11 @@ pivot_consuntivo AS (
         IFNULL(B057_GRP_ACT, 0) AS B057_GRP_ACT,
         IFNULL(B060_DIV_ACT, 0) AS B060_DIV_ACT,
         IFNULL(B060_SOC_ACT, 0) AS B060_SOC_ACT,
-        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT
+        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT,
+        IFNULL(B010_DIV_ACT, 0) AS B010_DIV_ACT,
+        IFNULL(B010_SOC_ACT, 0) AS B010_SOC_ACT,
+        IFNULL(B010_GRP_ACT, 0) AS B010_GRP_ACT
+
 
 
 
@@ -171,7 +175,10 @@ pivot_consuntivo AS (
             'B057_GRP' AS B057_GRP_ACT,
             'B060_DIV' AS B060_DIV_ACT,
             'B060_SOC' AS B060_SOC_ACT,
-            'B060_GRP' AS B060_GRP_ACT
+            'B060_GRP' AS B060_GRP_ACT,
+            'B010_DIV' AS B010_DIV_ACT,
+            'B010_SOC' AS B010_SOC_ACT,
+            'B010_GRP' AS B010_GRP_ACT
 
         )
 
@@ -259,7 +266,10 @@ pivot_consuntivo_py AS (
         IFNULL(B057_GRP_PY, 0) AS B057_GRP_PY,
         IFNULL(B060_DIV_PY, 0) AS B060_DIV_PY,
         IFNULL(B060_SOC_PY, 0) AS B060_SOC_PY,
-        IFNULL(B060_GRP_PY, 0) AS B060_GRP_PY
+        IFNULL(B060_GRP_PY, 0) AS B060_GRP_PY,
+        IFNULL(B010_DIV_PY, 0) AS B010_DIV_PY,
+        IFNULL(B010_SOC_PY, 0) AS B010_SOC_PY,
+        IFNULL(B010_GRP_PY, 0) AS B010_GRP_PY
 
     FROM (
 
@@ -336,7 +346,10 @@ pivot_consuntivo_py AS (
             'B057_GRP' AS B057_GRP_PY,
             'B060_DIV' AS B060_DIV_PY,
             'B060_SOC' AS B060_SOC_PY,
-            'B060_GRP' AS B060_GRP_PY
+            'B060_GRP' AS B060_GRP_PY,
+            'B010_DIV' AS B010_DIV_PY,
+            'B010_SOC' AS B010_SOC_PY,
+            'B010_GRP' AS B010_GRP_PY
         )
 
     )
@@ -423,7 +436,10 @@ pivot_consuntivo_py_end AS (
         IFNULL(B057_GRP_PY_END, 0) AS B057_GRP_PY_END,
         IFNULL(B060_DIV_PY_END, 0) AS B060_DIV_PY_END,
         IFNULL(B060_SOC_PY_END, 0) AS B060_SOC_PY_END,
-        IFNULL(B060_GRP_PY_END, 0) AS B060_GRP_PY_END
+        IFNULL(B060_GRP_PY_END, 0) AS B060_GRP_PY_END,
+        IFNULL(B010_DIV_PY_END, 0) AS B010_DIV_PY_END,
+        IFNULL(B010_SOC_PY_END, 0) AS B010_SOC_PY_END,
+        IFNULL(B010_GRP_PY_END, 0) AS B010_GRP_PY_END
 
     FROM (
 
@@ -500,7 +516,10 @@ pivot_consuntivo_py_end AS (
             'B057_GRP' AS B057_GRP_PY_END,
             'B060_DIV' AS B060_DIV_PY_END,
             'B060_SOC' AS B060_SOC_PY_END,
-            'B060_GRP' AS B060_GRP_PY_END
+            'B060_GRP' AS B060_GRP_PY_END,
+            'B010_DIV' AS B010_DIV_PY_END,
+            'B010_SOC' AS B010_SOC_PY_END,
+            'B010_GRP' AS B010_GRP_PY_END
         )
 
     )  
@@ -549,6 +568,10 @@ select
 	IFNULL(act.B300_DIV_ACT, 0) AS B300_DIV_ACT,
 	IFNULL(act.B300_SOC_ACT, 0) AS B300_SOC_ACT,
 	IFNULL(act.B300_GRP_ACT, 0) AS B300_GRP_ACT,
+    IFNULL(act.B010_DIV_ACT, 0) AS B010_DIV_ACT,
+	IFNULL(act.B010_SOC_ACT, 0) AS B010_SOC_ACT,
+	IFNULL(act.B010_GRP_ACT, 0) AS B010_GRP_ACT,
+
 
 	-- Net Sales LLCF Actuals
 	CASE
@@ -587,10 +610,10 @@ select
 	IFNULL(act.B190_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0) AS net_sales_SOC_ACT,
 	IFNULL(act.B190_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0) AS net_sales_GRP_ACT,
 
-	-- Gross Sales Actuals
-	IFNULL(act.B320_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) AS gross_sales_DIV_ACT,
-	IFNULL(act.B320_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0) AS gross_sales_SOC_ACT,
-	IFNULL(act.B320_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0) AS gross_sales_GRP_ACT,
+	-- Gross Margin Actuals
+	IFNULL(act.B320_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) AS gross_margin_DIV_ACT,
+	IFNULL(act.B320_SOC_ACT, 0) + IFNULL(act.B151_SOC_ACT, 0) AS gross_margin_SOC_ACT,
+	IFNULL(act.B320_GRP_ACT, 0) + IFNULL(act.B151_GRP_ACT, 0) AS gross_margin_GRP_ACT,
 
 	-- Best Price Actuals
 	IFNULL(act.B190_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) + IFNULL(act.B160_DIV_ACT, 0) + IFNULL(act.B151_DIV_ACT, 0) AS best_price_DIV_ACT,
@@ -648,6 +671,9 @@ select
 	IFNULL(py.B300_DIV_PY, 0) AS B300_DIV_PY,
 	IFNULL(py.B300_SOC_PY, 0) AS B300_SOC_PY,
 	IFNULL(py.B300_GRP_PY, 0) AS B300_GRP_PY,
+    IFNULL(py.B010_DIV_PY, 0) AS B010_DIV_PY,
+	IFNULL(py.B010_SOC_PY, 0) AS B010_SOC_PY,
+	IFNULL(py.B010_GRP_PY, 0) AS B010_GRP_PY,
 
 	-- Net Sales LLCF Previous Year (PY)
 	CASE
@@ -686,10 +712,10 @@ select
 	IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS net_sales_SOC_PY,
 	IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS net_sales_GRP_PY,
 
-	-- Gross Sales Previous Year (PY)
-    IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS gross_sales_DIV_PY,
-	IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS gross_sales_SOC_PY,
-	IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS gross_sales_GRP_PY,
+	-- Gross Margin Previous Year (PY)
+    IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS gross_margin_DIV_PY,
+	IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS gross_margin_SOC_PY,
+	IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS gross_margin_GRP_PY,
 
     -- Best Price Previous Year (PY)
     IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS best_price_DIV_PY,
@@ -747,6 +773,9 @@ select
 	IFNULL(py_end.B300_DIV_PY_END, 0) AS B300_DIV_PY_END,
 	IFNULL(py_end.B300_SOC_PY_END, 0) AS B300_SOC_PY_END,
 	IFNULL(py_end.B300_GRP_PY_END, 0) AS B300_GRP_PY_END,
+    IFNULL(py_end.B010_DIV_PY_END, 0) AS B010_DIV_PY_END,
+	IFNULL(py_end.B010_SOC_PY_END, 0) AS B010_SOC_PY_END,
+	IFNULL(py_end.B010_GRP_PY_END, 0) AS B010_GRP_PY_END,
 
 	-- Net Sales LLCF Previous Year End (PY End)
 	CASE
@@ -785,10 +814,10 @@ select
 	IFNULL(py_end.B190_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) AS net_sales_SOC_PY_END,
 	IFNULL(py_end.B190_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS net_sales_GRP_PY_END,
 
-	-- Gross Sales Previous Year End (PY End)
-	IFNULL(py_end.B320_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS gross_sales_DIV_PY_END,
-	IFNULL(py_end.B320_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) AS gross_sales_SOC_PY_END,
-	IFNULL(py_end.B320_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS gross_sales_GRP_PY_END,
+	-- Gross Margin Previous Year End (PY End)
+	IFNULL(py_end.B320_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS gross_margin_DIV_PY_END,
+	IFNULL(py_end.B320_SOC_PY_END, 0) + IFNULL(py_end.B151_SOC_PY_END, 0) AS gross_margin_SOC_PY_END,
+	IFNULL(py_end.B320_GRP_PY_END, 0) + IFNULL(py_end.B151_GRP_PY_END, 0) AS gross_margin_GRP_PY_END,
 
 	-- Best Price Previous Year End (PY End)
 	IFNULL(py_end.B190_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) + IFNULL(py_end.B160_DIV_PY_END, 0) + IFNULL(py_end.B151_DIV_PY_END, 0) AS best_price_DIV_PY_END,

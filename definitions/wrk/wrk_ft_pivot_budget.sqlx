@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -90,7 +90,10 @@ pivot_budget AS (
         IFNULL(B057_GRP_ACT, 0) AS B057_GRP_ACT,
         IFNULL(B060_DIV_ACT, 0) AS B060_DIV_ACT,
         IFNULL(B060_SOC_ACT, 0) AS B060_SOC_ACT,
-        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT
+        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT,
+        IFNULL(B010_DIV_ACT, 0) AS B010_DIV_ACT,
+        IFNULL(B010_SOC_ACT, 0) AS B010_SOC_ACT,
+        IFNULL(B010_GRP_ACT, 0) AS B010_GRP_ACT
 
     FROM (
 
@@ -166,7 +169,10 @@ pivot_budget AS (
             'B057_GRP' AS B057_GRP_ACT,
             'B060_DIV' AS B060_DIV_ACT,
             'B060_SOC' AS B060_SOC_ACT,
-            'B060_GRP' AS B060_GRP_ACT
+            'B060_GRP' AS B060_GRP_ACT,
+            'B010_DIV' AS B010_DIV_ACT,
+            'B010_SOC' AS B010_SOC_ACT,
+            'B010_GRP' AS B010_GRP_ACT
         )
 
     )
@@ -203,7 +209,6 @@ select
 	IFNULL(bdg.B320_DIV_ACT, 0) AS B320_DIV_BDG,
 	IFNULL(bdg.B320_SOC_ACT, 0) AS B320_SOC_BDG,
 	IFNULL(bdg.B320_GRP_ACT, 0) AS B320_GRP_BDG,
-
     IFNULL(bdg.B180_DIV_ACT, 0) AS B180_DIV_BDG,
 	IFNULL(bdg.B180_SOC_ACT, 0) AS B180_SOC_BDG,
 	IFNULL(bdg.B180_GRP_ACT, 0) AS B180_GRP_BDG,
@@ -216,6 +221,9 @@ select
 	IFNULL(bdg.B300_DIV_ACT, 0) AS B300_DIV_BDG,
 	IFNULL(bdg.B300_SOC_ACT, 0) AS B300_SOC_BDG,
 	IFNULL(bdg.B300_GRP_ACT, 0) AS B300_GRP_BDG,
+    IFNULL(bdg.B010_DIV_ACT, 0) AS B010_DIV_BDG,
+	IFNULL(bdg.B010_SOC_ACT, 0) AS B010_SOC_BDG,
+	IFNULL(bdg.B010_GRP_ACT, 0) AS B010_GRP_BDG,
     
   -- Net Sales LLCF Budget
 	CASE
@@ -254,10 +262,10 @@ select
 	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) AS net_sales_SOC_BDG,
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS net_sales_GRP_BDG,
 
-	-- Gross Sales Budget
-	IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS gross_sales_DIV_BDG,
-	IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) AS gross_sales_SOC_BDG,
-	IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS gross_sales_GRP_BDG,
+	-- Gross Margin Budget
+	IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS gross_margin_DIV_BDG,
+	IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) AS gross_margin_SOC_BDG,
+	IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS gross_margin_GRP_BDG,
 
 	-- Best Price Budget
 	IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_DIV_BDG,
