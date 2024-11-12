@@ -1,0 +1,8 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  *
+FROM ${ref("stg_calendar")}

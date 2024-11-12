@@ -1,0 +1,13 @@
+config {
+  schema: "staging",
+  type: "table"}
+
+SELECT
+  *,
+  CURRENT_TIMESTAMP() AS load_timestamp
+
+FROM bli-bi-commerciale-test-001.landing.calendar
+ORDER BY 
+ CAST(SUBSTR(date, 7, 4) AS INT64),   
+ CAST(SUBSTR(date, 4, 2) AS INT64),  
+ CAST(SUBSTR(date, 1, 2) AS INT64)
