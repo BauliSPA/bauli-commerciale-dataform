@@ -7,3 +7,8 @@ SELECT
   CURRENT_TIMESTAMP() AS load_timestamp
 
 FROM bli-bi-commerciale-test-001.landing.calendar
+ORDER BY 
+  CAST(year AS INT64),
+  CAST(month_cd AS INT64),
+  CAST(day_of_month AS INT64)
+
