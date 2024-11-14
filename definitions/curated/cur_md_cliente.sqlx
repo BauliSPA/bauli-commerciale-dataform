@@ -62,7 +62,7 @@ SELECT DISTINCT
   Centrale_CP_31 AS centrale_cp_ds,
   SuperCentrale_CP AS supercentrale_cp_cd,
   SuperCentrale_CP_32 AS supercentrale_cp_ds,
-  SUBSTRING(Div_Distretto_Assegnatario, 5) AS distretto_cd,
-  Div_Distretto_Assegnatario_11 AS distretto_ds,
+  SUBSTRING(Div_Distretto_Assegnatario, 5) AS distretto_assegnatario_cd,
+  Div_Distretto_Assegnatario_11 AS distretto_assegnatario_ds,
   load_timestamp
 FROM ${ref("stg_board_anagrafica_cliente")}
