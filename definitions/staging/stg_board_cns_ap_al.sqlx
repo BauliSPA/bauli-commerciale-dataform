@@ -1,6 +1,11 @@
 config {
   schema: "staging",
-  type: "incremental"
+  type: "incremental",
+  protected: true,
+  bigquery: {
+    partitionBy: "mese",
+    requirePartitionFilter : true
+  }
 }
 -- DELETE+INSERT
 pre_operations {
