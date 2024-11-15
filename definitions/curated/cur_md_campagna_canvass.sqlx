@@ -14,5 +14,20 @@ SELECT
   Tipo_Esercizio_4 AS tipo_esercizio_ds,
   Esercizio AS esercizio_cd,
   Esercizio_5 AS esercizio_ds,
+  CASE
+     WHEN Tipo_Esercizio = 'EPE' THEN
+        CASE  
+           WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2)AS INT64))=1 
+           THEN CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS INT64))
+           ELSE CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) +1 AS STRING)) 
+        END  --es precedente, se (anno data odierna - anno di riferimento ) = 1, anno di riferimento, altrimenti anno + 1 
+     WHEN Tipo_Esercizio = 'ECA' THEN
+        CASE 
+          WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2)AS INT64))=0 
+          THEN CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS INT64))
+          ELSE CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) +1 AS STRING))
+   		  END --es corrente, se (anno data odierna- anno di riferimento) = 0, anno di riferimento, altrimenti anno + 1
+     ELSE NULL
+	END AS data_aggiornamento, 
   load_timestamp
 FROM ${ref("stg_board_campagna_canvass")}
