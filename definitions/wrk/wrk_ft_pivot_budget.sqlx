@@ -188,12 +188,12 @@ select
     bdg.scenario_cd,
     bdg.processo_cd,
     bdg.mese_cd,
-    CONCAT('01/', SUBSTR(bdg.mese_cd, 5, 2), '/', SUBSTR(bdg.mese_cd, 1, 4)) AS data_dt,
+    CONCAT('01/', SUBSTR(bdg.mese_cd, 5, 2), '/', SUBSTR(bdg.mese_cd, 1, 4)) AS data_dt, --primo/mese/anno
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
 	bu.business_unit_cd,
     cc.esercizio_cd,
-    CONCAT('01/01/', SUBSTRING(cc.esercizio_cd, 4, 2)) AS esercizio_data_dt,
+    cc.data_aggiornamento,
     
 
     -- Budget
@@ -269,7 +269,7 @@ select
 
 	-- Best Price Budget
 	IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_DIV_BDG,
-	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_BDG, ----typo
+	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_BDG, --typo
 	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_BDG,
 
     -- Totale Fuori Fattura Budget
