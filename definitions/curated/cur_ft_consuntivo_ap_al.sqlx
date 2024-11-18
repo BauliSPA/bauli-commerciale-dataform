@@ -18,8 +18,13 @@ SELECT
   COALESCE(cast(REPLACE(cons_ap_al.ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
   cons_ap_al.load_timestamp
 FROM ${ref("stg_board_cns_ap_al")} AS cons_ap_al
-
 INNER JOIN ${ref("stg_board_campagna_canvass")} AS campagna
   ON cons_ap_al.campagna_canvass = campagna.Campagna_Canvass
 
-WHERE campagna.Tipo_Esercizio IN ( 'ECA', 'EPE', 'EP1','EP2') --ultimi 4 esercizi fiscali 
+-- filtro ultimi 4 esercizi fiscali 
+WHERE campagna.Tipo_Esercizio IN ( 
+  'ECA', 
+  'EPE', 
+  'EP1',
+  'EP2'
+)  

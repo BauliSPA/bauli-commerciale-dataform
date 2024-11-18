@@ -3,6 +3,5 @@ config {
   type: "view"
 }
 
-
 SELECT *
 FROM ${ref("wrk_ft_pivot_consuntivo")} 

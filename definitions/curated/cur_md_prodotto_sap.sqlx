@@ -61,8 +61,6 @@ SELECT
   mara.Listino_UdV AS listino_udv,
   mara.Data_creazione AS data_creazione, 
   mara.load_timestamp
-
-
 FROM ${ref("stg_sap_mara")} AS mara
 LEFT JOIN  linea 
     ON mara.linea = linea.linea 

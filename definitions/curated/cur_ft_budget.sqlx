@@ -17,8 +17,13 @@ SELECT
   COALESCE(cast(REPLACE(budget.ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
   budget.load_timestamp
 FROM ${ref("stg_board_budget")} AS budget
-
 INNER JOIN ${ref("stg_board_campagna_canvass")} AS campagna
   ON budget.Campagna_Anno = campagna.Campagna_Anno
-
-WHERE campagna.Tipo_Esercizio IN ( 'ECA', 'EPE', 'EP1','EP2') --ultimi 4 esercizi fiscali 
+  
+-- filtro ultimi 4 esercizi fiscali 
+WHERE campagna.Tipo_Esercizio IN ( 
+  'ECA', 
+  'EPE', 
+  'EP1',
+  'EP2'
+) 
