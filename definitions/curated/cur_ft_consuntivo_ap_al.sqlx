@@ -4,17 +4,22 @@ config {
 }
 
 SELECT 
-  div_consegnamerce AS div_consegna_merce_cd,
-  referenza AS referenza_cd,
-  campagna_canvass AS campagna_canvass_cd,
-  nazione AS nazione_cd,
-  divisione AS divisione_cd,
-  righe_ce AS righe_ce_cd,
-  flag_promo AS flag_promo_fl,
-  fuori_catalogo AS fuori_catalogo_fl,
-  tipo_valuta AS tipo_valuta_cd,
-  tipo_ce AS tipo_ce_cd,
-  mese AS mese_cd,
-  COALESCE(cast(REPLACE(ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
-  load_timestamp
-FROM ${ref("stg_board_cns_ap_al")}
+  cons_ap_al.div_consegnamerce AS div_consegna_merce_cd,
+  cons_ap_al.referenza AS referenza_cd,
+  cons_ap_al.campagna_canvass AS campagna_canvass_cd,
+  cons_ap_al.nazione AS nazione_cd,
+  cons_ap_al.divisione AS divisione_cd,
+  cons_ap_al.righe_ce AS righe_ce_cd,
+  cons_ap_al.flag_promo AS flag_promo_fl,
+  cons_ap_al.fuori_catalogo AS fuori_catalogo_fl,
+  cons_ap_al.tipo_valuta AS tipo_valuta_cd,
+  cons_ap_al.tipo_ce AS tipo_ce_cd,
+  cons_ap_al.mese AS mese_cd,
+  COALESCE(cast(REPLACE(cons_ap_al.ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
+  cons_ap_al.load_timestamp
+FROM ${ref("stg_board_cns_ap_al")} AS cons_ap_al
+
+INNER JOIN ${ref("stg_board_campagna_canvass")} AS campagna
+  ON cons_ap_al.campagna_canvass = campagna.Campagna_Canvass
+
+WHERE campagna.Tipo_Esercizio IN ( 'ECA', 'EPE', 'EP1','EP2') --ultimi 4 esercizi fiscali 
