@@ -1,0 +1,9 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  *,
+  load_timestamp
+FROM ${ref("stg_board_tree_nazione")}
