@@ -193,7 +193,7 @@ select
 	bu.business_cd,
 	bu.business_unit_cd,
     cc.esercizio_cd,
-    cc.data_aggiornamento,
+    CONCAT('01/', SUBSTR(upd.data_dt, 5, 2), '/', SUBSTR(upd.data_dt, 1, 4)) AS data_aggiornamento_dt,
     
 
     -- Budget
@@ -311,3 +311,5 @@ LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
 LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
     ON bdg.campagna_anno_cd = cc.campagna_anno_cd
+LEFT JOIN ${ref("cur_lu_budget_update")} AS upd
+   ON bdg.mese_cd = upd.mese_cd

@@ -1,0 +1,12 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  Mese AS mese_cd,
+  Data AS data_dt,
+  operation_flag,
+  recordstamp,
+  load_timestamp
+FROM ${ref("stg_datasphere_budget")}

@@ -541,7 +541,7 @@ select
 	bu.business_cd,
 	bu.business_unit_cd,
     cc.esercizio_cd,
-    cc.data_aggiornamento,
+    cc.data_aggiornamento_dt,
 
     -- Actuals
 	IFNULL(act.B030_DIV_ACT, 0) AS B030_DIV_ACT,
