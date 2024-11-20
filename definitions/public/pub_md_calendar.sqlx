@@ -5,7 +5,7 @@ config {
 
 SELECT 
   *
-FROM ${ref("cur_calendar")}
+FROM ${ref("cur_md_calendar")}
 ORDER BY 
   CAST(year AS INT64),
   CAST(month_cd AS INT64),
