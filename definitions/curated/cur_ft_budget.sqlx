@@ -13,8 +13,8 @@ SELECT
   budget.Scenario AS scenario_cd,
   budget.Tipo_Valuta AS tipo_valuta_cd,
   budget.Processo AS processo_cd,
-  budget.Mese AS mese_cd,
-  COALESCE(cast(REPLACE(budget.ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
+  CAST(budget.Mese AS NUMERIC) AS mese_cd,
+  COALESCE(CAST(REPLACE(budget.ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
   budget.load_timestamp
 FROM ${ref("stg_board_budget")} AS budget
 

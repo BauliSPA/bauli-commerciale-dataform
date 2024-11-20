@@ -14,8 +14,8 @@ SELECT
   cons_ap_al.fuori_catalogo AS fuori_catalogo_fl,
   cons_ap_al.tipo_valuta AS tipo_valuta_cd,
   cons_ap_al.tipo_ce AS tipo_ce_cd,
-  cons_ap_al.mese AS mese_cd,
-  COALESCE(cast(REPLACE(cons_ap_al.ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
+  CAST(cons_ap_al.mese AS NUMERIC) AS mese_cd,
+  COALESCE(CAST(REPLACE(cons_ap_al.ce_consuntivo_al_v002, ",", ".") AS NUMERIC),0) AS val_cons,
   cons_ap_al.load_timestamp
 FROM ${ref("stg_board_cns_ap_al")} AS cons_ap_al
 

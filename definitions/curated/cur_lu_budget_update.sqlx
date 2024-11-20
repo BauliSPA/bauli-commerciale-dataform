@@ -4,8 +4,9 @@ config {
 }
 
 SELECT
-  Mese AS mese_cd,
+  CAST(Mese AS NUMERIC) AS mese_cd,
   Data AS data_dt,
+  PARSE_TIMESTAMP('%Y%m%d', Data) AS data_aggiornamento_ts,
   operation_flag,
   recordstamp,
   load_timestamp

@@ -15,19 +15,21 @@ SELECT
   Esercizio AS esercizio_cd,
   Esercizio_5 AS esercizio_ds,
   CASE
-     WHEN Tipo_Esercizio = 'EPE' THEN
+    WHEN Tipo_Esercizio = 'EPE' THEN
         CASE  
-           WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2)AS INT64))=1 
-           THEN CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS INT64))
-           ELSE CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) +1 AS STRING)) 
-        END  --es precedente, se (anno data odierna - anno di riferimento ) = 1, anno di riferimento, altrimenti anno + 1 
-     WHEN Tipo_Esercizio = 'ECA' THEN
+            WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2) AS INT64)) = 1
+            THEN PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS STRING)))
+            ELSE PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) + 1 AS STRING))) 
+        END  -- se (anno corrente - anno esercizio) = 1, usa l'anno di esercizio, altrimenti usa anno + 1
+    
+    WHEN Tipo_Esercizio = 'ECA' THEN
         CASE 
-          WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2)AS INT64))=0 
-          THEN CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS INT64))
-          ELSE CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) +1 AS STRING))
-   		  END --es corrente, se (anno data odierna- anno di riferimento) = 0, anno di riferimento, altrimenti anno + 1
-     ELSE '01/01/1999'
-	END AS data_aggiornamento_dt, 
+            WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(Esercizio,2) AS INT64)) = 0
+            THEN PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(LEFT(Esercizio,2) AS STRING)))
+            ELSE PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(CAST(LEFT(Esercizio,2) AS INT64) + 1 AS STRING)))
+        END -- se (anno corrente - anno esercizio) = 0, usa l'anno di esercizio, altrimenti usa anno + 1
+    
+    ELSE PARSE_TIMESTAMP('%d/%m/%y', '01/01/99')
+END AS data_aggiornamento_ts,
   load_timestamp
 FROM ${ref("stg_board_campagna_canvass")}
