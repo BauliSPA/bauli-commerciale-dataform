@@ -6,8 +6,8 @@ config {
 SELECT 
   date AS `Date`,
   day_of_month AS `Day of Month`,
-  weekday_cd AS `Weekend Cod`,
-  weekday_ds AS `Weekend`,
+  weekday_cd AS `Week Day Cod`,
+  weekday_ds AS `Week Day`,
   year AS `Year`,
   month_cd AS `Month Cod`,
   month_ds AS `Month`,
