@@ -4,7 +4,18 @@ config {
 }
 
 SELECT 
-  *
+  date AS `Date`,
+  day_of_month AS `Day of Month`,
+  weekday_cd AS `Weekend Cod`,
+  weekday_ds AS `Weekend`,
+  year AS `Year`,
+  month_cd AS `Month Cod`,
+  month_ds AS `Month`,
+  yearmonth_cd AS `Year Month Cod`,
+  monthyear_ds AS `Year Month`,
+  index_fiscal_day AS `Index Fiscal Day`,
+  index_fiscal_month AS `Index Fiscal Month`,
+  load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_md_calendar")}
 ORDER BY 
   CAST(year AS INT64),

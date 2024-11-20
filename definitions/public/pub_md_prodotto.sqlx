@@ -34,5 +34,5 @@ SELECT
   pezzi_ds AS `Pieces`,
   sub_marchio_cd AS `Sub-Brand Cod`,
   sub_marchio_ds AS `Sub-Brand`,
-  load_timestamp
+  load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_md_prodotto")}

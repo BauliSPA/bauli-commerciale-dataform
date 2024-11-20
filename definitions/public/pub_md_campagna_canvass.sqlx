@@ -14,6 +14,6 @@ SELECT
   tipo_esercizio_ds AS `Fiscal Year Type`,
   esercizio_cd AS `Fiscal Year Cod`,
   esercizio_ds AS `Fiscal Year`,
-  data_aggiornamento_dt,
-  load_timestamp
+  data_aggiornamento_dt AS `Update Date`,
+  load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_md_campagna_canvass")}

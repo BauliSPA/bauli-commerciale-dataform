@@ -64,5 +64,5 @@ SELECT
   supercentrale_cp_ds AS `Super Central CP`,
   distretto_assegnatario_cd AS `District_Assignee Cod`,
   distretto_assegnatario_ds AS `District_Assignee`,
-  load_timestamp 
+  load_timestamp AS `Load Timestamp` 
 FROM ${ref("cur_md_cliente")}
