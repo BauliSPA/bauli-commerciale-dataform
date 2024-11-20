@@ -303,13 +303,22 @@ select
 FROM pivot_budget AS bdg
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON bdg.referenza_cd = prod.referenza_cd
-LEFT JOIN ${ref("cur_md_cliente")} AS cli
+LEFT JOIN (
+    SELECT DISTINCT 
+        div_cliente_piano_cd
+    FROM ${ref("cur_md_cliente")}
+ ) AS cli -- Granularità differente dal consuntivo
     ON bdg.div_cliente_piano_cd = cli.div_cliente_piano_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON bdg.divisione_cd = bu.divisione_cd
 	AND substr(bdg.campagna_anno_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
 	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
-LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
+LEFT JOIN (
+    SELECT DISTINCT
+      campagna_anno_cd, 
+      esercizio_cd
+    FROM ${ref("cur_md_campagna_canvass")}
+) AS cc -- Granulirità differente dal consuntivo
     ON bdg.campagna_anno_cd = cc.campagna_anno_cd
 LEFT JOIN ${ref("cur_lu_budget_update")} AS upd
-   ON bdg.mese_cd = upd.mese_cd
+    ON bdg.mese_cd = upd.mese_cd
