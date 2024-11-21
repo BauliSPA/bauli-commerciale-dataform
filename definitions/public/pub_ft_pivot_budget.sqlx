@@ -10,7 +10,7 @@ SELECT
   nazione_cd AS `Country Cod`,
   divisione_cd AS `Division_DP Cod`,
   scenario_cd AS `Budget Scenario Cod`,
-  processo_cd AS `Budget Scendario Cod`,
+  processo_cd AS `Process Cod`,
   mese_cd AS `Year Month Cod`,
   data_dt AS `Date`,
   macro_macro_raggruppamento_linea_cd AS `Macro Macro Line Grouping Cod`,
