@@ -9,7 +9,7 @@ SELECT
   campagna_anno_cd AS `Campaign Cod`,
   nazione_cd AS `Country Cod`,
   divisione_cd AS `Division_DP Cod`,
-  scenario_cd AS `Budget Scenario Cod`,
+  scenario_cd AS `Scenario`,
   processo_cd AS `Process Cod`,
   mese_cd AS `Year Month Cod`,
   data_dt AS `Date`,
@@ -66,8 +66,8 @@ SELECT
   cifre_fisse_DIV_BDG,
   cifre_fisse_SOC_BDG,
   cifre_fisse_GRP_BDG,
-  sconto_promozionale_DIV_BDG,
-  sconto_promozionale_SOC_BDG,
-  sconto_promozionale_GRP_BDG,
+  imponibile_per_sconto_promo_DIV_BDG,
+  imponibile_per_sconto_promo_SOC_BDG,
+  imponibile_per_sconto_promo_GRP_BDG,
   load_timestamp AS `Load Timestamp`
 FROM ${ref("wrk_ft_pivot_budget")} 
