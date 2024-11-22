@@ -1,0 +1,294 @@
+config {
+  schema: "wrk",
+  type: "table"
+}
+
+/*
+
+    Pivot fatta per:
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
+    - tipo_valuta_cd 		DIV, SOC, GRP
+
+*/
+
+WITH 
+
+pivot_consuntivo_py AS ( -- Consuntivo anno precedente ribaltato su anno successivo
+
+    SELECT
+        div_consegna_merce_cd,
+        referenza_cd,
+        campagna_canvass_cd,
+        nazione_cd,
+        divisione_cd,
+        flag_promo_fl,
+        fuori_catalogo_fl,
+        tipo_ce_cd,
+        mese_cd,
+        load_timestamp,
+
+        -- Colonne pivot
+        IFNULL(B030_DIV_PY, 0) AS B030_DIV_PY,
+        IFNULL(B030_SOC_PY, 0) AS B030_SOC_PY,
+        IFNULL(B030_GRP_PY, 0) AS B030_GRP_PY,
+        IFNULL(B080_DIV_PY, 0) AS B080_DIV_PY,
+        IFNULL(B080_SOC_PY, 0) AS B080_SOC_PY,
+        IFNULL(B080_GRP_PY, 0) AS B080_GRP_PY,
+        IFNULL(B190_DIV_PY, 0) AS B190_DIV_PY,
+        IFNULL(B190_SOC_PY, 0) AS B190_SOC_PY,
+        IFNULL(B190_GRP_PY, 0) AS B190_GRP_PY,
+        IFNULL(B320_DIV_PY, 0) AS B320_DIV_PY,
+        IFNULL(B320_SOC_PY, 0) AS B320_SOC_PY,
+        IFNULL(B320_GRP_PY, 0) AS B320_GRP_PY,
+        IFNULL(B151_DIV_PY, 0) AS B151_DIV_PY,
+        IFNULL(B151_SOC_PY, 0) AS B151_SOC_PY,
+        IFNULL(B151_GRP_PY, 0) AS B151_GRP_PY,
+        IFNULL(B141_DIV_PY, 0) AS B141_DIV_PY,
+        IFNULL(B141_SOC_PY, 0) AS B141_SOC_PY,
+        IFNULL(B141_GRP_PY, 0) AS B141_GRP_PY,
+        IFNULL(B146_DIV_PY, 0) AS B146_DIV_PY,
+        IFNULL(B146_SOC_PY, 0) AS B146_SOC_PY,
+        IFNULL(B146_GRP_PY, 0) AS B146_GRP_PY,
+        IFNULL(B180_DIV_PY, 0) AS B180_DIV_PY,
+        IFNULL(B180_SOC_PY, 0) AS B180_SOC_PY,
+        IFNULL(B180_GRP_PY, 0) AS B180_GRP_PY,
+        IFNULL(B160_DIV_PY, 0) AS B160_DIV_PY,
+        IFNULL(B160_SOC_PY, 0) AS B160_SOC_PY,
+        IFNULL(B160_GRP_PY, 0) AS B160_GRP_PY,
+        IFNULL(B196_DIV_PY, 0) AS B196_DIV_PY,
+        IFNULL(B196_SOC_PY, 0) AS B196_SOC_PY,
+        IFNULL(B196_GRP_PY, 0) AS B196_GRP_PY,
+        IFNULL(B230_DIV_PY, 0) AS B230_DIV_PY,
+        IFNULL(B230_SOC_PY, 0) AS B230_SOC_PY,
+        IFNULL(B230_GRP_PY, 0) AS B230_GRP_PY,
+        IFNULL(B300_DIV_PY, 0) AS B300_DIV_PY,
+        IFNULL(B300_SOC_PY, 0) AS B300_SOC_PY,
+        IFNULL(B300_GRP_PY, 0) AS B300_GRP_PY,
+        IFNULL(B170_DIV_PY, 0) AS B170_DIV_PY,
+        IFNULL(B170_SOC_PY, 0) AS B170_SOC_PY,
+        IFNULL(B170_GRP_PY, 0) AS B170_GRP_PY,
+        IFNULL(B040_DIV_PY, 0) AS B040_DIV_PY,
+        IFNULL(B040_SOC_PY, 0) AS B040_SOC_PY,
+        IFNULL(B040_GRP_PY, 0) AS B040_GRP_PY,
+        IFNULL(B050_DIV_PY, 0) AS B050_DIV_PY,
+        IFNULL(B050_SOC_PY, 0) AS B050_SOC_PY,
+        IFNULL(B050_GRP_PY, 0) AS B050_GRP_PY,
+        IFNULL(B055_DIV_PY, 0) AS B055_DIV_PY,
+        IFNULL(B055_SOC_PY, 0) AS B055_SOC_PY,
+        IFNULL(B055_GRP_PY, 0) AS B055_GRP_PY,
+        IFNULL(B057_DIV_PY, 0) AS B057_DIV_PY,
+        IFNULL(B057_SOC_PY, 0) AS B057_SOC_PY,
+        IFNULL(B057_GRP_PY, 0) AS B057_GRP_PY,
+        IFNULL(B060_DIV_PY, 0) AS B060_DIV_PY,
+        IFNULL(B060_SOC_PY, 0) AS B060_SOC_PY,
+        IFNULL(B060_GRP_PY, 0) AS B060_GRP_PY,
+        IFNULL(B010_DIV_PY, 0) AS B010_DIV_PY,
+        IFNULL(B010_SOC_PY, 0) AS B010_SOC_PY,
+        IFNULL(B010_GRP_PY, 0) AS B010_GRP_PY
+
+    FROM (
+
+        SELECT 
+            div_consegna_merce_cd,
+            referenza_cd,
+            (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
+            nazione_cd,
+            divisione_cd,
+            flag_promo_fl,
+            fuori_catalogo_fl,
+            tipo_ce_cd,
+            CAST(FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS NUMERIC) AS mese_cd, -- Mese anno +1
+            CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+            val_cons,
+            load_timestamp
+        FROM ${ref("cur_ft_consuntivo")}
+
+    ) 
+    PIVOT (
+
+        SUM(val_cons)
+        FOR righe_valuta_cd IN (
+            'B030_DIV' AS B030_DIV_PY,
+            'B030_SOC' AS B030_SOC_PY,
+            'B030_GRP' AS B030_GRP_PY,
+            'B080_DIV' AS B080_DIV_PY,
+            'B080_SOC' AS B080_SOC_PY,
+            'B080_GRP' AS B080_GRP_PY,
+            'B190_DIV' AS B190_DIV_PY,
+            'B190_SOC' AS B190_SOC_PY,
+            'B190_GRP' AS B190_GRP_PY,
+            'B320_DIV' AS B320_DIV_PY,
+            'B320_SOC' AS B320_SOC_PY,
+            'B320_GRP' AS B320_GRP_PY,
+            'B151_DIV' AS B151_DIV_PY,
+            'B151_SOC' AS B151_SOC_PY,
+            'B151_GRP' AS B151_GRP_PY,
+            'B141_DIV' AS B141_DIV_PY,
+            'B141_SOC' AS B141_SOC_PY,
+            'B141_GRP' AS B141_GRP_PY,
+            'B146_DIV' AS B146_DIV_PY,
+            'B146_SOC' AS B146_SOC_PY,
+            'B146_GRP' AS B146_GRP_PY,
+            'B180_DIV' AS B180_DIV_PY,
+            'B180_SOC' AS B180_SOC_PY,
+            'B180_GRP' AS B180_GRP_PY,
+            'B160_DIV' AS B160_DIV_PY,
+            'B160_SOC' AS B160_SOC_PY,
+            'B160_GRP' AS B160_GRP_PY,
+            'B196_DIV' AS B196_DIV_PY,
+            'B196_SOC' AS B196_SOC_PY,
+            'B196_GRP' AS B196_GRP_PY,
+            'B230_DIV' AS B230_DIV_PY,
+            'B230_SOC' AS B230_SOC_PY,
+            'B230_GRP' AS B230_GRP_PY,
+            'B300_DIV' AS B300_DIV_PY,
+            'B300_SOC' AS B300_SOC_PY,
+            'B300_GRP' AS B300_GRP_PY,
+            'B170_DIV' AS B170_DIV_PY,
+            'B170_SOC' AS B170_SOC_PY,
+            'B170_GRP' AS B170_GRP_PY,
+            'B040_DIV' AS B040_DIV_PY,
+            'B040_SOC' AS B040_SOC_PY,
+            'B040_GRP' AS B040_GRP_PY,
+            'B050_DIV' AS B050_DIV_PY,
+            'B050_SOC' AS B050_SOC_PY,
+            'B050_GRP' AS B050_GRP_PY,
+            'B055_DIV' AS B055_DIV_PY,
+            'B055_SOC' AS B055_SOC_PY,
+            'B055_GRP' AS B055_GRP_PY,
+            'B057_DIV' AS B057_DIV_PY,
+            'B057_SOC' AS B057_SOC_PY,
+            'B057_GRP' AS B057_GRP_PY,
+            'B060_DIV' AS B060_DIV_PY,
+            'B060_SOC' AS B060_SOC_PY,
+            'B060_GRP' AS B060_GRP_PY,
+            'B010_DIV' AS B010_DIV_PY,
+            'B010_SOC' AS B010_SOC_PY,
+            'B010_GRP' AS B010_GRP_PY
+        )
+
+    )  
+
+)
+
+select
+    py.div_consegna_merce_cd,
+    py.referenza_cd,
+    py.campagna_canvass_cd,
+    py.nazione_cd,
+    py.divisione_cd,
+    py.flag_promo_fl,
+    py.fuori_catalogo_fl,
+    py.tipo_ce_cd,
+    py.mese_cd,
+    PARSE_DATE('%Y%m%d', CONCAT(CAST(py.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno
+    prod.macro_macro_raggruppamento_linea_cd,
+	bu.business_cd,
+	bu.business_unit_cd,
+    cc.esercizio_cd,
+    cc.data_aggiornamento_ts,
+
+    -- Previous Year End (PY End)
+	IFNULL(py.B030_DIV_PY, 0) AS B030_DIV_PY,
+	IFNULL(py.B030_SOC_PY, 0) AS B030_SOC_PY,
+	IFNULL(py.B030_GRP_PY, 0) AS B030_GRP_PY,
+	IFNULL(py.B080_DIV_PY, 0) AS B080_DIV_PY,
+	IFNULL(py.B080_SOC_PY, 0) AS B080_SOC_PY,
+	IFNULL(py.B080_GRP_PY, 0) AS B080_GRP_PY,
+	IFNULL(py.B190_DIV_PY, 0) AS B190_DIV_PY,
+	IFNULL(py.B190_SOC_PY, 0) AS B190_SOC_PY,
+	IFNULL(py.B190_GRP_PY, 0) AS B190_GRP_PY,
+	IFNULL(py.B320_DIV_PY, 0) AS B320_DIV_PY,
+	IFNULL(py.B320_SOC_PY, 0) AS B320_SOC_PY,
+	IFNULL(py.B320_GRP_PY, 0) AS B320_GRP_PY,
+    IFNULL(py.B180_DIV_PY, 0) AS B180_DIV_PY,
+	IFNULL(py.B180_SOC_PY, 0) AS B180_SOC_PY,
+	IFNULL(py.B180_GRP_PY, 0) AS B180_GRP_PY,
+	IFNULL(py.B196_DIV_PY, 0) AS B196_DIV_PY,
+	IFNULL(py.B196_SOC_PY, 0) AS B196_SOC_PY,
+	IFNULL(py.B196_GRP_PY, 0) AS B196_GRP_PY,
+	IFNULL(py.B230_DIV_PY, 0) AS B230_DIV_PY,
+	IFNULL(py.B230_SOC_PY, 0) AS B230_SOC_PY,
+	IFNULL(py.B230_GRP_PY, 0) AS B230_GRP_PY,
+	IFNULL(py.B300_DIV_PY, 0) AS B300_DIV_PY,
+	IFNULL(py.B300_SOC_PY, 0) AS B300_SOC_PY,
+	IFNULL(py.B300_GRP_PY, 0) AS B300_GRP_PY,
+    IFNULL(py.B010_DIV_PY, 0) AS B010_DIV_PY,
+	IFNULL(py.B010_SOC_PY, 0) AS B010_SOC_PY,
+	IFNULL(py.B010_GRP_PY, 0) AS B010_GRP_PY,
+
+	-- Net Sales LLCF Previous Year End (PY End)
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
+		ELSE IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
+	END AS net_sales_llcf_DIV_PY,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
+		ELSE IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
+	END AS net_sales_llcf_SOC_PY,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
+		ELSE IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
+	END AS net_sales_llcf_GRP_PY,
+
+	-- Gross Margin LLCF Previous Year End (PY End)
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
+		ELSE IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0)
+	END AS gross_margin_llcf_DIV_PY,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
+		ELSE IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0)
+	END AS gross_margin_llcf_SOC_PY,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
+		ELSE IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0)
+	END AS gross_margin_llcf_GRP_PY,
+
+	-- Net Sales Previous Year End (PY End)
+	IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS net_sales_DIV_PY,
+	IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS net_sales_SOC_PY,
+	IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS net_sales_GRP_PY,
+
+	-- Gross Margin Previous Year End (PY End)
+	IFNULL(py.B320_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS gross_margin_DIV_PY,
+	IFNULL(py.B320_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) AS gross_margin_SOC_PY,
+	IFNULL(py.B320_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS gross_margin_GRP_PY,
+
+	-- Best Price Previous Year End (PY End)
+	IFNULL(py.B190_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS best_price_DIV_PY,
+	IFNULL(py.B190_SOC_PY, 0) + IFNULL(py.B151_SOC_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_DIV_PY, 0) AS best_price_SOC_PY,
+	IFNULL(py.B190_GRP_PY, 0) + IFNULL(py.B151_GRP_PY, 0) + IFNULL(py.B160_DIV_PY, 0) + IFNULL(py.B151_GRP_PY, 0) AS best_price_GRP_PY,
+
+    -- Totale Fuori Fattura Previous Year End(PY End)
+    IFNULL(py.B170_DIV_PY, 0) - IFNULL(py.B151_DIV_PY, 0) AS totale_fuori_fattura_DIV_PY,
+	IFNULL(py.B170_SOC_PY, 0) - IFNULL(py.B151_SOC_PY, 0) AS totale_fuori_fattura_SOC_PY,
+	IFNULL(py.B170_GRP_PY, 0) - IFNULL(py.B151_GRP_PY, 0) AS totale_fuori_fattura_GRP_PY,
+
+    -- Cifre Fisse Previous Year End (PY End)
+    IFNULL(py.B141_DIV_PY, 0) + IFNULL(py.B146_DIV_PY, 0) AS cifre_fisse_DIV_PY,
+	IFNULL(py.B141_SOC_PY, 0) + IFNULL(py.B146_SOC_PY, 0) AS cifre_fisse_SOC_PY,
+	IFNULL(py.B141_GRP_PY, 0) + IFNULL(py.B146_GRP_PY, 0) AS cifre_fisse_GRP_PY,
+
+	   -- Imponibile per sconto promo Previous Year End (PY)
+    IFNULL(py.B040_DIV_PY, 0) - IFNULL(py.B050_DIV_PY, 0) - IFNULL(py.B055_DIV_PY, 0) - IFNULL(py.B057_DIV_PY, 0) AS imponibile_per_sconto_promo_DIV_PY,
+    IFNULL(py.B040_SOC_PY, 0) - IFNULL(py.B050_SOC_PY, 0) - IFNULL(py.B055_SOC_PY, 0) - IFNULL(py.B057_SOC_PY, 0) AS imponibile_per_sconto_promo_SOC_PY,
+    IFNULL(py.B040_GRP_PY, 0) - IFNULL(py.B050_GRP_PY, 0) - IFNULL(py.B055_GRP_PY, 0) - IFNULL(py.B057_GRP_PY, 0) AS imponibile_per_sconto_promo_GRP_PY,
+
+    py.load_timestamp
+
+FROM pivot_consuntivo_py AS py
+LEFT JOIN ${ref("cur_md_prodotto")} AS prod
+    ON py.referenza_cd = prod.referenza_cd
+LEFT JOIN ${ref("cur_md_cliente")} AS cli
+    ON py.div_consegna_merce_cd = cli.div_consegna_merce_cd
+LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
+	ON py.divisione_cd = bu.divisione_cd
+	AND substr(py.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
+    ON py.campagna_canvass_cd = cc.campagna_canvass_cd
