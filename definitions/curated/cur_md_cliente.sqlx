@@ -65,4 +65,4 @@ SELECT DISTINCT
   SUBSTRING(Div_Distretto_Assegnatario, 5) AS distretto_assegnatario_cd,
   Div_Distretto_Assegnatario_11 AS distretto_assegnatario_ds,
   load_timestamp
-FROM ${ref("stg_board_anagrafica_cliente")}
+FROM ${ref("stg_board_cliente")}
