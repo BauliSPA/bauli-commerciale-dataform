@@ -15,9 +15,9 @@ SELECT
   cons.tipo_valuta AS tipo_valuta_cd,
   cons.tipo_ce AS tipo_ce_cd,
   CAST(cons.mese AS NUMERIC) AS mese_cd,
-  COALESCE(CAST(REPLACE(cons.ce_consuntivo, ",", ".") AS NUMERIC),0) AS val_cons,
+  COALESCE(CAST(REPLACE(cons.valore, ",", ".") AS NUMERIC),0) AS val_cons,
   cons.load_timestamp
-FROM ${ref("stg_board_ce_consuntivo")} AS cons
+FROM ${ref("stg_board_consuntivo")} AS cons
 
 -- filtro ultimo 4 esercizi fiscali
 WHERE cons.campagna_canvass IN (

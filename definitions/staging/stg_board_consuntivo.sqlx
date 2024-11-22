@@ -1,7 +1,7 @@
 config {
   schema: "staging",
   type: "incremental",
-  protected: true
+  protected:true
 }
 -- DELETE+INSERT
 pre_operations {
@@ -13,4 +13,4 @@ pre_operations {
 SELECT
     *,
     CURRENT_TIMESTAMP() AS load_timestamp
-FROM bli-bi-commerciale-test-001.landing.board_ce_consuntivo
+FROM bli-bi-commerciale-test-001.landing.board_consuntivo
