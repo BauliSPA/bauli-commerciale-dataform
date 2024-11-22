@@ -13,6 +13,7 @@ SELECT
   month_ds AS `Month`,
   yearmonth_cd AS `Year Month Cod`,
   monthyear_ds AS `Month Year`,
+  Month_Year_Desc AS `Month Year Desc` ,
   index_fiscal_day AS `Index Fiscal Day`,
   index_fiscal_month AS `Index Fiscal Month`,
   load_timestamp AS `Load Timestamp`

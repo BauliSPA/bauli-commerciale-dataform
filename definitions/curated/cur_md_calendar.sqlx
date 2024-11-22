@@ -13,6 +13,12 @@ SELECT
   month_ds,
   CAST(yearmonth_cd AS NUMERIC) AS yearmonth_cd,
   monthyear_ds,
+  CASE 
+    WHEN EXTRACT (YEAR FROM PARSE_DATE('%d/%m/%Y', date)) = EXTRACT(YEAR FROM CURRENT_DATE()) 
+	     AND EXTRACT(MONTH FROM PARSE_DATE('%d/%m/%Y', date)) = EXTRACT(MONTH FROM CURRENT_DATE())
+	  THEN 'Current Month Year'
+    ELSE FORMAT_DATE('%B %Y', PARSE_DATE('%d/%m/%Y', date))
+  END AS Month_Year_Desc,
   CAST(index_fiscal_day AS NUMERIC) AS index_fiscal_day,
   CAST(index_fiscal_month AS NUMERIC) AS index_fiscal_month,
   load_timestamp
