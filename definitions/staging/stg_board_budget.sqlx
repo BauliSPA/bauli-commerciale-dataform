@@ -1,7 +1,6 @@
 config {
   schema: "staging",
-  type: "incremental",
-  protected: true
+  type: "incremental"
 }
 -- DELETE+INSERT
 pre_operations {
