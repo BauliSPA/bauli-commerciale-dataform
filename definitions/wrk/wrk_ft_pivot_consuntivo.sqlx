@@ -282,7 +282,7 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
             flag_promo_fl,
             fuori_catalogo_fl,
             tipo_ce_cd,
-            FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS mese_cd, -- Mese anno +1
+            CAST(FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS NUMERIC) AS mese_cd, -- Mese anno +1
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
             val_cons,
             load_timestamp
@@ -452,7 +452,7 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
             flag_promo_fl,
             fuori_catalogo_fl,
             tipo_ce_cd,
-            FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS mese_cd, -- Mese anno +1
+            CAST(FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS NUMERIC) AS mese_cd, -- Mese anno +1
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
             val_cons,
             load_timestamp
@@ -536,7 +536,7 @@ select
     act.fuori_catalogo_fl,
     act.tipo_ce_cd,
     act.mese_cd,
-    PARSE_DATE('%Y%m%d', CONCAT(CAST(act.mese_cd AS STRING), '01'))AS data_dt, --primo/mese/anno
+    PARSE_DATE('%Y%m%d', CONCAT(CAST(act.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
 	bu.business_unit_cd,
