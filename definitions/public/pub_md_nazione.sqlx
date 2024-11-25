@@ -5,6 +5,7 @@ config {
 
 SELECT 
   nazione_cd AS `Country Cod`,
+  iso3_cd AS `ISO3`,
   nazione_ds AS `Country`,
   raggruppamento_nazione_cd AS `Country Grouping Cod`,
   raggruppamento_nazione_ds AS `Country Grouping`,
