@@ -13,5 +13,15 @@ SELECT
   business_unit_ds,
   business_cd,
   business_ds,
+  CASE 
+    WHEN business_cd IN ('NAT _IT','PASQ_IT') --spazio in natale
+    THEN '01'
+    ELSE '02'
+  END AS bsn_seasonality_cd,
+  CASE 
+    WHEN business_cd IN ('NAT _IT','PASQ_IT')
+    THEN 'Business Ricorrenti'
+    ELSE 'Business Continuativi'
+  END AS bsn_seasonality_ds,
   load_timestamp
 FROM ${ref("stg_file_business_unit")}
