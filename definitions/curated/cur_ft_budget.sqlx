@@ -14,7 +14,7 @@ SELECT
   budget.Tipo_Valuta AS tipo_valuta_cd,
   budget.Processo AS processo_cd,
   CAST(budget.Mese AS NUMERIC) AS mese_cd,
-  COALESCE(CAST(REPLACE(budget.ce_finale, ",", ".") AS NUMERIC),0) AS val_cons,
+  COALESCE(CAST(REPLACE(budget.valore, ",", ".") AS NUMERIC),0) AS val_cons,
   budget.load_timestamp
 FROM ${ref("stg_board_budget")} AS budget
 
