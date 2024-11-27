@@ -14,6 +14,8 @@ SELECT
   yearmonth_cd AS `Year Month Cod`,
   monthyear_ds AS `Month Year`,
   Month_Year_Desc AS `Month Year Desc` ,
+  flag_view_date AS `Flag View Date`,
+  flag_view_past_date AS `Flag View Past Date`,
   index_fiscal_day AS `Index Fiscal Day`,
   index_fiscal_month AS `Index Fiscal Month`,
   load_timestamp AS `Load Timestamp`
