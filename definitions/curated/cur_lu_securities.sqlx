@@ -3,7 +3,7 @@ config {
   type: "table"
 }
 
-SELECT 
+SELECT DISTINCT
   Utente AS utente,
   Dimensione AS dimensione,
   Valore AS valore,
