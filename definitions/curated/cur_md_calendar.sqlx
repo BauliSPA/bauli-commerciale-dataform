@@ -3,6 +3,30 @@ config {
   type: "table"
 }
 
+WITH cal AS ( 
+    SELECT 
+        year || '-' || month_cd AS anno_mese,
+        CASE 
+            WHEN month_cd >= 7 THEN 
+                RIGHT(CAST(year AS STRING), 2) || '/' || CAST(CAST(RIGHT(CAST(year AS STRING), 2) AS INT64) + 1 AS STRING)
+            ELSE 
+                CAST(CAST(RIGHT(CAST(year AS STRING), 2) AS INT64) - 1 AS STRING) || '/' || RIGHT(CAST(year AS STRING), 2)
+        END AS esercizio
+    FROM bli-bi-commerciale-test-001.curated.cur_md_calendar
+), 
+
+relazione AS (
+
+    SELECT 
+	  DISTINCT anno_mese, 
+	 -- tipo_esercizio_cd
+    FROM bli-bi-commerciale-test-001.curated.cur_md_campagna_canvass AS cc
+    LEFT JOIN cal AS cal
+    on  cc.esercizio_cd = cal.esercizio 
+    WHERE tipo_esercizio_cd IN ('ECA', 'FY')
+)
+
+
 SELECT
   PARSE_DATE('%d/%m/%Y', date) AS date,
   CAST(day_of_month AS NUMERIC) AS day_of_month,
@@ -59,6 +83,13 @@ SELECT
   END AS flag_view_past_date,-- 1 per tutte le date, precedenti ad oggi, degli ultimi 4 esercizi fiscali 
   CAST(index_fiscal_day AS NUMERIC) AS index_fiscal_day,
   CAST(index_fiscal_month AS NUMERIC) AS index_fiscal_month,
+  CASE 
+    WHEN year || '-' || month_cd in ( 
+    SELECT anno_mese 
+    FROM relazione)
+    THEN 1 
+    ELSE 0 
+  END AS flag_esercizi_corrente,
   load_timestamp
 FROM ${ref("stg_calendar")}
 ORDER BY 

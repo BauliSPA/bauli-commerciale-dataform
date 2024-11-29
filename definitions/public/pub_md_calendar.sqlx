@@ -18,6 +18,7 @@ SELECT
   flag_view_past_date AS `Flag View Past Date`,
   index_fiscal_day AS `Index Fiscal Day`,
   index_fiscal_month AS `Index Fiscal Month`,
+  flag_esercizi_corrente AS `Flag Esercizio Corrente`,
   load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_md_calendar")}
 ORDER BY 
