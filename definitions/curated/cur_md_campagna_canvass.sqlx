@@ -7,16 +7,16 @@ WITH
 campagna_canvass as (
 
     SELECT 
-        Campagna_Canvass AS campagna_canvass_cd,
-        Campagna_Canvass_1 AS campagna_canvass_ds,
-        Campagna_Anno AS campagna_anno_cd,
-        Campagna_Anno_2 AS campagna_anno_ds,
-        Tipo_Campagna AS tipo_campagna_cd,
-        Tipo_Campagna_3 AS tipo_campagna_ds,
-        Tipo_Esercizio AS tipo_esercizio_cd,
-        Tipo_Esercizio_4 AS tipo_esercizio_ds,
-        Esercizio AS esercizio_cd,
-        Esercizio_5 AS esercizio_ds
+        campagna_canvass_cd,
+        campagna_canvass_ds,
+        campagna_anno_cd,
+        campagna_anno_ds,
+        tipo_campagna_cd,
+        tipo_campagna_ds,
+        tipo_esercizio_cd,
+        tipo_esercizio_ds,
+        esercizio_cd,
+        esercizio_ds
     FROM ${ref("stg_board_campagna_canvass")}
 
 ),
