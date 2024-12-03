@@ -4,22 +4,22 @@ config {
 }
 
 SELECT
-  budget.Referenza AS referenza_cd,
-  budget.Div_Cliente_Piano AS div_cliente_piano_cd,
-  budget.Nazione AS nazione_cd,
-  budget.Divisione AS divisione_cd,
-  budget.Righe_CE as righe_ce_cd,
-  budget.Campagna_Anno AS campagna_anno_cd,
-  budget.Scenario AS scenario_cd,
-  budget.Tipo_Valuta AS tipo_valuta_cd,
-  budget.Processo AS processo_cd,
-  CAST(budget.Mese AS NUMERIC) AS mese_cd,
+  budget.referenza_cd,
+  budget.div_cliente_piano_cd,
+  budget.nazione_cd,
+  budget.divisione_cd,
+  budget.righe_ce_cd,
+  budget.campagna_anno_cd,
+  budget.scenario_cd,
+  budget.tipo_valuta_cd,
+  budget.processo_cd,
+  CAST(budget.mese_cd AS NUMERIC) AS mese_cd,
   COALESCE(CAST(REPLACE(budget.valore, ",", ".") AS NUMERIC),0) AS val_cons,
   budget.load_timestamp
 FROM ${ref("stg_board_budget")} AS budget
 
 -- filtro ultimo 4 esercizi fiscali
-WHERE budget.Campagna_Anno IN (
+WHERE budget.campagna_anno_cd IN (
     SELECT DISTINCT 
       campagna_anno_cd
     FROM ${ref("cur_md_campagna_canvass")}

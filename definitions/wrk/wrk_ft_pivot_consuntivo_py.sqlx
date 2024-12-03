@@ -16,7 +16,7 @@ WITH
 pivot_consuntivo_py AS ( -- Consuntivo anno precedente ribaltato su anno successivo
 
     SELECT
-        div_consegna_merce_cd,
+        div_consegnamerce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -89,7 +89,7 @@ pivot_consuntivo_py AS ( -- Consuntivo anno precedente ribaltato su anno success
     FROM (
 
         SELECT 
-            div_consegna_merce_cd,
+            div_consegnamerce_cd,
             referenza_cd,
             (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
             nazione_cd,
@@ -172,7 +172,7 @@ pivot_consuntivo_py AS ( -- Consuntivo anno precedente ribaltato su anno success
 )
 
 select
-    py.div_consegna_merce_cd,
+    py.div_consegnamerce_cd,
     py.referenza_cd,
     py.campagna_canvass_cd,
     py.nazione_cd,
@@ -285,7 +285,7 @@ FROM pivot_consuntivo_py AS py
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON py.referenza_cd = prod.referenza_cd
 LEFT JOIN ${ref("cur_md_cliente")} AS cli
-    ON py.div_consegna_merce_cd = cli.div_consegnamerce_cd
+    ON py.div_consegnamerce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON py.divisione_cd = bu.divisione_cd
 	AND substr(py.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd

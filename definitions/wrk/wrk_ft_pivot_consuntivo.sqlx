@@ -16,7 +16,7 @@ pivot_consuntivo AS (
 
     SELECT
         SHA256(
-            div_consegna_merce_cd ||
+            div_consegnamerce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -27,7 +27,7 @@ pivot_consuntivo AS (
             mese_cd
         ) AS surrogate_key,
 
-        div_consegna_merce_cd,
+        div_consegnamerce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -103,7 +103,7 @@ pivot_consuntivo AS (
     FROM (
 
         SELECT 
-            div_consegna_merce_cd,
+            div_consegnamerce_cd,
             referenza_cd,
             campagna_canvass_cd,
             nazione_cd,
@@ -190,7 +190,7 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
 
     SELECT
         SHA256(
-            div_consegna_merce_cd ||
+            div_consegnamerce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -201,7 +201,7 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
             mese_cd
         ) AS surrogate_key,
 
-        div_consegna_merce_cd,
+        div_consegnamerce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -274,7 +274,7 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
     FROM (
 
         SELECT 
-            div_consegna_merce_cd,
+            div_consegnamerce_cd,
             referenza_cd,
             (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
             nazione_cd,
@@ -360,7 +360,7 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
 
     SELECT
         SHA256(
-            div_consegna_merce_cd ||
+            div_consegnamerce_cd ||
             referenza_cd ||
             campagna_canvass_cd ||
             nazione_cd ||
@@ -371,7 +371,7 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
             mese_cd
         ) AS surrogate_key,
 
-        div_consegna_merce_cd,
+        div_consegnamerce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -444,7 +444,7 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
     FROM (
 
         SELECT 
-            div_consegna_merce_cd,
+            div_consegnamerce_cd,
             referenza_cd,
             (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
             nazione_cd,
@@ -527,7 +527,7 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
 )
 
 select
-    act.div_consegna_merce_cd,
+    act.div_consegnamerce_cd,
     act.referenza_cd,
     act.campagna_canvass_cd,
     act.nazione_cd,
@@ -828,7 +828,7 @@ LEFT JOIN pivot_consuntivo_py_end AS py_end
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON act.referenza_cd = prod.referenza_cd
 LEFT JOIN ${ref("cur_md_cliente")} AS cli
-    ON act.div_consegna_merce_cd = cli.div_consegnamerce_cd
+    ON act.div_consegnamerce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
 	AND substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd

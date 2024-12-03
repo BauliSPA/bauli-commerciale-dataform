@@ -16,7 +16,7 @@ WITH
 pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
 
     SELECT
-        div_consegna_merce_cd,
+        div_consegnamerce_cd,
         referenza_cd,
         campagna_canvass_cd,
         nazione_cd,
@@ -89,7 +89,7 @@ pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
     FROM (
 
         SELECT 
-            div_consegna_merce_cd,
+            div_consegnamerce_cd,
             referenza_cd,
             (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
             nazione_cd,
@@ -172,7 +172,7 @@ pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
 )
 
 select
-    ap_al.div_consegna_merce_cd,
+    ap_al.div_consegnamerce_cd,
     ap_al.referenza_cd,
     ap_al.campagna_canvass_cd,
     ap_al.nazione_cd,
@@ -285,7 +285,7 @@ FROM pivot_consuntivo_ap_al AS ap_al
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON ap_al.referenza_cd = prod.referenza_cd
 LEFT JOIN ${ref("cur_md_cliente")} AS cli
-    ON ap_al.div_consegna_merce_cd = cli.div_consegnamerce_cd
+    ON ap_al.div_consegnamerce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON ap_al.divisione_cd = bu.divisione_cd
 	AND substr(ap_al.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd

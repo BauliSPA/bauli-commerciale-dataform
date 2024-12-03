@@ -4,23 +4,23 @@ config {
 }
 
 SELECT 
-  cons_ap_al.div_consegnamerce AS div_consegna_merce_cd,
-  cons_ap_al.referenza AS referenza_cd,
-  cons_ap_al.campagna_canvass AS campagna_canvass_cd,
-  cons_ap_al.nazione AS nazione_cd,
-  cons_ap_al.divisione AS divisione_cd,
-  cons_ap_al.righe_ce AS righe_ce_cd,
-  cons_ap_al.flag_promo AS flag_promo_fl,
-  cons_ap_al.fuori_catalogo AS fuori_catalogo_fl,
-  cons_ap_al.tipo_valuta AS tipo_valuta_cd,
-  cons_ap_al.tipo_ce AS tipo_ce_cd,
-  CAST(cons_ap_al.mese AS NUMERIC) AS mese_cd,
+  cons_ap_al.div_consegnamerce_cd,
+  cons_ap_al.referenza_cd,
+  cons_ap_al.campagna_canvass_cd,
+  cons_ap_al.nazione_cd,
+  cons_ap_al.divisione_cd,
+  cons_ap_al.righe_ce_cd,
+  cons_ap_al.flag_promo_fl,
+  cons_ap_al.fuori_catalogo_fl,
+  cons_ap_al.tipo_valuta_cd,
+  cons_ap_al.tipo_ce_cd,
+  CAST(cons_ap_al.mese_cd AS NUMERIC) AS mese_cd,
   COALESCE(CAST(REPLACE(cons_ap_al.valore, ",", ".") AS NUMERIC),0) AS val_cons,
   cons_ap_al.load_timestamp
 FROM ${ref("stg_board_consuntivo_ap_al")} AS cons_ap_al
 
 -- filtro ultimo 4 esercizi fiscali
-WHERE cons_ap_al.campagna_canvass IN (
+WHERE cons_ap_al.campagna_canvass_cd IN (
     SELECT
       campagna_canvass_cd
     FROM ${ref("cur_md_campagna_canvass")}
