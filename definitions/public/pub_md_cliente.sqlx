@@ -4,8 +4,8 @@ config {
 }
 
 SELECT 
-  div_consegna_merce_cd AS `Div_delivery point Cod`,
-  div_consegna_merce_ds AS `Div_delivery point`,
+  div_consegnamerce_cd AS `Div_delivery point Cod`,
+  div_consegnamerce_ds AS `Div_delivery point`,
   insegna_cd AS `Chain Cod`,
   insegna_ds AS `Chain`,
   canale_cd AS `Channel Cod`,

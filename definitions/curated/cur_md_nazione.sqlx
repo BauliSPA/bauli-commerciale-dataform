@@ -4,14 +4,14 @@ config {
 }
 
 SELECT
-  naz.Nazione AS nazione_cd,
+  naz.nazione_cd,
   cnt.iso3_cd,
-  naz.Nazione_1 AS nazione_ds,
-  naz.Raggruppamento_Nazione AS raggruppamento_nazione_cd,
-  naz.Raggruppamento_Nazione_2 AS raggruppamento_nazione_ds,
-  naz.Continente AS continente_cd,
-  naz.Continente_3 AS continente_ds,
+  naz.nazione_ds,
+  naz.raggruppamento_nazione_cd,
+  naz.raggruppamento_nazione_ds,
+  naz.continente_cd,
+  naz.continente_ds,
   naz.load_timestamp
 FROM ${ref("stg_board_nazione")} AS naz
 LEFT JOIN ${ref("cur_lu_country_iso")} AS cnt
-  ON naz.Nazione = cnt.iso2_cd
+  ON naz.nazione_cd = cnt.iso2_cd

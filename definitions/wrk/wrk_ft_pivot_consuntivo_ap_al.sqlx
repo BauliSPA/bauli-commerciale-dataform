@@ -285,7 +285,7 @@ FROM pivot_consuntivo_ap_al AS ap_al
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
     ON ap_al.referenza_cd = prod.referenza_cd
 LEFT JOIN ${ref("cur_md_cliente")} AS cli
-    ON ap_al.div_consegna_merce_cd = cli.div_consegna_merce_cd
+    ON ap_al.div_consegna_merce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON ap_al.divisione_cd = bu.divisione_cd
 	AND substr(ap_al.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
