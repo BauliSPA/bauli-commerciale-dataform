@@ -34,9 +34,5 @@ SELECT
   pezzi_ds,
   sub_marchio_cd,
   sub_marchio_ds,
-
-CONCAT(referenza_cd,referenza_ds)
-
-
   load_timestamp
 FROM ${ref("stg_board_prodotto")}
