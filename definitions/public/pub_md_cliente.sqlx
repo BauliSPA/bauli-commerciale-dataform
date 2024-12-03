@@ -58,6 +58,7 @@ SELECT
   div_centrale_cp_ds AS `Div_Central CP`,
   cliente_piano_cd AS `Customer_Plan Cod`,
   cliente_piano_ds AS `Customer_Plan`,
+  cliente_piano_cd_ds AS `Customer_Plan Cod Ds`,
   centrale_cp_cd AS `Central CP Cod`,
   centrale_cp_ds AS `Central CP`,
   supercentrale_cp_cd AS `Super Central CP Cod`,

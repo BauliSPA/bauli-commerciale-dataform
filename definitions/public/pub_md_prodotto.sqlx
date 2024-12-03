@@ -6,8 +6,10 @@ config {
 SELECT 
   referenza_cd AS `Item Cod`,
   referenza_ds AS `Item`,
+  referenza_cd_ds AS `Item Cod Ds`,
   raggrprodotto_cd AS `Item Grouping Cod`,
   raggrprodotto_ds AS `Item Grouping`,
+  raggrprodotto_cd_ds AS `Item Grouping Cod Ds`,
   linea_cd AS `Line Cod`,
   linea_ds AS `Line`,
   raggruppamento_linea_cd AS `Line Grouping Cod`,
