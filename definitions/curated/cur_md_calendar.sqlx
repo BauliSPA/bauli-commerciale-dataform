@@ -85,11 +85,60 @@ SELECT
   CAST(index_fiscal_month AS NUMERIC) AS index_fiscal_month,
   CASE 
     WHEN year || '-' || month_cd in ( 
-    SELECT anno_mese 
-    FROM relazione)
+       SELECT anno_mese 
+       FROM relazione)
     THEN 1 
     ELSE 0 
   END AS flag_esercizi_corrente,
+  CASE 
+     WHEN CAST(month_cd AS NUMERIC) <= 6
+     THEN "January-June"
+	 ELSE "July-December"
+  END AS semester_cd,
+  CASE 
+     WHEN CAST(month_cd AS NUMERIC) <= 6
+     THEN "Sem Jan-June"
+	 ELSE "Sem Jul-Dec"
+  END AS semester_ds,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN "January-March" 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN "April-June"
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN "July-September" 
+  			        ELSE "October-December"
+  			     END
+  	      END
+  END AS trimester_cd,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN "Trim Jan-Mar" 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN "Trim Apr-June"
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN "Trim Jul-Sept" 
+  			        ELSE "Trim Oct-Dec"
+  			     END
+  	      END
+  END AS trimester_ds,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN 1 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN 2
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN 3
+  			        ELSE 4
+  			     END
+  	      END
+  END AS trimester_ord,
   load_timestamp
 FROM ${ref("stg_calendar")}
 ORDER BY 
