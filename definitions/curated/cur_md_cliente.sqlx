@@ -58,13 +58,13 @@ SELECT DISTINCT
   div_centrale_cp_ds,
   cliente_piano_cd,
   cliente_piano_ds,
-  CONCAT(cliente_piano_cd," ",cliente_piano_ds) AS cliente_piano_cd_ds,
+  CONCAT(cliente_piano_cd," ","-"," ",cliente_piano_ds) AS cliente_piano_cd_ds,
   centrale_cp_cd,
   centrale_cp_ds,
   supercentrale_cp_cd,
   supercentrale_cp_ds,
   SUBSTRING(div_distretto_assegnatario_cd, 5) AS distretto_assegnatario_cd, 
   div_distretto_assegnatario_ds AS distretto_assegnatario_ds,
-  CONCAT(SUBSTRING(div_distretto_assegnatario_cd, 5), " ", div_distretto_assegnatario_ds) AS distretto_assegnatario_cd_ds,
+  CONCAT(SUBSTRING(div_distretto_assegnatario_cd, 5)," ","-"," ", div_distretto_assegnatario_ds) AS distretto_assegnatario_cd_ds,
   load_timestamp
 FROM ${ref("stg_board_cliente")}

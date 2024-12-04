@@ -6,10 +6,10 @@ config {
 SELECT 
   referenza_cd,
   referenza_ds,
-  CONCAT(referenza_cd," ",referenza_ds) AS referenza_cd_ds, 
+  CONCAT(referenza_cd," ","-"," ",referenza_ds) AS referenza_cd_ds, 
   raggrprodotto_cd,
   raggrprodotto_ds,
-  CONCAT(raggrprodotto_cd," ",raggrprodotto_ds) AS raggrprodotto_cd_ds,
+  CONCAT(raggrprodotto_cd," ","-"," ",raggrprodotto_ds) AS raggrprodotto_cd_ds,
   linea_cd,
   linea_ds,
   raggruppamento_linea_cd,
