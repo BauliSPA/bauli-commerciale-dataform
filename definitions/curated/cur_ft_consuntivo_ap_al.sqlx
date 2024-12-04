@@ -1,0 +1,33 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+  cons_ap_al.div_consegnamerce_cd,
+  cons_ap_al.referenza_cd,
+  cons_ap_al.campagna_canvass_cd,
+  cons_ap_al.nazione_cd,
+  cons_ap_al.divisione_cd,
+  cons_ap_al.righe_ce_cd,
+  cons_ap_al.flag_promo_fl,
+  cons_ap_al.fuori_catalogo_fl,
+  cons_ap_al.tipo_valuta_cd,
+  cons_ap_al.tipo_ce_cd,
+  CAST(cons_ap_al.mese_cd AS NUMERIC) AS mese_cd,
+  COALESCE(CAST(REPLACE(cons_ap_al.valore, ",", ".") AS NUMERIC),0) AS val_cons,
+  cons_ap_al.load_timestamp
+FROM ${ref("stg_board_consuntivo_ap_al")} AS cons_ap_al
+
+-- filtro ultimo 4 esercizi fiscali
+WHERE cons_ap_al.campagna_canvass_cd IN (
+    SELECT
+      campagna_canvass_cd
+    FROM ${ref("cur_md_campagna_canvass")}
+    WHERE tipo_esercizio_cd IN ( 
+    'ECA', 
+    'EPE', 
+    'EP1',
+    'EP2' 
+    ) 
+)

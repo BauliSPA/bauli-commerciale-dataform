@@ -1,0 +1,294 @@
+config {
+  schema: "wrk",
+  type: "table"
+}
+
+/*
+
+    Pivot fatta per:
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
+    - tipo_valuta_cd 		DIV, SOC, GRP
+
+*/
+
+WITH 
+
+pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
+
+    SELECT
+        div_consegnamerce_cd,
+        referenza_cd,
+        campagna_canvass_cd,
+        nazione_cd,
+        divisione_cd,
+        flag_promo_fl,
+        fuori_catalogo_fl,
+        tipo_ce_cd,
+        mese_cd,
+        load_timestamp,
+
+        -- Colonne pivot
+        IFNULL(B030_DIV_AP_AL, 0) AS B030_DIV_AP_AL,
+        IFNULL(B030_SOC_AP_AL, 0) AS B030_SOC_AP_AL,
+        IFNULL(B030_GRP_AP_AL, 0) AS B030_GRP_AP_AL,
+        IFNULL(B080_DIV_AP_AL, 0) AS B080_DIV_AP_AL,
+        IFNULL(B080_SOC_AP_AL, 0) AS B080_SOC_AP_AL,
+        IFNULL(B080_GRP_AP_AL, 0) AS B080_GRP_AP_AL,
+        IFNULL(B190_DIV_AP_AL, 0) AS B190_DIV_AP_AL,
+        IFNULL(B190_SOC_AP_AL, 0) AS B190_SOC_AP_AL,
+        IFNULL(B190_GRP_AP_AL, 0) AS B190_GRP_AP_AL,
+        IFNULL(B320_DIV_AP_AL, 0) AS B320_DIV_AP_AL,
+        IFNULL(B320_SOC_AP_AL, 0) AS B320_SOC_AP_AL,
+        IFNULL(B320_GRP_AP_AL, 0) AS B320_GRP_AP_AL,
+        IFNULL(B151_DIV_AP_AL, 0) AS B151_DIV_AP_AL,
+        IFNULL(B151_SOC_AP_AL, 0) AS B151_SOC_AP_AL,
+        IFNULL(B151_GRP_AP_AL, 0) AS B151_GRP_AP_AL,
+        IFNULL(B141_DIV_AP_AL, 0) AS B141_DIV_AP_AL,
+        IFNULL(B141_SOC_AP_AL, 0) AS B141_SOC_AP_AL,
+        IFNULL(B141_GRP_AP_AL, 0) AS B141_GRP_AP_AL,
+        IFNULL(B146_DIV_AP_AL, 0) AS B146_DIV_AP_AL,
+        IFNULL(B146_SOC_AP_AL, 0) AS B146_SOC_AP_AL,
+        IFNULL(B146_GRP_AP_AL, 0) AS B146_GRP_AP_AL,
+        IFNULL(B180_DIV_AP_AL, 0) AS B180_DIV_AP_AL,
+        IFNULL(B180_SOC_AP_AL, 0) AS B180_SOC_AP_AL,
+        IFNULL(B180_GRP_AP_AL, 0) AS B180_GRP_AP_AL,
+        IFNULL(B160_DIV_AP_AL, 0) AS B160_DIV_AP_AL,
+        IFNULL(B160_SOC_AP_AL, 0) AS B160_SOC_AP_AL,
+        IFNULL(B160_GRP_AP_AL, 0) AS B160_GRP_AP_AL,
+        IFNULL(B196_DIV_AP_AL, 0) AS B196_DIV_AP_AL,
+        IFNULL(B196_SOC_AP_AL, 0) AS B196_SOC_AP_AL,
+        IFNULL(B196_GRP_AP_AL, 0) AS B196_GRP_AP_AL,
+        IFNULL(B230_DIV_AP_AL, 0) AS B230_DIV_AP_AL,
+        IFNULL(B230_SOC_AP_AL, 0) AS B230_SOC_AP_AL,
+        IFNULL(B230_GRP_AP_AL, 0) AS B230_GRP_AP_AL,
+        IFNULL(B300_DIV_AP_AL, 0) AS B300_DIV_AP_AL,
+        IFNULL(B300_SOC_AP_AL, 0) AS B300_SOC_AP_AL,
+        IFNULL(B300_GRP_AP_AL, 0) AS B300_GRP_AP_AL,
+        IFNULL(B170_DIV_AP_AL, 0) AS B170_DIV_AP_AL,
+        IFNULL(B170_SOC_AP_AL, 0) AS B170_SOC_AP_AL,
+        IFNULL(B170_GRP_AP_AL, 0) AS B170_GRP_AP_AL,
+        IFNULL(B040_DIV_AP_AL, 0) AS B040_DIV_AP_AL,
+        IFNULL(B040_SOC_AP_AL, 0) AS B040_SOC_AP_AL,
+        IFNULL(B040_GRP_AP_AL, 0) AS B040_GRP_AP_AL,
+        IFNULL(B050_DIV_AP_AL, 0) AS B050_DIV_AP_AL,
+        IFNULL(B050_SOC_AP_AL, 0) AS B050_SOC_AP_AL,
+        IFNULL(B050_GRP_AP_AL, 0) AS B050_GRP_AP_AL,
+        IFNULL(B055_DIV_AP_AL, 0) AS B055_DIV_AP_AL,
+        IFNULL(B055_SOC_AP_AL, 0) AS B055_SOC_AP_AL,
+        IFNULL(B055_GRP_AP_AL, 0) AS B055_GRP_AP_AL,
+        IFNULL(B057_DIV_AP_AL, 0) AS B057_DIV_AP_AL,
+        IFNULL(B057_SOC_AP_AL, 0) AS B057_SOC_AP_AL,
+        IFNULL(B057_GRP_AP_AL, 0) AS B057_GRP_AP_AL,
+        IFNULL(B060_DIV_AP_AL, 0) AS B060_DIV_AP_AL,
+        IFNULL(B060_SOC_AP_AL, 0) AS B060_SOC_AP_AL,
+        IFNULL(B060_GRP_AP_AL, 0) AS B060_GRP_AP_AL,
+        IFNULL(B010_DIV_AP_AL, 0) AS B010_DIV_AP_AL,
+        IFNULL(B010_SOC_AP_AL, 0) AS B010_SOC_AP_AL,
+        IFNULL(B010_GRP_AP_AL, 0) AS B010_GRP_AP_AL
+
+    FROM (
+
+        SELECT 
+            div_consegnamerce_cd,
+            referenza_cd,
+            (CAST(LEFT(campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(campagna_canvass_cd,3) AS campagna_canvass_cd, -- Campagna anno +1
+            nazione_cd,
+            divisione_cd,
+            flag_promo_fl,
+            fuori_catalogo_fl,
+            tipo_ce_cd,
+            CAST(FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS NUMERIC) AS mese_cd, -- Mese anno +1
+            CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+            val_cons,
+            load_timestamp
+        FROM ${ref("cur_ft_consuntivo_ap_al")}
+
+    ) 
+    PIVOT (
+
+        SUM(val_cons)
+        FOR righe_valuta_cd IN (
+            'B030_DIV' AS B030_DIV_AP_AL,
+            'B030_SOC' AS B030_SOC_AP_AL,
+            'B030_GRP' AS B030_GRP_AP_AL,
+            'B080_DIV' AS B080_DIV_AP_AL,
+            'B080_SOC' AS B080_SOC_AP_AL,
+            'B080_GRP' AS B080_GRP_AP_AL,
+            'B190_DIV' AS B190_DIV_AP_AL,
+            'B190_SOC' AS B190_SOC_AP_AL,
+            'B190_GRP' AS B190_GRP_AP_AL,
+            'B320_DIV' AS B320_DIV_AP_AL,
+            'B320_SOC' AS B320_SOC_AP_AL,
+            'B320_GRP' AS B320_GRP_AP_AL,
+            'B151_DIV' AS B151_DIV_AP_AL,
+            'B151_SOC' AS B151_SOC_AP_AL,
+            'B151_GRP' AS B151_GRP_AP_AL,
+            'B141_DIV' AS B141_DIV_AP_AL,
+            'B141_SOC' AS B141_SOC_AP_AL,
+            'B141_GRP' AS B141_GRP_AP_AL,
+            'B146_DIV' AS B146_DIV_AP_AL,
+            'B146_SOC' AS B146_SOC_AP_AL,
+            'B146_GRP' AS B146_GRP_AP_AL,
+            'B180_DIV' AS B180_DIV_AP_AL,
+            'B180_SOC' AS B180_SOC_AP_AL,
+            'B180_GRP' AS B180_GRP_AP_AL,
+            'B160_DIV' AS B160_DIV_AP_AL,
+            'B160_SOC' AS B160_SOC_AP_AL,
+            'B160_GRP' AS B160_GRP_AP_AL,
+            'B196_DIV' AS B196_DIV_AP_AL,
+            'B196_SOC' AS B196_SOC_AP_AL,
+            'B196_GRP' AS B196_GRP_AP_AL,
+            'B230_DIV' AS B230_DIV_AP_AL,
+            'B230_SOC' AS B230_SOC_AP_AL,
+            'B230_GRP' AS B230_GRP_AP_AL,
+            'B300_DIV' AS B300_DIV_AP_AL,
+            'B300_SOC' AS B300_SOC_AP_AL,
+            'B300_GRP' AS B300_GRP_AP_AL,
+            'B170_DIV' AS B170_DIV_AP_AL,
+            'B170_SOC' AS B170_SOC_AP_AL,
+            'B170_GRP' AS B170_GRP_AP_AL,
+            'B040_DIV' AS B040_DIV_AP_AL,
+            'B040_SOC' AS B040_SOC_AP_AL,
+            'B040_GRP' AS B040_GRP_AP_AL,
+            'B050_DIV' AS B050_DIV_AP_AL,
+            'B050_SOC' AS B050_SOC_AP_AL,
+            'B050_GRP' AS B050_GRP_AP_AL,
+            'B055_DIV' AS B055_DIV_AP_AL,
+            'B055_SOC' AS B055_SOC_AP_AL,
+            'B055_GRP' AS B055_GRP_AP_AL,
+            'B057_DIV' AS B057_DIV_AP_AL,
+            'B057_SOC' AS B057_SOC_AP_AL,
+            'B057_GRP' AS B057_GRP_AP_AL,
+            'B060_DIV' AS B060_DIV_AP_AL,
+            'B060_SOC' AS B060_SOC_AP_AL,
+            'B060_GRP' AS B060_GRP_AP_AL,
+            'B010_DIV' AS B010_DIV_AP_AL,
+            'B010_SOC' AS B010_SOC_AP_AL,
+            'B010_GRP' AS B010_GRP_AP_AL
+        )
+
+    )
+
+)
+
+select
+    ap_al.div_consegnamerce_cd,
+    ap_al.referenza_cd,
+    ap_al.campagna_canvass_cd,
+    ap_al.nazione_cd,
+    ap_al.divisione_cd,
+    ap_al.flag_promo_fl,
+    ap_al.fuori_catalogo_fl,
+    ap_al.tipo_ce_cd,
+    ap_al.mese_cd,
+    PARSE_DATE('%Y%m%d', CONCAT(CAST(ap_al.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno
+    prod.macro_macro_raggruppamento_linea_cd,
+	bu.business_cd,
+	bu.business_unit_cd,
+    cc.esercizio_cd,
+    cc.data_aggiornamento_ts,
+
+	-- Previous Year 
+    IFNULL(ap_al.B030_DIV_AP_AL, 0) AS B030_DIV_AP_AL,
+	IFNULL(ap_al.B030_SOC_AP_AL, 0) AS B030_SOC_AP_AL,
+	IFNULL(ap_al.B030_GRP_AP_AL, 0) AS B030_GRP_AP_AL,
+	IFNULL(ap_al.B080_DIV_AP_AL, 0) AS B080_DIV_AP_AL,
+	IFNULL(ap_al.B080_SOC_AP_AL, 0) AS B080_SOC_AP_AL,
+	IFNULL(ap_al.B080_GRP_AP_AL, 0) AS B080_GRP_AP_AL,
+	IFNULL(ap_al.B190_DIV_AP_AL, 0) AS B190_DIV_AP_AL,
+	IFNULL(ap_al.B190_SOC_AP_AL, 0) AS B190_SOC_AP_AL,
+	IFNULL(ap_al.B190_GRP_AP_AL, 0) AS B190_GRP_AP_AL,
+	IFNULL(ap_al.B320_DIV_AP_AL, 0) AS B320_DIV_AP_AL,
+	IFNULL(ap_al.B320_SOC_AP_AL, 0) AS B320_SOC_AP_AL,
+	IFNULL(ap_al.B320_GRP_AP_AL, 0) AS B320_GRP_AP_AL,
+    IFNULL(ap_al.B180_DIV_AP_AL, 0) AS B180_DIV_AP_AL,
+	IFNULL(ap_al.B180_SOC_AP_AL, 0) AS B180_SOC_AP_AL,
+	IFNULL(ap_al.B180_GRP_AP_AL, 0) AS B180_GRP_AP_AL,
+	IFNULL(ap_al.B196_DIV_AP_AL, 0) AS B196_DIV_AP_AL,
+	IFNULL(ap_al.B196_SOC_AP_AL, 0) AS B196_SOC_AP_AL,
+	IFNULL(ap_al.B196_GRP_AP_AL, 0) AS B196_GRP_AP_AL,
+	IFNULL(ap_al.B230_DIV_AP_AL, 0) AS B230_DIV_AP_AL,
+	IFNULL(ap_al.B230_SOC_AP_AL, 0) AS B230_SOC_AP_AL,
+	IFNULL(ap_al.B230_GRP_AP_AL, 0) AS B230_GRP_AP_AL,
+	IFNULL(ap_al.B300_DIV_AP_AL, 0) AS B300_DIV_AP_AL,
+	IFNULL(ap_al.B300_SOC_AP_AL, 0) AS B300_SOC_AP_AL,
+	IFNULL(ap_al.B300_GRP_AP_AL, 0) AS B300_GRP_AP_AL,
+    IFNULL(ap_al.B010_DIV_AP_AL, 0) AS B010_DIV_AP_AL,
+	IFNULL(ap_al.B010_SOC_AP_AL, 0) AS B010_SOC_AP_AL,
+	IFNULL(ap_al.B010_GRP_AP_AL, 0) AS B010_GRP_AP_AL,
+
+	-- Net Sales LLCF Previous Year (PY)
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B190_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0)
+		ELSE IFNULL(ap_al.B190_DIV_AP_AL, 0) + IFNULL(ap_al.B141_DIV_AP_AL, 0) + IFNULL(ap_al.B146_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0)
+	END AS net_sales_llcf_DIV_AP_AL,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B190_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0)
+		ELSE IFNULL(ap_al.B190_SOC_AP_AL, 0) + IFNULL(ap_al.B141_SOC_AP_AL, 0) + IFNULL(ap_al.B146_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0)
+	END AS net_sales_llcf_SOC_AP_AL,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B190_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0)
+		ELSE IFNULL(ap_al.B190_GRP_AP_AL, 0) + IFNULL(ap_al.B141_GRP_AP_AL, 0) + IFNULL(ap_al.B146_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0)
+	END AS net_sales_llcf_GRP_AP_AL,
+
+	-- Gross Margin LLCF Previous Year (PY)
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B320_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0)
+		ELSE IFNULL(ap_al.B320_DIV_AP_AL, 0) + IFNULL(ap_al.B141_DIV_AP_AL, 0) + IFNULL(ap_al.B146_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0)
+	END AS gross_margin_llcf_DIV_AP_AL,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B320_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0)
+		ELSE IFNULL(ap_al.B320_SOC_AP_AL, 0) + IFNULL(ap_al.B141_SOC_AP_AL, 0) + IFNULL(ap_al.B146_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0)
+	END AS gross_margin_llcf_SOC_AP_AL,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(ap_al.B320_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0)
+		ELSE IFNULL(ap_al.B320_GRP_AP_AL, 0) + IFNULL(ap_al.B141_GRP_AP_AL, 0) + IFNULL(ap_al.B146_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0)
+	END AS gross_margin_llcf_GRP_AP_AL,
+
+	-- Net Sales Previous Year (PY)	
+	IFNULL(ap_al.B190_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0) AS net_sales_DIV_AP_AL,
+	IFNULL(ap_al.B190_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0) AS net_sales_SOC_AP_AL,
+	IFNULL(ap_al.B190_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0) AS net_sales_GRP_AP_AL,
+
+	-- Gross Margin Previous Year (PY)
+    IFNULL(ap_al.B320_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0) AS gross_margin_DIV_AP_AL,
+	IFNULL(ap_al.B320_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0) AS gross_margin_SOC_AP_AL,
+	IFNULL(ap_al.B320_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0) AS gross_margin_GRP_AP_AL,
+
+    -- Best Price Previous Year (PY)
+    IFNULL(ap_al.B190_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0) + IFNULL(ap_al.B160_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0) AS best_price_DIV_AP_AL,
+	IFNULL(ap_al.B190_SOC_AP_AL, 0) + IFNULL(ap_al.B151_SOC_AP_AL, 0) + IFNULL(ap_al.B160_DIV_AP_AL, 0) + IFNULL(ap_al.B151_DIV_AP_AL, 0) AS best_price_SOC_AP_AL,
+	IFNULL(ap_al.B190_GRP_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0) + IFNULL(ap_al.B160_DIV_AP_AL, 0) + IFNULL(ap_al.B151_GRP_AP_AL, 0) AS best_price_GRP_AP_AL,
+
+    -- Totale Fuori Fattura Previous Year (PY)
+    IFNULL(ap_al.B170_DIV_AP_AL, 0) - IFNULL(ap_al.B151_DIV_AP_AL, 0) AS totale_fuori_fattura_DIV_AP_AL,
+	IFNULL(ap_al.B170_SOC_AP_AL, 0) - IFNULL(ap_al.B151_SOC_AP_AL, 0) AS totale_fuori_fattura_SOC_AP_AL,
+	IFNULL(ap_al.B170_GRP_AP_AL, 0) - IFNULL(ap_al.B151_GRP_AP_AL, 0) AS totale_fuori_fattura_GRP_AP_AL,
+
+    -- Cifre Fisse Previous Year (PY)
+    IFNULL(ap_al.B141_DIV_AP_AL, 0) + IFNULL(ap_al.B146_DIV_AP_AL, 0) AS cifre_fisse_DIV_AP_AL,
+	IFNULL(ap_al.B141_SOC_AP_AL, 0) + IFNULL(ap_al.B146_SOC_AP_AL, 0) AS cifre_fisse_SOC_AP_AL,
+	IFNULL(ap_al.B141_GRP_AP_AL, 0) + IFNULL(ap_al.B146_GRP_AP_AL, 0) AS cifre_fisse_GRP_AP_AL,
+
+	   -- Imponibile per sconto promo Previous Year (PY)
+    IFNULL(ap_al.B040_DIV_AP_AL, 0) - IFNULL(ap_al.B050_DIV_AP_AL, 0) - IFNULL(ap_al.B055_DIV_AP_AL, 0) - IFNULL(ap_al.B057_DIV_AP_AL, 0) AS imponibile_per_sconto_promo_DIV_AP_AL,
+    IFNULL(ap_al.B040_SOC_AP_AL, 0) - IFNULL(ap_al.B050_SOC_AP_AL, 0) - IFNULL(ap_al.B055_SOC_AP_AL, 0) - IFNULL(ap_al.B057_SOC_AP_AL, 0) AS imponibile_per_sconto_promo_SOC_AP_AL,
+    IFNULL(ap_al.B040_GRP_AP_AL, 0) - IFNULL(ap_al.B050_GRP_AP_AL, 0) - IFNULL(ap_al.B055_GRP_AP_AL, 0) - IFNULL(ap_al.B057_GRP_AP_AL, 0) AS imponibile_per_sconto_promo_GRP_AP_AL,
+
+    ap_al.load_timestamp
+
+FROM pivot_consuntivo_ap_al AS ap_al
+LEFT JOIN ${ref("cur_md_prodotto")} AS prod
+    ON ap_al.referenza_cd = prod.referenza_cd
+LEFT JOIN ${ref("cur_md_cliente")} AS cli
+    ON ap_al.div_consegnamerce_cd = cli.div_consegnamerce_cd
+LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
+	ON ap_al.divisione_cd = bu.divisione_cd
+	AND substr(ap_al.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
+    ON ap_al.campagna_canvass_cd = cc.campagna_canvass_cd

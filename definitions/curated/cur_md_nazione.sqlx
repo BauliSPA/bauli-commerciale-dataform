@@ -1,0 +1,17 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  naz.nazione_cd,
+  cnt.iso3_cd,
+  naz.nazione_ds,
+  naz.raggruppamento_nazione_cd,
+  naz.raggruppamento_nazione_ds,
+  naz.continente_cd,
+  naz.continente_ds,
+  naz.load_timestamp
+FROM ${ref("stg_board_nazione")} AS naz
+LEFT JOIN ${ref("cur_lu_country_iso")} AS cnt
+  ON naz.nazione_cd = cnt.iso2_cd

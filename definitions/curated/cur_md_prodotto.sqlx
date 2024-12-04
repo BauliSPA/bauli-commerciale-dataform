@@ -1,0 +1,40 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+  referenza_cd,
+  referenza_ds,
+  CONCAT(referenza_cd," ","-"," ",referenza_ds) AS referenza_cd_ds, 
+  raggrprodotto_cd,
+  raggrprodotto_ds,
+  CONCAT(raggrprodotto_cd," ","-"," ",raggrprodotto_ds) AS raggrprodotto_cd_ds,
+  linea_cd,
+  linea_ds,
+  raggruppamento_linea_cd,
+  raggruppamento_linea_ds,
+  macro_raggruppamento_linea_cd,
+  macro_raggruppamento_linea_ds,
+  macro_macro_raggruppamento_linea_cd,
+  macro_macro_raggruppamento_linea_ds,
+  raggrmacroraggrlinea_cd,
+  raggrmacroraggrlinea_ds,
+  marchio_cd,
+  marchio_ds,
+  raggruppamento_marchio_cd,
+  raggruppamento_marchio_ds,
+  macro_raggruppamento_marchio_cd,
+  macro_raggruppamento_marchio_ds,
+  codice_ricetta_cd,
+  codice_ricetta_ds,
+  raggruppamento_ricetta_cd,
+  raggruppamento_ricetta_ds,
+  peso_cd,
+  peso_ds,
+  pezzi_cd,
+  pezzi_ds,
+  sub_marchio_cd,
+  sub_marchio_ds,
+  load_timestamp
+FROM ${ref("stg_board_prodotto")}

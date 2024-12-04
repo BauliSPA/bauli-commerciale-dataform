@@ -1,0 +1,313 @@
+config {
+  schema: "wrk",
+  type: "table"
+}
+
+/*
+
+    Pivot fatta per:
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
+    - tipo_valuta_cd 		DIV, SOC, GRP
+
+*/
+
+WITH
+pivot_budget AS (
+
+    SELECT
+        SHA256(
+            div_cliente_piano_cd ||
+            referenza_cd ||
+            campagna_anno_cd ||
+            nazione_cd ||
+            divisione_cd ||
+            scenario_cd ||
+            processo_cd ||
+            mese_cd
+        ) AS surrogate_key,
+
+        div_cliente_piano_cd,
+        referenza_cd,
+        campagna_anno_cd,
+        nazione_cd,
+        divisione_cd,
+        scenario_cd,
+        processo_cd,
+        mese_cd,
+        load_timestamp,
+
+        -- Colonne pivot
+        IFNULL(B030_DIV_ACT, 0) AS B030_DIV_ACT,
+        IFNULL(B030_SOC_ACT, 0) AS B030_SOC_ACT,
+        IFNULL(B030_GRP_ACT, 0) AS B030_GRP_ACT,
+        IFNULL(B080_DIV_ACT, 0) AS B080_DIV_ACT,
+        IFNULL(B080_SOC_ACT, 0) AS B080_SOC_ACT,
+        IFNULL(B080_GRP_ACT, 0) AS B080_GRP_ACT,
+        IFNULL(B190_DIV_ACT, 0) AS B190_DIV_ACT,
+        IFNULL(B190_SOC_ACT, 0) AS B190_SOC_ACT,
+        IFNULL(B190_GRP_ACT, 0) AS B190_GRP_ACT,
+        IFNULL(B320_DIV_ACT, 0) AS B320_DIV_ACT,
+        IFNULL(B320_SOC_ACT, 0) AS B320_SOC_ACT,
+        IFNULL(B320_GRP_ACT, 0) AS B320_GRP_ACT,
+        IFNULL(B151_DIV_ACT, 0) AS B151_DIV_ACT,
+        IFNULL(B151_SOC_ACT, 0) AS B151_SOC_ACT,
+        IFNULL(B151_GRP_ACT, 0) AS B151_GRP_ACT,
+        IFNULL(B141_DIV_ACT, 0) AS B141_DIV_ACT,
+        IFNULL(B141_SOC_ACT, 0) AS B141_SOC_ACT,
+        IFNULL(B141_GRP_ACT, 0) AS B141_GRP_ACT,
+        IFNULL(B146_DIV_ACT, 0) AS B146_DIV_ACT,
+        IFNULL(B146_SOC_ACT, 0) AS B146_SOC_ACT,
+        IFNULL(B146_GRP_ACT, 0) AS B146_GRP_ACT,
+        IFNULL(B180_DIV_ACT, 0) AS B180_DIV_ACT,
+        IFNULL(B180_SOC_ACT, 0) AS B180_SOC_ACT,
+        IFNULL(B180_GRP_ACT, 0) AS B180_GRP_ACT,
+        IFNULL(B160_DIV_ACT, 0) AS B160_DIV_ACT,
+        IFNULL(B160_SOC_ACT, 0) AS B160_SOC_ACT,
+        IFNULL(B160_GRP_ACT, 0) AS B160_GRP_ACT,
+        IFNULL(B196_DIV_ACT, 0) AS B196_DIV_ACT,
+        IFNULL(B196_SOC_ACT, 0) AS B196_SOC_ACT,
+        IFNULL(B196_GRP_ACT, 0) AS B196_GRP_ACT,
+        IFNULL(B230_DIV_ACT, 0) AS B230_DIV_ACT,
+        IFNULL(B230_SOC_ACT, 0) AS B230_SOC_ACT,
+        IFNULL(B230_GRP_ACT, 0) AS B230_GRP_ACT,
+        IFNULL(B300_DIV_ACT, 0) AS B300_DIV_ACT,
+        IFNULL(B300_SOC_ACT, 0) AS B300_SOC_ACT,
+        IFNULL(B300_GRP_ACT, 0) AS B300_GRP_ACT,
+        IFNULL(B170_DIV_ACT, 0) AS B170_DIV_ACT,
+        IFNULL(B170_SOC_ACT, 0) AS B170_SOC_ACT,
+        IFNULL(B170_GRP_ACT, 0) AS B170_GRP_ACT,
+        IFNULL(B040_DIV_ACT, 0) AS B040_DIV_ACT,
+        IFNULL(B040_SOC_ACT, 0) AS B040_SOC_ACT,
+        IFNULL(B040_GRP_ACT, 0) AS B040_GRP_ACT,
+        IFNULL(B050_DIV_ACT, 0) AS B050_DIV_ACT,
+        IFNULL(B050_SOC_ACT, 0) AS B050_SOC_ACT,
+        IFNULL(B050_GRP_ACT, 0) AS B050_GRP_ACT,
+        IFNULL(B055_DIV_ACT, 0) AS B055_DIV_ACT,
+        IFNULL(B055_SOC_ACT, 0) AS B055_SOC_ACT,
+        IFNULL(B055_GRP_ACT, 0) AS B055_GRP_ACT,
+        IFNULL(B057_DIV_ACT, 0) AS B057_DIV_ACT,
+        IFNULL(B057_SOC_ACT, 0) AS B057_SOC_ACT,
+        IFNULL(B057_GRP_ACT, 0) AS B057_GRP_ACT,
+        IFNULL(B060_DIV_ACT, 0) AS B060_DIV_ACT,
+        IFNULL(B060_SOC_ACT, 0) AS B060_SOC_ACT,
+        IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT,
+        IFNULL(B010_DIV_ACT, 0) AS B010_DIV_ACT,
+        IFNULL(B010_SOC_ACT, 0) AS B010_SOC_ACT,
+        IFNULL(B010_GRP_ACT, 0) AS B010_GRP_ACT
+
+    FROM (
+
+        SELECT 
+            div_cliente_piano_cd,
+            referenza_cd,
+            campagna_anno_cd,
+            nazione_cd,
+            divisione_cd,
+            scenario_cd,
+            processo_cd,
+            mese_cd,
+            CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
+            val_cons,
+            load_timestamp
+        FROM ${ref("cur_ft_budget")}
+
+    ) 
+    PIVOT (
+
+        SUM(val_cons)
+        FOR righe_valuta_cd IN (
+            'B030_DIV' AS B030_DIV_ACT,
+            'B030_SOC' AS B030_SOC_ACT,
+            'B030_GRP' AS B030_GRP_ACT,
+            'B080_DIV' AS B080_DIV_ACT,
+            'B080_SOC' AS B080_SOC_ACT,
+            'B080_GRP' AS B080_GRP_ACT,
+            'B190_DIV' AS B190_DIV_ACT,
+            'B190_SOC' AS B190_SOC_ACT,
+            'B190_GRP' AS B190_GRP_ACT,
+            'B320_DIV' AS B320_DIV_ACT,
+            'B320_SOC' AS B320_SOC_ACT,
+            'B320_GRP' AS B320_GRP_ACT,
+            'B151_DIV' AS B151_DIV_ACT,
+            'B151_SOC' AS B151_SOC_ACT,
+            'B151_GRP' AS B151_GRP_ACT,
+            'B141_DIV' AS B141_DIV_ACT,
+            'B141_SOC' AS B141_SOC_ACT,
+            'B141_GRP' AS B141_GRP_ACT,
+            'B146_DIV' AS B146_DIV_ACT,
+            'B146_SOC' AS B146_SOC_ACT,
+            'B146_GRP' AS B146_GRP_ACT,
+            'B180_DIV' AS B180_DIV_ACT,
+            'B180_SOC' AS B180_SOC_ACT,
+            'B180_GRP' AS B180_GRP_ACT,
+            'B160_DIV' AS B160_DIV_ACT,
+            'B160_SOC' AS B160_SOC_ACT,
+            'B160_GRP' AS B160_GRP_ACT,
+            'B196_DIV' AS B196_DIV_ACT,
+            'B196_SOC' AS B196_SOC_ACT,
+            'B196_GRP' AS B196_GRP_ACT,
+            'B230_DIV' AS B230_DIV_ACT,
+            'B230_SOC' AS B230_SOC_ACT,
+            'B230_GRP' AS B230_GRP_ACT,
+            'B300_DIV' AS B300_DIV_ACT,
+            'B300_SOC' AS B300_SOC_ACT,
+            'B300_GRP' AS B300_GRP_ACT,
+            'B170_DIV' AS B170_DIV_ACT,
+            'B170_SOC' AS B170_SOC_ACT,
+            'B170_GRP' AS B170_GRP_ACT,
+            'B040_DIV' AS B040_DIV_ACT,
+            'B040_SOC' AS B040_SOC_ACT,
+            'B040_GRP' AS B040_GRP_ACT,
+            'B050_DIV' AS B050_DIV_ACT,
+            'B050_SOC' AS B050_SOC_ACT,
+            'B050_GRP' AS B050_GRP_ACT,
+            'B055_DIV' AS B055_DIV_ACT,
+            'B055_SOC' AS B055_SOC_ACT,
+            'B055_GRP' AS B055_GRP_ACT,
+            'B057_DIV' AS B057_DIV_ACT,
+            'B057_SOC' AS B057_SOC_ACT,
+            'B057_GRP' AS B057_GRP_ACT,
+            'B060_DIV' AS B060_DIV_ACT,
+            'B060_SOC' AS B060_SOC_ACT,
+            'B060_GRP' AS B060_GRP_ACT,
+            'B010_DIV' AS B010_DIV_ACT,
+            'B010_SOC' AS B010_SOC_ACT,
+            'B010_GRP' AS B010_GRP_ACT
+        )
+
+    )
+
+)
+
+select
+    bdg.div_cliente_piano_cd,
+    bdg.referenza_cd,
+    bdg.campagna_anno_cd,
+    bdg.nazione_cd,
+    bdg.divisione_cd,
+    bdg.scenario_cd,
+    bdg.processo_cd,
+    bdg.mese_cd,
+    PARSE_DATE('%Y%m%d', CONCAT(CAST(bdg.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno 
+    prod.macro_macro_raggruppamento_linea_cd,
+	bu.business_cd,
+	bu.business_unit_cd,
+    cc.esercizio_cd,
+    upd.data_aggiornamento_ts,
+    
+
+    -- Budget
+	IFNULL(bdg.B030_DIV_ACT, 0) AS B030_DIV_BDG,
+	IFNULL(bdg.B030_SOC_ACT, 0) AS B030_SOC_BDG,
+	IFNULL(bdg.B030_GRP_ACT, 0) AS B030_GRP_BDG,
+	IFNULL(bdg.B080_DIV_ACT, 0) AS B080_DIV_BDG,
+	IFNULL(bdg.B080_SOC_ACT, 0) AS B080_SOC_BDG,
+	IFNULL(bdg.B080_GRP_ACT, 0) AS B080_GRP_BDG,
+	IFNULL(bdg.B190_DIV_ACT, 0) AS B190_DIV_BDG,
+	IFNULL(bdg.B190_SOC_ACT, 0) AS B190_SOC_BDG,
+	IFNULL(bdg.B190_GRP_ACT, 0) AS B190_GRP_BDG,
+	IFNULL(bdg.B320_DIV_ACT, 0) AS B320_DIV_BDG,
+	IFNULL(bdg.B320_SOC_ACT, 0) AS B320_SOC_BDG,
+	IFNULL(bdg.B320_GRP_ACT, 0) AS B320_GRP_BDG,
+    IFNULL(bdg.B180_DIV_ACT, 0) AS B180_DIV_BDG,
+	IFNULL(bdg.B180_SOC_ACT, 0) AS B180_SOC_BDG,
+	IFNULL(bdg.B180_GRP_ACT, 0) AS B180_GRP_BDG,
+	IFNULL(bdg.B196_DIV_ACT, 0) AS B196_DIV_BDG,
+	IFNULL(bdg.B196_SOC_ACT, 0) AS B196_SOC_BDG,
+	IFNULL(bdg.B196_GRP_ACT, 0) AS B196_GRP_BDG,
+	IFNULL(bdg.B230_DIV_ACT, 0) AS B230_DIV_BDG,
+	IFNULL(bdg.B230_SOC_ACT, 0) AS B230_SOC_BDG,
+	IFNULL(bdg.B230_GRP_ACT, 0) AS B230_GRP_BDG,
+	IFNULL(bdg.B300_DIV_ACT, 0) AS B300_DIV_BDG,
+	IFNULL(bdg.B300_SOC_ACT, 0) AS B300_SOC_BDG,
+	IFNULL(bdg.B300_GRP_ACT, 0) AS B300_GRP_BDG,
+    IFNULL(bdg.B010_DIV_ACT, 0) AS B010_DIV_BDG,
+	IFNULL(bdg.B010_SOC_ACT, 0) AS B010_SOC_BDG,
+	IFNULL(bdg.B010_GRP_ACT, 0) AS B010_GRP_BDG,
+    
+  -- Net Sales LLCF Budget
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+		ELSE IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+	END AS net_sales_llcf_DIV_BDG,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+		ELSE IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+	END AS net_sales_llcf_SOC_BDG,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+		ELSE IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+	END AS net_sales_llcf_GRP_BDG,
+
+	-- Gross Margin LLCF Budget
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+		ELSE IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0)
+	END AS gross_margin_llcf_DIV_BDG,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+		ELSE IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0)
+	END AS gross_margin_llcf_SOC_BDG,
+
+	CASE
+		WHEN prod.macro_macro_raggruppamento_linea_cd = '01' THEN IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+		ELSE IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0)
+	END AS gross_margin_llcf_GRP_BDG,
+
+	-- Net Sales Budget
+	IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS net_sales_DIV_BDG,
+	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) AS net_sales_SOC_BDG,
+	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS net_sales_GRP_BDG,
+
+	-- Gross Margin Budget
+	IFNULL(bdg.B320_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS gross_margin_DIV_BDG,
+	IFNULL(bdg.B320_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) AS gross_margin_SOC_BDG,
+	IFNULL(bdg.B320_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS gross_margin_GRP_BDG,
+
+	-- Best Price Budget
+	IFNULL(bdg.B190_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_DIV_BDG,
+	IFNULL(bdg.B190_SOC_ACT, 0) + IFNULL(bdg.B151_SOC_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_DIV_ACT, 0) AS best_price_SOC_BDG, --typo
+	IFNULL(bdg.B190_GRP_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) + IFNULL(bdg.B160_DIV_ACT, 0) + IFNULL(bdg.B151_GRP_ACT, 0) AS best_price_GRP_BDG,
+
+    -- Totale Fuori Fattura Budget
+    IFNULL(bdg.B170_DIV_ACT, 0) - IFNULL(bdg.B151_DIV_ACT, 0) AS totale_fuori_fattura_DIV_BDG,
+	IFNULL(bdg.B170_SOC_ACT, 0) - IFNULL(bdg.B151_SOC_ACT, 0) AS totale_fuori_fattura_SOC_BDG,
+	IFNULL(bdg.B170_GRP_ACT, 0) - IFNULL(bdg.B151_GRP_ACT, 0) AS totale_fuori_fattura_GRP_BDG,
+
+    -- Cifre Fisse Budget
+    IFNULL(bdg.B141_DIV_ACT, 0) + IFNULL(bdg.B146_DIV_ACT, 0) AS cifre_fisse_DIV_BDG,
+	IFNULL(bdg.B141_SOC_ACT, 0) + IFNULL(bdg.B146_SOC_ACT, 0) AS cifre_fisse_SOC_BDG,
+	IFNULL(bdg.B141_GRP_ACT, 0) + IFNULL(bdg.B146_GRP_ACT, 0) AS cifre_fisse_GRP_BDG,
+
+    -- Imponibile per sconto promo Budget
+    IFNULL(bdg.B040_DIV_ACT, 0) - IFNULL(bdg.B050_DIV_ACT, 0) - IFNULL(bdg.B055_DIV_ACT, 0) - IFNULL(bdg.B057_DIV_ACT, 0) AS imponibile_per_sconto_promo_DIV_BDG,
+    IFNULL(bdg.B040_SOC_ACT, 0) - IFNULL(bdg.B050_SOC_ACT, 0) - IFNULL(bdg.B055_SOC_ACT, 0) - IFNULL(bdg.B057_SOC_ACT, 0) AS imponibile_per_sconto_promo_SOC_BDG,
+    IFNULL(bdg.B040_GRP_ACT, 0) - IFNULL(bdg.B050_GRP_ACT, 0) - IFNULL(bdg.B055_GRP_ACT, 0) - IFNULL(bdg.B057_GRP_ACT, 0) AS imponibile_per_sconto_promo_GRP_BDG,
+
+    bdg.load_timestamp
+
+FROM pivot_budget AS bdg
+LEFT JOIN ${ref("cur_md_prodotto")} AS prod
+    ON bdg.referenza_cd = prod.referenza_cd
+LEFT JOIN (
+    SELECT DISTINCT 
+        div_cliente_piano_cd
+    FROM ${ref("cur_md_cliente")}
+ ) AS cli -- Granularità differente dal consuntivo
+    ON bdg.div_cliente_piano_cd = cli.div_cliente_piano_cd
+LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
+	ON bdg.divisione_cd = bu.divisione_cd
+	AND substr(bdg.campagna_anno_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+LEFT JOIN (
+    SELECT DISTINCT
+      campagna_anno_cd, 
+      esercizio_cd
+    FROM ${ref("cur_md_campagna_canvass")}
+) AS cc -- Granulirità differente dal consuntivo
+    ON bdg.campagna_anno_cd = cc.campagna_anno_cd
+LEFT JOIN ${ref("cur_lu_budget_update")} AS upd
+    ON bdg.mese_cd = upd.mese_cd

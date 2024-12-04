@@ -1,0 +1,11 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT DISTINCT
+  Utente AS utente,
+  Dimensione AS dimensione,
+  Valore AS valore,
+  load_timestamp
+FROM ${ref("stg_securities")}
