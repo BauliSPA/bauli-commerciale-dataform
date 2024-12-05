@@ -1,0 +1,40 @@
+config {
+  schema: "public",
+  type: "view"
+}
+
+SELECT 
+  referenza_cd AS `Item Cod`,
+  referenza_ds AS `Item`,
+  referenza_cd_ds AS `Item Cod Ds`,
+  raggrprodotto_cd AS `Item Grouping Cod`,
+  raggrprodotto_ds AS `Item Grouping`,
+  raggrprodotto_cd_ds AS `Item Grouping Cod Ds`,
+  linea_cd AS `Line Cod`,
+  linea_ds AS `Line`,
+  raggruppamento_linea_cd AS `Line Grouping Cod`,
+  raggruppamento_linea_ds AS `Line Grouping`,
+  macro_raggruppamento_linea_cd AS `Macro Line Grouping Cod`,
+  macro_raggruppamento_linea_ds AS `Macro Line Grouping`,
+  macro_macro_raggruppamento_linea_cd AS `Macro Macro Line Grouping Cod`,
+  macro_macro_raggruppamento_linea_ds AS `Macro Macro Line Grouping`,
+  raggrmacroraggrlinea_cd AS `High Level Type Product Cod`,
+  raggrmacroraggrlinea_ds AS `High Level Type Product`,
+  marchio_cd AS `Brand Cod`,
+  marchio_ds AS `Brand`,
+  raggruppamento_marchio_cd AS `Brand Grouping Cod`,
+  raggruppamento_marchio_ds AS `Brand Grouping`,
+  macro_raggruppamento_marchio_cd AS `Macro Brand Grouping Cod`,
+  macro_raggruppamento_marchio_ds AS `Macro Brand Grouping`,
+  codice_ricetta_cd AS `Recipe Cod`,
+  codice_ricetta_ds AS `Recipe`,
+  raggruppamento_ricetta_cd AS `Recipe Grouping Cod`,
+  raggruppamento_ricetta_ds AS `Recipe Grouping`,
+  peso_cd AS `Weight Cod`,
+  peso_ds AS `Weight`,
+  pezzi_cd AS `Pieces Cod`,
+  pezzi_ds AS `Pieces`,
+  sub_marchio_cd AS `Sub-Brand Cod`,
+  sub_marchio_ds AS `Sub-Brand`,
+  load_timestamp AS `Load Timestamp`
+FROM ${ref("cur_md_prodotto")}

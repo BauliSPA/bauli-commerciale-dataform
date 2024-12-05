@@ -1,0 +1,15 @@
+config {
+  schema: "public",
+  type: "view"
+}
+
+SELECT 
+  nazione_cd AS `Country Cod`,
+  iso3_cd AS `ISO3`,
+  nazione_ds AS `Country`,
+  raggruppamento_nazione_cd AS `Country Grouping Cod`,
+  raggruppamento_nazione_ds AS `Country Grouping`,
+  continente_cd AS `Continent Cod`,
+  continente_ds AS `Continent`,
+  load_timestamp AS `Load Timestamp`
+FROM ${ref("cur_md_nazione")}
