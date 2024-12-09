@@ -1,8 +1,0 @@
-config {
-  schema: "public",
-  type: "view"
-}
-
-SELECT 
-  *
-FROM ${ref("cur_md_prodotto_sap")}

@@ -12,7 +12,7 @@ WITH cal AS (
             ELSE 
                 CAST(CAST(RIGHT(CAST(year AS STRING), 2) AS INT64) - 1 AS STRING) || '/' || RIGHT(CAST(year AS STRING), 2)
         END AS esercizio
-    FROM bli-bi-commerciale-test-001.curated.cur_md_calendar
+    FROM bli-bi-commerciale-prod-001.curated.cur_md_calendar
 ), 
 
 relazione AS (
@@ -20,7 +20,7 @@ relazione AS (
     SELECT 
 	  DISTINCT anno_mese, 
 	 -- tipo_esercizio_cd
-    FROM bli-bi-commerciale-test-001.curated.cur_md_campagna_canvass AS cc
+    FROM bli-bi-commerciale-prod-001.curated.cur_md_campagna_canvass AS cc
     LEFT JOIN cal AS cal
     on  cc.esercizio_cd = cal.esercizio 
     WHERE tipo_esercizio_cd IN ('ECA', 'FY')

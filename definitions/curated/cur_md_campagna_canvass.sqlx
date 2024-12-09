@@ -25,7 +25,7 @@ consuntivo_py AS (
 
     SELECT
       (CAST(LEFT(cons.campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(cons.campagna_canvass_cd,3) AS campagna_canvass_cd
-    FROM bli-bi-commerciale-test-001.staging.stg_board_consuntivo AS cons
+    FROM bli-bi-commerciale-prod-001.staging.stg_board_consuntivo AS cons
 
 ),
 
@@ -43,7 +43,7 @@ nuove_campagne AS (
         LEFT(cons_py.campagna_canvass_cd,2) || '/' || CAST(CAST(LEFT(cons_py.campagna_canvass_cd,2) AS INTEGER)  + 1 AS STRING) as esercizio_cd,
         LEFT(cons_py.campagna_canvass_cd,2) || '/' || CAST(CAST(LEFT(cons_py.campagna_canvass_cd,2) AS INTEGER)  + 1 AS STRING) as esercizio_ds
     FROM consuntivo_py as cons_py
-    LEFT JOIN bli-bi-commerciale-test-001.curated.cur_md_campagna_canvass AS cc
+    LEFT JOIN bli-bi-commerciale-prod-001.curated.cur_md_campagna_canvass AS cc 
     ON cons_py.campagna_canvass_cd = cc.campagna_canvass_cd
     WHERE cc.campagna_canvass_cd IS NULL
 
