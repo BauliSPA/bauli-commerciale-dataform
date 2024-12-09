@@ -24,7 +24,7 @@ campagna_canvass as (
 consuntivo_py AS (
 
     SELECT
-      (CAST(LEFT(cons.campagna_canvass, 2) AS INT) + 1)  || SUBSTRING(cons.campagna_canvass,3) AS campagna_canvass_cd
+      (CAST(LEFT(cons.campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(cons.campagna_canvass_cd,3) AS campagna_canvass_cd
     FROM bli-bi-commerciale-test-001.staging.stg_board_consuntivo AS cons
 
 ),
