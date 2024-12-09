@@ -99,14 +99,14 @@ pivot_consuntivo_py AS ( -- Consuntivo anno precedente ribaltato su anno success
             tipo_ce_cd,
             CAST(FORMAT_DATE('%Y%m', DATE_ADD(PARSE_DATE('%Y%m',CAST(mese_cd AS STRING)), INTERVAL 1 YEAR)) AS NUMERIC) AS mese_cd, -- Mese anno +1
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons,
+            valore,
             load_timestamp
         FROM ${ref("cur_ft_consuntivo")}
 
     ) 
     PIVOT (
 
-        SUM(val_cons)
+        SUM(valore)
         FOR righe_valuta_cd IN (
             'B030_DIV' AS B030_DIV_PY,
             'B030_SOC' AS B030_SOC_PY,

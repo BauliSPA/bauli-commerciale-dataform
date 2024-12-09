@@ -107,14 +107,14 @@ pivot_budget AS (
             processo_cd,
             mese_cd,
             CONCAT(righe_ce_cd, '_', tipo_valuta_cd) AS righe_valuta_cd,
-            val_cons,
+            valore,
             load_timestamp
         FROM ${ref("cur_ft_budget")}
 
     ) 
     PIVOT (
 
-        SUM(val_cons)
+        SUM(valore)
         FOR righe_valuta_cd IN (
             'B030_DIV' AS B030_DIV_ACT,
             'B030_SOC' AS B030_SOC_ACT,

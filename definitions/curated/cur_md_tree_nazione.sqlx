@@ -1,8 +1,0 @@
-config {
-  schema: "curated",
-  type: "table"
-}
-
-SELECT
-  *
-FROM ${ref("stg_board_tree_nazione")}

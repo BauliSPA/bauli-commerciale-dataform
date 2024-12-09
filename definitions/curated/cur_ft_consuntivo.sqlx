@@ -4,7 +4,7 @@ config {
 }
 
 SELECT
-  cons.div_consegna_merce_cd,
+  cons.div_consegnamerce_cd,
   cons.referenza_cd,
   cons.campagna_canvass_cd,
   cons.nazione_cd,
@@ -15,7 +15,7 @@ SELECT
   cons.tipo_valuta_cd,
   cons.tipo_ce_cd,
   CAST(cons.mese_cd AS NUMERIC) AS mese_cd,
-  COALESCE(CAST(REPLACE(cons.valore, ",", ".") AS NUMERIC),0) AS val_cons,
+  COALESCE(CAST(REPLACE(cons.valore, ",", ".") AS NUMERIC),0) AS valore,
   cons.load_timestamp
 FROM ${ref("stg_board_consuntivo")} AS cons
 
