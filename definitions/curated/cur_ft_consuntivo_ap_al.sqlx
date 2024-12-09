@@ -15,7 +15,7 @@ SELECT
   cons_ap_al.tipo_valuta_cd,
   cons_ap_al.tipo_ce_cd,
   CAST(cons_ap_al.mese_cd AS NUMERIC) AS mese_cd,
-  COALESCE(CAST(REPLACE(cons_ap_al.valore, ",", ".") AS NUMERIC),0) AS val_cons,
+  COALESCE(CAST(REPLACE(cons_ap_al.valore, ",", ".") AS NUMERIC),0) AS valore,
   cons_ap_al.load_timestamp
 FROM ${ref("stg_board_consuntivo_ap_al")} AS cons_ap_al
 

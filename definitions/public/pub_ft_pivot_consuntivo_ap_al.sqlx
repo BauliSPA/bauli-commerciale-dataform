@@ -4,7 +4,7 @@ config {
 }
 
 SELECT 
-  div_consegna_merce_cd AS `Div_delivery point Cod`,
+  div_consegnamerce_cd AS `Div_delivery point Cod`,
   referenza_cd AS `Item Cod`,
   campagna_canvass_cd AS `Campaign Cod`,
   nazione_cd AS `Country Cod`,
