@@ -18,14 +18,14 @@ SELECT
   flag_view_past_date AS `Flag View Past Date`,
   index_fiscal_day AS `Index Fiscal Day`,
   index_fiscal_month AS `Index Fiscal Month`,
-  flag_esercizi_corrente AS `Flag Esercizio Corrente`,
+  flag_esercizi_corrente AS `Flag Esercizio Corrente`, 
   semester_cd AS `Semester Cod`, 
   semester_ds AS `Semester Desc`,
   trimester_cd AS `Trimester Cod`, 
   trimester_ds AS `Trimester Desc`,
   trimester_ord AS `Trimester Ord`,
   load_timestamp AS `Load Timestamp`
-FROM ${ref("cur_md_calendar")}
+FROM ${ref("wrk_md_calendar")}
 ORDER BY 
   CAST(year AS INT64),
   CAST(month_cd AS INT64),

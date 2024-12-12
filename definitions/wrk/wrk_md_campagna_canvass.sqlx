@@ -1,0 +1,51 @@
+config {
+  schema: "wrk",
+  type: "table"
+}
+
+WITH 
+consuntivo_py AS (
+
+    SELECT
+      (CAST(LEFT(cons.campagna_canvass_cd, 2) AS INT) + 1)  || SUBSTRING(cons.campagna_canvass_cd,3) AS campagna_canvass_cd,
+      load_timestamp
+    FROM ${ref("stg_board_consuntivo")} AS cons   
+
+),
+
+nuove_campagne AS (
+
+    SELECT DISTINCT 
+        cons_py.campagna_canvass_cd, 
+        cons_py.campagna_canvass_cd as campagna_canvass_ds,
+        LEFT(cons_py.campagna_canvass_cd,3) as campagna_anno_cd,
+        LEFT(cons_py.campagna_canvass_cd,3) as campagna_anno_ds,
+        SUBSTRING(cons_py.campagna_canvass_cd,3,1) as tipo_campagna_cd,
+        SUBSTRING(cons_py.campagna_canvass_cd,3,1) as tipo_campagna_ds,
+        'FY' as tipo_esercizio_cd,
+        'Futuro' as tipo_esercizio_ds,
+        LEFT(cons_py.campagna_canvass_cd,2) || '/' || CAST(CAST(LEFT(cons_py.campagna_canvass_cd,2) AS INTEGER)  + 1 AS STRING) as esercizio_cd,
+        LEFT(cons_py.campagna_canvass_cd,2) || '/' || CAST(CAST(LEFT(cons_py.campagna_canvass_cd,2) AS INTEGER)  + 1 AS STRING) as esercizio_ds,
+        cons_py.load_timestamp
+    FROM consuntivo_py as cons_py
+    LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
+    ON cons_py.campagna_canvass_cd = cc.campagna_canvass_cd
+    WHERE cc.campagna_canvass_cd IS NULL
+
+)
+
+
+SELECT 
+  campagna_canvass_cd,
+  campagna_canvass_ds,
+  campagna_anno_cd,
+  campagna_anno_ds,
+  tipo_campagna_cd,
+  tipo_campagna_ds,
+  tipo_esercizio_cd,
+  tipo_esercizio_ds,
+  esercizio_cd,
+  esercizio_ds,
+  PARSE_TIMESTAMP('%d/%m/%y', '01/01/99') AS data_aggiornamento_ts,
+  load_timestamp
+FROM nuove_campagne 
