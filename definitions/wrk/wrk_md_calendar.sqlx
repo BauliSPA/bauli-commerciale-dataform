@@ -1,0 +1,155 @@
+config {
+  schema: "wrk",
+  type: "table"
+}
+
+WITH cal AS ( 
+    SELECT 
+        year || '-' || month_cd AS anno_mese,
+        CASE 
+            WHEN month_cd >= 7 THEN 
+                RIGHT(CAST(year AS STRING), 2) || '/' || CAST(CAST(RIGHT(CAST(year AS STRING), 2) AS INT64) + 1 AS STRING)
+            ELSE 
+                CAST(CAST(RIGHT(CAST(year AS STRING), 2) AS INT64) - 1 AS STRING) || '/' || RIGHT(CAST(year AS STRING), 2)
+        END AS esercizio
+    FROM ${ref("cur_md_calendar")}
+), 
+
+relazione AS (
+
+    SELECT 
+	  DISTINCT anno_mese, 
+	 -- tipo_esercizio_cd
+    FROM ${ref("cur_md_campagna_canvass")} AS cc
+    LEFT JOIN cal AS cal
+    on  cc.esercizio_cd = cal.esercizio 
+    WHERE tipo_esercizio_cd = 'ECA'
+    UNION ALL
+    SELECT 
+    DISTINCT anno_mese
+    FROM ${ref("wrk_md_campagna_canvass")} AS cc1
+    LEFT JOIN cal AS cal
+    on  cc1.esercizio_cd = cal.esercizio 
+    WHERE tipo_esercizio_cd = 'FY'
+)
+
+SELECT
+  date,
+  day_of_month,
+  weekday_cd,
+  weekday_ds,
+  year,
+  month_cd,
+  month_ds,
+  yearmonth_cd,
+  monthyear_ds,
+ CASE 
+    WHEN EXTRACT (YEAR FROM date) = EXTRACT(YEAR FROM CURRENT_DATE()) 
+	     AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURRENT_DATE())
+	  THEN 'Current Month Year'
+    ELSE FORMAT_DATE('%B %Y', date)
+  END AS Month_Year_Desc,
+  CASE 
+    WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 07 THEN 
+      CASE
+        WHEN CAST(date as DATE) 
+          BETWEEN CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - 3 as INTEGER) || '-07-01' as DATE) 
+          AND CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) + 1 as INTEGER) || '-06-30' as DATE)
+        THEN 1
+        ELSE 0
+      END
+	  WHEN EXTRACT(MONTH FROM CURRENT_DATE) < 07 THEN 
+	    CASE
+        WHEN CAST(date as DATE) 
+          BETWEEN CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - 4 as INTEGER) || '-07-01' as DATE) 
+          AND CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) as INTEGER) || '-06-30' as DATE)
+        THEN 1
+        ELSE 0
+      END
+    ELSE 0 
+  END AS flag_view_date, -- 1 per tutte le date degli ultimi 4 esercizi fiscali 
+  CASE 
+    WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 07 THEN 
+      CASE
+        WHEN CAST(date as DATE) 
+          BETWEEN CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - 3 as INTEGER) || '-07-01' as DATE) 
+          AND CURRENT_DATE
+        THEN 1
+        ELSE 0
+      END
+	  WHEN EXTRACT(MONTH FROM CURRENT_DATE) < 07 THEN 
+	    CASE
+        WHEN CAST(date as DATE) 
+          BETWEEN CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - 4 as INTEGER) || '-07-01' as DATE) 
+          AND CURRENT_DATE
+        THEN 1
+        ELSE 0
+      END
+    ELSE 0 
+  END AS flag_view_past_date,-- 1 per tutte le date, precedenti ad oggi, degli ultimi 4 esercizi fiscali 
+  index_fiscal_day,
+  index_fiscal_month,
+  CASE 
+    WHEN year || '-' || month_cd in ( 
+       SELECT anno_mese 
+       FROM relazione)
+    THEN 1 
+    ELSE 0 
+  END AS flag_esercizi_corrente,
+  CASE 
+     WHEN CAST(month_cd AS NUMERIC) <= 6
+     THEN "January-June"
+	 ELSE "July-December"
+  END AS semester_cd,
+  CASE 
+     WHEN CAST(month_cd AS NUMERIC) <= 6
+     THEN "Sem Jan-June"
+	 ELSE "Sem Jul-Dec"
+  END AS semester_ds,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN "January-March" 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN "April-June"
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN "July-September" 
+  			        ELSE "October-December"
+  			     END
+  	      END
+  END AS trimester_cd,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN "Trim Jan-Mar" 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN "Trim Apr-June"
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN "Trim Jul-Sept" 
+  			        ELSE "Trim Oct-Dec"
+  			     END
+  	      END
+  END AS trimester_ds,
+  CASE 
+       WHEN CAST(month_cd AS NUMERIC) IN (1,2,3)
+       THEN 1 
+  	 ELSE CASE 
+  	        WHEN CAST(month_cd AS NUMERIC) IN (4,5,6)
+  	        THEN 2
+  			ELSE CASE 
+  			        WHEN CAST(month_cd AS NUMERIC) IN (7,8,9)
+  			        THEN 3
+  			        ELSE 4
+  			     END
+  	      END
+  END AS trimester_ord,
+  load_timestamp
+FROM ${ref("cur_md_calendar")}
+ORDER BY 
+  CAST(year AS INT64),
+  CAST(month_cd AS INT64),
+  CAST(day_of_month AS INT64)
+
+

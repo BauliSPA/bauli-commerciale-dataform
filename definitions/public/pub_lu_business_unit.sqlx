@@ -4,17 +4,15 @@ config {
 }
 
 SELECT 
-  divisione_cd AS `Division Cod` ,
+  divisione_cd AS `Division Cod`,
   divisione_ds AS `Division`,
-  campagna_cd AS `Campaign Cod`,
-  macro_raggruppamento_linea_cd AS `Macro Line Grouping Cod`,
-  macro_raggruppamento_linea_ds AS `Macro Line Grouping`,
-  business_unit_cd AS `Business Unit Cod`,
-  business_unit_ds AS `Business Unit`,
-  business_cd AS `Business Cod`,
-  business_ds AS `Business`,
-  business_type_cd AS `Business Type Cod`,
-  business_type_desc AS `Business Type`,
-  business_type_ds AS `Business Type Ds`,
+  tipocampagna_cd AS `Campaign Type`,
+  macromacroraggrlinea_cd AS `Macro Macro Line Grouping Cod`, 
+  business_cd AS `Business Cod`, 
+  business_ds AS `Business`, 
+  businessunit_cd AS `Business Unit Cod`, 
+  businessunit_ds AS `Business Unit`,
+  businesstype_cd AS `Business Type Cod`,
+  businesstype_ds AS `Business Type`,
   load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_lu_business_unit")}
