@@ -6,7 +6,7 @@ SELECT
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
 
-FROM bli-bi-commerciale-test-001.landing.calendar
+FROM ${ref("calendar")}
 ORDER BY 
   CAST(year AS INT64),
   CAST(month_cd AS INT64),
