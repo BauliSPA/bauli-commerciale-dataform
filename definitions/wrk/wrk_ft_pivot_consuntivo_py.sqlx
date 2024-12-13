@@ -184,7 +184,7 @@ select
     PARSE_DATE('%Y%m%d', CONCAT(CAST(py.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
-	bu.business_unit_cd,
+	bu.businessunit_cd,
     cc.esercizio_cd,
     cc.data_aggiornamento_ts,
 
@@ -288,7 +288,7 @@ LEFT JOIN ${ref("cur_md_cliente")} AS cli
     ON py.div_consegnamerce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON py.divisione_cd = bu.divisione_cd
-	AND substr(py.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
-	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+	AND substr(py.campagna_canvass_cd,3,1) = bu.tipocampagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macromacroraggrlinea_cd
 LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
     ON py.campagna_canvass_cd = cc.campagna_canvass_cd
