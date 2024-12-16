@@ -24,6 +24,14 @@ declare(
 declare(
   {
    schema:  schema,
+   name:    'board_business'
+  }
+)
+
+
+declare(
+  {
+   schema:  schema,
    name:    'board_consuntivo_ap_al'
   }
 )
@@ -32,6 +40,20 @@ declare(
   {
    schema:  schema,
    name:    'board_consuntivo'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'board_divisione'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'board_mtx_business_unit'
   }
 )
 

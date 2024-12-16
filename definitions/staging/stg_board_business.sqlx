@@ -5,4 +5,4 @@ config {
 SELECT 
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
-FROM bli-bi-commerciale-test-001.landing.board_business
+FROM ${ref("board_business")}
