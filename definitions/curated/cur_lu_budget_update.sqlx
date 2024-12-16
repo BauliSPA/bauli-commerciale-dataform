@@ -9,5 +9,6 @@ SELECT
   PARSE_TIMESTAMP('%Y%m%d', Data) AS data_aggiornamento_ts,
   operation_flag,
   recordstamp,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_datasphere_budget")}

@@ -279,7 +279,8 @@ select
     IFNULL(ap_al.B040_SOC_AP_AL, 0) - IFNULL(ap_al.B050_SOC_AP_AL, 0) - IFNULL(ap_al.B055_SOC_AP_AL, 0) - IFNULL(ap_al.B057_SOC_AP_AL, 0) AS imponibile_per_sconto_promo_SOC_AP_AL,
     IFNULL(ap_al.B040_GRP_AP_AL, 0) - IFNULL(ap_al.B050_GRP_AP_AL, 0) - IFNULL(ap_al.B055_GRP_AP_AL, 0) - IFNULL(ap_al.B057_GRP_AP_AL, 0) AS imponibile_per_sconto_promo_GRP_AP_AL,
 
-    ap_al.load_timestamp
+    ap_al.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 FROM pivot_consuntivo_ap_al AS ap_al
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod

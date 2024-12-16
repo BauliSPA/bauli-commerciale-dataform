@@ -287,7 +287,8 @@ select
     IFNULL(bdg.B040_SOC_ACT, 0) - IFNULL(bdg.B050_SOC_ACT, 0) - IFNULL(bdg.B055_SOC_ACT, 0) - IFNULL(bdg.B057_SOC_ACT, 0) AS imponibile_per_sconto_promo_SOC_BDG,
     IFNULL(bdg.B040_GRP_ACT, 0) - IFNULL(bdg.B050_GRP_ACT, 0) - IFNULL(bdg.B055_GRP_ACT, 0) - IFNULL(bdg.B057_GRP_ACT, 0) AS imponibile_per_sconto_promo_GRP_BDG,
 
-    bdg.load_timestamp
+    bdg.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 FROM pivot_budget AS bdg
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod

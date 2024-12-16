@@ -145,7 +145,8 @@ SELECT
   			     END
   	      END
   END AS trimester_ord,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("cur_md_calendar")}
 ORDER BY 
   CAST(year AS INT64),

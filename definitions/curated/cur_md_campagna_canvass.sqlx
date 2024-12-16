@@ -32,5 +32,6 @@ SELECT
       
       ELSE PARSE_TIMESTAMP('%d/%m/%y', '01/01/99')
   END AS data_aggiornamento_ts,
-  CURRENT_TIMESTAMP() as load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_board_campagna_canvass")}

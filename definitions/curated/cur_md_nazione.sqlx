@@ -11,7 +11,8 @@ SELECT
   naz.raggruppamento_nazione_ds,
   naz.continente_cd,
   naz.continente_ds,
-  naz.load_timestamp
+  naz.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_board_nazione")} AS naz
 LEFT JOIN ${ref("cur_lu_country_iso")} AS cnt
   ON naz.nazione_cd = cnt.iso2_cd

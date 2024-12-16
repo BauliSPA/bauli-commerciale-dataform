@@ -47,5 +47,6 @@ SELECT
   esercizio_cd,
   esercizio_ds,
   PARSE_TIMESTAMP('%d/%m/%y', '01/01/99') AS data_aggiornamento_ts,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM nuove_campagne 

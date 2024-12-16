@@ -60,7 +60,8 @@ SELECT
   mara.UdM_base AS udm_base,
   mara.Listino_UdV AS listino_udv,
   mara.Data_creazione AS data_creazione, 
-  mara.load_timestamp
+  mara.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_sap_mara")} AS mara
 LEFT JOIN  linea 
     ON mara.linea = linea.linea 

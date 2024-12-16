@@ -817,7 +817,8 @@ select
     IFNULL(py_end.B040_SOC_PY_END, 0) - IFNULL(py_end.B050_SOC_PY_END, 0) - IFNULL(py_end.B055_SOC_PY_END, 0) - IFNULL(py_end.B057_SOC_PY_END, 0) AS imponibile_per_sconto_promo_SOC_PY_END,
     IFNULL(py_end.B040_GRP_PY_END, 0) - IFNULL(py_end.B050_GRP_PY_END, 0) - IFNULL(py_end.B055_GRP_PY_END, 0) - IFNULL(py_end.B057_GRP_PY_END, 0) AS imponibile_per_sconto_promo_GRP_PY_END,
 
-    act.load_timestamp
+    act.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 
 FROM pivot_consuntivo AS act

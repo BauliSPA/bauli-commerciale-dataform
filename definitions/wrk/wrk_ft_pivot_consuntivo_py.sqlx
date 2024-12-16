@@ -279,7 +279,8 @@ select
     IFNULL(py.B040_SOC_PY, 0) - IFNULL(py.B050_SOC_PY, 0) - IFNULL(py.B055_SOC_PY, 0) - IFNULL(py.B057_SOC_PY, 0) AS imponibile_per_sconto_promo_SOC_PY,
     IFNULL(py.B040_GRP_PY, 0) - IFNULL(py.B050_GRP_PY, 0) - IFNULL(py.B055_GRP_PY, 0) - IFNULL(py.B057_GRP_PY, 0) AS imponibile_per_sconto_promo_GRP_PY,
 
-    py.load_timestamp
+    py.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 FROM pivot_consuntivo_py AS py
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod

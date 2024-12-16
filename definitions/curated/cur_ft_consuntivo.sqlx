@@ -16,7 +16,8 @@ SELECT
   cons.tipo_ce_cd,
   CAST(cons.mese_cd AS NUMERIC) AS mese_cd,
   COALESCE(CAST(REPLACE(cons.valore, ",", ".") AS NUMERIC),0) AS valore,
-  cons.load_timestamp
+  cons.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_board_consuntivo")} AS cons
 
 -- filtro ultimo 4 esercizi fiscali

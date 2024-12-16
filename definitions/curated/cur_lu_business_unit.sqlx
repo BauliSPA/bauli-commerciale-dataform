@@ -14,7 +14,8 @@ SELECT
   bus.businessunit_ds,
   bus.businesstype_cd,
   bus.businesstype_ds,
-  bus.load_timestamp
+  bus.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 
 FROM ${ref("stg_board_business")} AS bus  
 LEFT JOIN ${ref("stg_board_mtx_business_unit")} AS mtx

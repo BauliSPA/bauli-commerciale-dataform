@@ -15,7 +15,8 @@ SELECT
   monthyear_ds,
   CAST(index_fiscal_day AS NUMERIC) AS index_fiscal_day,
   CAST(index_fiscal_month AS NUMERIC) AS index_fiscal_month,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_calendar")}
 ORDER BY 
   CAST(year AS INT64),
