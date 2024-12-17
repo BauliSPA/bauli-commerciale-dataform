@@ -539,7 +539,7 @@ select
     PARSE_DATE('%Y%m%d', CONCAT(CAST(act.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
-	bu.business_unit_cd,
+	bu.businessunit_cd,
     cc.esercizio_cd,
     cc.data_aggiornamento_ts,
 
@@ -817,7 +817,8 @@ select
     IFNULL(py_end.B040_SOC_PY_END, 0) - IFNULL(py_end.B050_SOC_PY_END, 0) - IFNULL(py_end.B055_SOC_PY_END, 0) - IFNULL(py_end.B057_SOC_PY_END, 0) AS imponibile_per_sconto_promo_SOC_PY_END,
     IFNULL(py_end.B040_GRP_PY_END, 0) - IFNULL(py_end.B050_GRP_PY_END, 0) - IFNULL(py_end.B055_GRP_PY_END, 0) - IFNULL(py_end.B057_GRP_PY_END, 0) AS imponibile_per_sconto_promo_GRP_PY_END,
 
-    act.load_timestamp
+    act.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 
 FROM pivot_consuntivo AS act
@@ -831,7 +832,7 @@ LEFT JOIN ${ref("cur_md_cliente")} AS cli
     ON act.div_consegnamerce_cd = cli.div_consegnamerce_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON act.divisione_cd = bu.divisione_cd
-	AND substr(act.campagna_canvass_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
-	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+	AND substr(act.campagna_canvass_cd,3,1) = bu.tipocampagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macromacroraggrlinea_cd
 LEFT JOIN ${ref("cur_md_campagna_canvass")} AS cc
     ON act.campagna_canvass_cd = cc.campagna_canvass_cd

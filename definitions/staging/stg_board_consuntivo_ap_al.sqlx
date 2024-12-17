@@ -6,4 +6,4 @@ config {
 SELECT
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
-FROM bli-bi-commerciale-prod-001.landing.board_consuntivo_ap_al
+FROM ${ref("board_consuntivo_ap_al")}

@@ -191,7 +191,7 @@ select
     PARSE_DATE('%Y%m%d', CONCAT(CAST(bdg.mese_cd AS STRING), '01')) AS data_dt, --primo/mese/anno 
     prod.macro_macro_raggruppamento_linea_cd,
 	bu.business_cd,
-	bu.business_unit_cd,
+	bu.businessunit_cd,
     cc.esercizio_cd,
     upd.data_aggiornamento_ts,
     
@@ -287,7 +287,8 @@ select
     IFNULL(bdg.B040_SOC_ACT, 0) - IFNULL(bdg.B050_SOC_ACT, 0) - IFNULL(bdg.B055_SOC_ACT, 0) - IFNULL(bdg.B057_SOC_ACT, 0) AS imponibile_per_sconto_promo_SOC_BDG,
     IFNULL(bdg.B040_GRP_ACT, 0) - IFNULL(bdg.B050_GRP_ACT, 0) - IFNULL(bdg.B055_GRP_ACT, 0) - IFNULL(bdg.B057_GRP_ACT, 0) AS imponibile_per_sconto_promo_GRP_BDG,
 
-    bdg.load_timestamp
+    bdg.load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
 
 FROM pivot_budget AS bdg
 LEFT JOIN ${ref("cur_md_prodotto")} AS prod
@@ -300,8 +301,8 @@ LEFT JOIN (
     ON bdg.div_cliente_piano_cd = cli.div_cliente_piano_cd
 LEFT JOIN ${ref("cur_lu_business_unit")} AS bu
 	ON bdg.divisione_cd = bu.divisione_cd
-	AND substr(bdg.campagna_anno_cd,3,1) = bu.campagna_cd -- Estraggo campagna da campagna_canvass_cd
-	AND prod.macro_macro_raggruppamento_linea_cd = bu.macro_raggruppamento_linea_cd
+	AND substr(bdg.campagna_anno_cd,3,1) = bu.tipocampagna_cd -- Estraggo campagna da campagna_canvass_cd
+	AND prod.macro_macro_raggruppamento_linea_cd = bu.macromacroraggrlinea_cd
 LEFT JOIN (
     SELECT DISTINCT
       campagna_anno_cd, 

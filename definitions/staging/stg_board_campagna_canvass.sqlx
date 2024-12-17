@@ -1,8 +1,9 @@
 config {
   schema: "staging",
-  type: "table"}
+  type: "table"
+}
 
 SELECT 
     *,
     CURRENT_TIMESTAMP() AS load_timestamp
-FROM bli-bi-commerciale-prod-001.landing.board_campagna_canvass
+FROM ${ref("board_campagna_canvass")}
