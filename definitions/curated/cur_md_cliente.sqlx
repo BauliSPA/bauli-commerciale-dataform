@@ -66,5 +66,6 @@ SELECT DISTINCT
   SUBSTRING(div_distretto_assegnatario_cd, 5) AS distretto_assegnatario_cd, 
   div_distretto_assegnatario_ds AS distretto_assegnatario_ds,
   CONCAT(SUBSTRING(div_distretto_assegnatario_cd, 5)," ","-"," ", div_distretto_assegnatario_ds) AS distretto_assegnatario_cd_ds,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_board_cliente")}

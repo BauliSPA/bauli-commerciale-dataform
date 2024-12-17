@@ -16,7 +16,7 @@ SELECT
   data_dt AS `Date`,
   macro_macro_raggruppamento_linea_cd AS `Macro Macro Line Grouping Cod`,
   business_cd AS `Business Cod`,
-  business_unit_cd AS `Business Unit Cod`,
+  businessunit_cd AS `Business Unit Cod`,
   esercizio_cd AS `Fiscal Year Cod`,
   data_aggiornamento_ts AS `Update Date`,
   B030_DIV_ACT AS `Volumes DIV ACT`,

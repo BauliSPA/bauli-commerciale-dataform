@@ -7,5 +7,6 @@ SELECT DISTINCT
   Utente AS utente,
   Dimensione AS dimensione,
   Valore AS valore,
-  load_timestamp
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_securities")}

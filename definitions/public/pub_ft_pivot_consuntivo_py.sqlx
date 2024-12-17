@@ -16,7 +16,7 @@ SELECT
   data_dt AS `Date`,
   macro_macro_raggruppamento_linea_cd AS `Macro Macro Line Grouping Cod`,
   business_cd AS `Business Cod`,
-  business_unit_cd AS `Business Unit Cod`,
+  businessunit_cd AS `Business Unit Cod`,
   esercizio_cd AS `Fiscal Year Cod`,
   data_aggiornamento_ts AS `Update Date`,
   B030_DIV_PY AS `Volumes DIV PY`,
@@ -71,4 +71,4 @@ SELECT
   imponibile_per_sconto_promo_SOC_PY,
   imponibile_per_sconto_promo_GRP_PY,
   load_timestamp AS `Load Timestamp`
-FROM ${ref("wrk_ft_pivot_consuntivo_py")} 
+FROM ${ref("wrk_ft_pivot_consuntivo_py")}

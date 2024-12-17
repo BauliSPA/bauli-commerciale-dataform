@@ -5,11 +5,11 @@ config {
 -- DELETE+INSERT
 pre_operations {
   ${when(incremental(),
-    `DELETE FROM ${self()} WHERE campagna_anno_cd IN (SELECT DISTINCT campagna_anno_cd FROM bli-bi-commerciale-prod-001.landing.board_budget)`
+    `DELETE FROM ${self()} WHERE campagna_anno_cd IN (SELECT DISTINCT campagna_anno_cd FROM ${ref("board_budget")})`
   )}
 }
 
 SELECT
     *,
     CURRENT_TIMESTAMP() AS load_timestamp
-FROM bli-bi-commerciale-prod-001.landing.board_budget
+FROM ${ref("board_budget")}

@@ -15,7 +15,8 @@ SELECT
   budget.processo_cd,
   CAST(budget.mese_cd AS NUMERIC) AS mese_cd,
   COALESCE(CAST(REPLACE(budget.valore, ",", ".") AS NUMERIC),0) AS valore,
-  budget.load_timestamp
+  budget.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
 FROM ${ref("stg_board_budget")} AS budget
 
 -- filtro ultimo 4 esercizi fiscali
