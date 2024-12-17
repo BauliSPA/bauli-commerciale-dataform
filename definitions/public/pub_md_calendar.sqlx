@@ -1,32 +1,32 @@
---config {
---  schema: "public",
---  type: "view"
---}
---
---SELECT 
---  date AS `Date`,
---  day_of_month AS `Day of Month`,
---  weekday_cd AS `Week Day Cod`,
---  weekday_ds AS `Week Day`,
---  year AS `Year`,
---  month_cd AS `Month Cod`,
---  month_ds AS `Month`,
---  yearmonth_cd AS `Year Month Cod`,
---  monthyear_ds AS `Month Year`,
---  Month_Year_Desc AS `Month Year Desc` ,
---  flag_view_date AS `Flag View Date`,
---  flag_view_past_date AS `Flag View Past Date`,
---  index_fiscal_day AS `Index Fiscal Day`,
---  index_fiscal_month AS `Index Fiscal Month`,
---  flag_esercizi_corrente AS `Flag Esercizio Corrente`, 
---  semester_cd AS `Semester Cod`, 
---  semester_ds AS `Semester Desc`,
---  trimester_cd AS `Trimester Cod`, 
---  trimester_ds AS `Trimester Desc`,
---  trimester_ord AS `Trimester Ord`,
---  load_timestamp AS `Load Timestamp`
---FROM ${ref("wrk_md_calendar")}
---ORDER BY 
---  CAST(year AS INT64),
---  CAST(month_cd AS INT64),
---  CAST(day_of_month AS INT64)
+config {
+  schema: "public",
+  type: "view"
+}
+
+SELECT 
+  date AS `Date`,
+  day_of_month AS `Day of Month`,
+  weekday_cd AS `Week Day Cod`,
+  weekday_ds AS `Week Day`,
+  year AS `Year`,
+  month_cd AS `Month Cod`,
+  month_ds AS `Month`,
+  yearmonth_cd AS `Year Month Cod`,
+  monthyear_ds AS `Month Year`,
+  Month_Year_Desc AS `Month Year Desc` ,
+  flag_view_date AS `Flag View Date`,
+  flag_view_past_date AS `Flag View Past Date`,
+  index_fiscal_day AS `Index Fiscal Day`,
+  index_fiscal_month AS `Index Fiscal Month`,
+  flag_esercizi_corrente AS `Flag Esercizio Corrente`, 
+  semester_cd AS `Semester Cod`, 
+  semester_ds AS `Semester Desc`,
+  trimester_cd AS `Trimester Cod`, 
+  trimester_ds AS `Trimester Desc`,
+  trimester_ord AS `Trimester Ord`,
+  load_timestamp AS `Load Timestamp`
+FROM ${ref("wrk_md_calendar")}
+ORDER BY 
+  CAST(year AS INT64),
+  CAST(month_cd AS INT64),
+  CAST(day_of_month AS INT64)

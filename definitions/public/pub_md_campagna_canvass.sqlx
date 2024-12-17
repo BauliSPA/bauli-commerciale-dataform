@@ -3,6 +3,16 @@ config {
   type: "view"
 }
 
+WITH final as (
+      
+    SELECT *
+    FROM ${ref("cur_md_campagna_canvass")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("wrk_md_campagna_canvass")}
+)
+
+
 SELECT 
   campagna_canvass_cd AS `Campaign Canvass Cod`,
   campagna_canvass_ds AS `Campaign Canvass`,
@@ -16,29 +26,4 @@ SELECT
   esercizio_ds AS `Fiscal Year`,
   data_aggiornamento_ts AS `Update Date`,
   load_timestamp AS `Load Timestamp`
-FROM ${ref("cur_md_campagna_canvass")}
-
---WITH final as (
---      
---    SELECT *
---    FROM ${ref("cur_md_campagna_canvass")}
---    UNION ALL
---    SELECT *
---    FROM ${ref("wrk_md_campagna_canvass")}
---)
---
---
---SELECT 
---  campagna_canvass_cd AS `Campaign Canvass Cod`,
---  campagna_canvass_ds AS `Campaign Canvass`,
---  campagna_anno_cd AS `Campaign Cod`,
---  campagna_anno_ds AS `Campaign`,
---  tipo_campagna_cd AS `Campaign Type Cod`,
---  tipo_campagna_ds AS `Campaign Type`,
---  tipo_esercizio_cd AS `Fiscal Year Type Cod`,
---  tipo_esercizio_ds AS `Fiscal Year Type`,
---  esercizio_cd AS `Fiscal Year Cod`,
---  esercizio_ds AS `Fiscal Year`,
---  data_aggiornamento_ts AS `Update Date`,
---  load_timestamp AS `Load Timestamp`
---FROM final
+FROM final
