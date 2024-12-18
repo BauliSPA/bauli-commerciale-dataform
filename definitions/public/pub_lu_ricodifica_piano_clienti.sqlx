@@ -1,0 +1,8 @@
+config {
+  schema: "public",
+  type: "view"
+}
+SELECT
+ricodifica_clienti_piano_cd AS `Ricodifica clienti piano`,
+load_timestamp AS `Load Timestamp`
+FROM ${ref("cur_lu_ricodifica_clienti_piano")} 

@@ -6,14 +6,23 @@ config {
 SELECT 
   div.divisione_cd,
   div.divisione_ds,
-  mtx.tipocampagna_cd,
-  mtx.macromacroraggrlinea_cd,
-  bus.business_cd,
-  bus.business_ds,
-  bus.businessunit_cd,
-  bus.businessunit_ds,
-  bus.businesstype_cd,
-  bus.businesstype_ds,
+  IFNULL(mtx.tipocampagna_cd, "NA") AS tipocampagna_cd,
+  IFNULL(mtx.macromacroraggrlinea_cd,"NA") AS macromacroraggrlinea_cd,
+  IFNULL(bus.business_cd,"NA") AS business_cd,
+  IFNULL(bus.business_ds,"NA") AS business_ds,
+  IFNULL(bus.businessunit_cd,"NA") AS businessunit_cd,
+  IFNULL(bus.businessunit_ds,"NA") AS businessunit_ds,
+  IFNULL(bus.businesstype_cd,"NA") AS businesstype_cd,
+  IFNULL(bus.businesstype_ds,"NA") AS businesstype_ds,
+  CASE 
+    WHEN businesstype_cd = '01'
+    THEN 'Seasonal Italy B.' 
+    ELSE CASE 
+            WHEN  businesstype_cd = '02'
+            THEN 'Other B.'
+         ELSE 'NA'
+         END 
+  END AS businesstype_desc,
   bus.load_timestamp,
   CURRENT_TIMESTAMP() AS batched_at
 

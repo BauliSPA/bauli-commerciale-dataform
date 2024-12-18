@@ -1,0 +1,14 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT 
+DISTINCT div_cliente_piano_cd AS  ricodifica_clienti_piano_cd,
+CURRENT_TIMESTAMP() AS load_timestamp
+
+FROM ${ref("cur_ft_budget")} 
+WHERE div_cliente_piano_cd NOT IN (
+  SELECT DISTINCT div_cliente_piano_cd
+  FROM ${ref("cur_md_cliente")}
+)
