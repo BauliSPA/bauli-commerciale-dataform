@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010, B075
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -95,8 +95,10 @@ pivot_consuntivo AS (
         IFNULL(B060_GRP_ACT, 0) AS B060_GRP_ACT,
         IFNULL(B010_DIV_ACT, 0) AS B010_DIV_ACT,
         IFNULL(B010_SOC_ACT, 0) AS B010_SOC_ACT,
-        IFNULL(B010_GRP_ACT, 0) AS B010_GRP_ACT
-
+        IFNULL(B010_GRP_ACT, 0) AS B010_GRP_ACT,
+        IFNULL(B075_DIV_ACT, 0) AS B075_DIV_ACT,
+        IFNULL(B075_SOC_ACT, 0) AS B075_SOC_ACT,
+        IFNULL(B075_GRP_ACT, 0) AS B075_GRP_ACT,
 
 
 
@@ -178,7 +180,10 @@ pivot_consuntivo AS (
             'B060_GRP' AS B060_GRP_ACT,
             'B010_DIV' AS B010_DIV_ACT,
             'B010_SOC' AS B010_SOC_ACT,
-            'B010_GRP' AS B010_GRP_ACT
+            'B010_GRP' AS B010_GRP_ACT,
+            'B075_DIV' AS B075_DIV_ACT,
+            'B075_SOC' AS B075_SOC_ACT,
+            'B075_GRP' AS B075_GRP_ACT            
 
         )
 
@@ -269,7 +274,11 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
         IFNULL(B060_GRP_PY, 0) AS B060_GRP_PY,
         IFNULL(B010_DIV_PY, 0) AS B010_DIV_PY,
         IFNULL(B010_SOC_PY, 0) AS B010_SOC_PY,
-        IFNULL(B010_GRP_PY, 0) AS B010_GRP_PY
+        IFNULL(B010_GRP_PY, 0) AS B010_GRP_PY,
+        IFNULL(B075_DIV_PY, 0) AS B075_DIV_PY,
+        IFNULL(B075_SOC_PY, 0) AS B075_SOC_PY,
+        IFNULL(B075_GRP_PY, 0) AS B075_GRP_PY,
+
 
     FROM (
 
@@ -349,7 +358,10 @@ pivot_consuntivo_py AS ( -- Consuntivo AP_AL ribaltato su anno successivo
             'B060_GRP' AS B060_GRP_PY,
             'B010_DIV' AS B010_DIV_PY,
             'B010_SOC' AS B010_SOC_PY,
-            'B010_GRP' AS B010_GRP_PY
+            'B010_GRP' AS B010_GRP_PY,
+            'B075_DIV' AS B075_DIV_PY,
+            'B075_SOC' AS B075_SOC_PY,
+            'B075_GRP' AS B075_GRP_PY
         )
 
     )
@@ -439,7 +451,10 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
         IFNULL(B060_GRP_PY_END, 0) AS B060_GRP_PY_END,
         IFNULL(B010_DIV_PY_END, 0) AS B010_DIV_PY_END,
         IFNULL(B010_SOC_PY_END, 0) AS B010_SOC_PY_END,
-        IFNULL(B010_GRP_PY_END, 0) AS B010_GRP_PY_END
+        IFNULL(B010_GRP_PY_END, 0) AS B010_GRP_PY_END,
+        IFNULL(B075_DIV_PY_END, 0) AS B075_DIV_PY_END,
+        IFNULL(B075_SOC_PY_END, 0) AS B075_SOC_PY_END,
+        IFNULL(B075_GRP_PY_END, 0) AS B075_GRP_PY_END
 
     FROM (
 
@@ -519,7 +534,10 @@ pivot_consuntivo_py_end AS ( -- Consuntivo anno precedente ribaltato su anno suc
             'B060_GRP' AS B060_GRP_PY_END,
             'B010_DIV' AS B010_DIV_PY_END,
             'B010_SOC' AS B010_SOC_PY_END,
-            'B010_GRP' AS B010_GRP_PY_END
+            'B010_GRP' AS B010_GRP_PY_END,
+            'B075_DIV' AS B075_DIV_PY_END,
+            'B075_SOC' AS B075_SOC_PY_END,
+            'B075_GRP' AS B075_GRP_PY_END
         )
 
     )  
@@ -571,6 +589,15 @@ select
     IFNULL(act.B010_DIV_ACT, 0) AS B010_DIV_ACT,
 	IFNULL(act.B010_SOC_ACT, 0) AS B010_SOC_ACT,
 	IFNULL(act.B010_GRP_ACT, 0) AS B010_GRP_ACT,
+    IFNULL(act.B040_DIV_ACT, 0) AS B040_DIV_ACT,
+	IFNULL(act.B040_SOC_ACT, 0) AS B040_SOC_ACT,
+	IFNULL(act.B040_GRP_ACT, 0) AS B040_GRP_ACT,
+    IFNULL(act.B060_DIV_ACT, 0) AS B060_DIV_ACT,
+	IFNULL(act.B060_SOC_ACT, 0) AS B060_SOC_ACT,
+	IFNULL(act.B060_GRP_ACT, 0) AS B060_GRP_ACT,
+    IFNULL(act.B075_DIV_ACT, 0) AS B075_DIV_ACT,
+	IFNULL(act.B075_SOC_ACT, 0) AS B075_SOC_ACT,
+	IFNULL(act.B075_GRP_ACT, 0) AS B075_GRP_ACT,
 
 
 	-- Net Sales LLCF Actuals
@@ -663,6 +690,15 @@ select
     IFNULL(py.B010_DIV_PY, 0) AS B010_DIV_PY,
 	IFNULL(py.B010_SOC_PY, 0) AS B010_SOC_PY,
 	IFNULL(py.B010_GRP_PY, 0) AS B010_GRP_PY,
+    IFNULL(py.B040_DIV_PY, 0) AS B040_DIV_PY,
+	IFNULL(py.B040_SOC_PY, 0) AS B040_SOC_PY,
+	IFNULL(py.B040_GRP_PY, 0) AS B040_GRP_PY,
+    IFNULL(py.B060_DIV_PY, 0) AS B060_DIV_PY,
+	IFNULL(py.B060_SOC_PY, 0) AS B060_SOC_PY,
+	IFNULL(py.B060_GRP_PY, 0) AS B060_GRP_PY,
+    IFNULL(py.B075_DIV_PY, 0) AS B075_DIV_PY,
+	IFNULL(py.B075_SOC_PY, 0) AS B075_SOC_PY,
+	IFNULL(py.B075_GRP_PY, 0) AS B075_GRP_PY,
 
 	-- Net Sales LLCF Previous Year (PY)
 	CASE
@@ -754,6 +790,15 @@ select
     IFNULL(py_end.B010_DIV_PY_END, 0) AS B010_DIV_PY_END,
 	IFNULL(py_end.B010_SOC_PY_END, 0) AS B010_SOC_PY_END,
 	IFNULL(py_end.B010_GRP_PY_END, 0) AS B010_GRP_PY_END,
+    IFNULL(py_end.B040_DIV_PY_END, 0) AS B040_DIV_PY_END,
+	IFNULL(py_end.B040_SOC_PY_END, 0) AS B040_SOC_PY_END,
+	IFNULL(py_end.B040_GRP_PY_END, 0) AS B040_GRP_PY_END,
+    IFNULL(py_end.B060_DIV_PY_END, 0) AS B060_DIV_PY_END,
+	IFNULL(py_end.B060_SOC_PY_END, 0) AS B060_SOC_PY_END,
+	IFNULL(py_end.B060_GRP_PY_END, 0) AS B060_GRP_PY_END,
+    IFNULL(py_end.B075_DIV_PY_END, 0) AS B075_DIV_PY_END,
+	IFNULL(py_end.B075_SOC_PY_END, 0) AS B075_SOC_PY_END,
+	IFNULL(py_end.B075_GRP_PY_END, 0) AS B075_GRP_PY_END,
 
 	-- Net Sales LLCF Previous Year End (PY End)
 	CASE

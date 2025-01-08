@@ -6,7 +6,7 @@ config {
 /*
 
     Pivot fatta per:
-    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010
+    - righe_ce_cd 			B030, B080, B190, B320, B151, B141, B146, B180, B160, B196, B230, B300, B170, B151, B040, B050, B055, B057, B060, B010, B075
     - tipo_valuta_cd 		DIV, SOC, GRP
 
 */
@@ -84,7 +84,11 @@ pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
         IFNULL(B060_GRP_AP_AL, 0) AS B060_GRP_AP_AL,
         IFNULL(B010_DIV_AP_AL, 0) AS B010_DIV_AP_AL,
         IFNULL(B010_SOC_AP_AL, 0) AS B010_SOC_AP_AL,
-        IFNULL(B010_GRP_AP_AL, 0) AS B010_GRP_AP_AL
+        IFNULL(B010_GRP_AP_AL, 0) AS B010_GRP_AP_AL,
+        IFNULL(B075_DIV_AP_AL, 0) AS B075_DIV_AP_AL,
+        IFNULL(B075_SOC_AP_AL, 0) AS B075_SOC_AP_AL,
+        IFNULL(B075_GRP_AP_AL, 0) AS B075_GRP_AP_AL
+
 
     FROM (
 
@@ -164,7 +168,11 @@ pivot_consuntivo_ap_al AS ( -- Consuntivo AP_AL ribaltato su anno successivo
             'B060_GRP' AS B060_GRP_AP_AL,
             'B010_DIV' AS B010_DIV_AP_AL,
             'B010_SOC' AS B010_SOC_AP_AL,
-            'B010_GRP' AS B010_GRP_AP_AL
+            'B010_GRP' AS B010_GRP_AP_AL,
+            'B075_DIV' AS B075_DIV_AP_AL,
+            'B075_SOC' AS B075_SOC_AP_AL,
+            'B075_GRP' AS B075_GRP_AP_AL
+
         )
 
     )
@@ -216,6 +224,15 @@ select
     IFNULL(ap_al.B010_DIV_AP_AL, 0) AS B010_DIV_AP_AL,
 	IFNULL(ap_al.B010_SOC_AP_AL, 0) AS B010_SOC_AP_AL,
 	IFNULL(ap_al.B010_GRP_AP_AL, 0) AS B010_GRP_AP_AL,
+    IFNULL(ap_al.B040_DIV_AP_AL, 0) AS B040_DIV_AP_AL,
+	IFNULL(ap_al.B040_SOC_AP_AL, 0) AS B040_SOC_AP_AL,
+	IFNULL(ap_al.B040_GRP_AP_AL, 0) AS B040_GRP_AP_AL,
+    IFNULL(ap_al.B060_DIV_AP_AL, 0) AS B060_DIV_AP_AL,
+	IFNULL(ap_al.B060_SOC_AP_AL, 0) AS B060_SOC_AP_AL,
+	IFNULL(ap_al.B060_GRP_AP_AL, 0) AS B060_GRP_AP_AL,
+    IFNULL(ap_al.B075_DIV_AP_AL, 0) AS B075_DIV_AP_AL,
+	IFNULL(ap_al.B075_SOC_AP_AL, 0) AS B075_SOC_AP_AL,
+	IFNULL(ap_al.B075_GRP_AP_AL, 0) AS B075_GRP_AP_AL,
 
 	-- Net Sales LLCF Previous Year (PY)
 	CASE
