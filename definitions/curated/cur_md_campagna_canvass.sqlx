@@ -7,7 +7,7 @@ config {
 SELECT
   campagna_canvass_cd,
   campagna_canvass_ds,
-  campagna_anno_cd,
+  IFNULL(campagna_anno_cd,"NA") AS campagna_anno_cd,
   campagna_anno_ds,
   tipo_campagna_cd,
   tipo_campagna_ds,

@@ -9,7 +9,7 @@ WITH final as (
     FROM ${ref("cur_md_campagna_canvass")}
     UNION ALL
     SELECT *
-    FROM ${ref("wrk_md_campagna_canvass")}
+    FROM ${ref("wrk_md_campagna_canvass_future")}
 )
 
 

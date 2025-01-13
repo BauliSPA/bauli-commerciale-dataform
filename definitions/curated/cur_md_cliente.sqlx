@@ -29,7 +29,7 @@ SELECT DISTINCT
   div_area_pianificatore_cd,
   div_area_pianificatore_ds,
   div_cliente_piano_cd,
-  div_cliente_piano_ds,
+  IFNULL(div_cliente_piano_ds,"NA") AS div_cliente_piano_ds,
   div_supercentrale_cp_cd,
   div_supercentrale_cp_ds,
   divisione_cm_cd,

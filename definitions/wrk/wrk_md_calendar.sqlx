@@ -27,7 +27,7 @@ relazione AS (
     UNION ALL
     SELECT 
     DISTINCT anno_mese
-    FROM ${ref("wrk_md_campagna_canvass")} AS cc1
+    FROM ${ref("wrk_md_campagna_canvass_future")} AS cc1
     LEFT JOIN cal AS cal
     on  cc1.esercizio_cd = cal.esercizio 
     WHERE tipo_esercizio_cd = 'FY'
