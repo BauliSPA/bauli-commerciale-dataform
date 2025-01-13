@@ -1,2 +1,2 @@
-# dataform-bauli-dwh-commerciale
+# bauli-commerciale-dataform
 Repository for Dataform code
