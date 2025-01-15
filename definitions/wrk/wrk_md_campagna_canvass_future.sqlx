@@ -32,21 +32,28 @@ nuove_campagne AS (
     ON cons_py.campagna_canvass_cd = cc.campagna_canvass_cd
     WHERE cc.campagna_canvass_cd IS NULL
 
+),
+
+campagne_future AS (
+    SELECT 
+    campagna_canvass_cd,
+    campagna_canvass_ds,
+    campagna_anno_cd,
+    campagna_anno_ds,
+    tipo_campagna_cd,
+    tipo_campagna_ds,
+    tipo_esercizio_cd,
+    tipo_esercizio_ds,
+    esercizio_cd,
+    esercizio_ds,
+    PARSE_TIMESTAMP('%d/%m/%y', '01/01/99') AS data_aggiornamento_ts,
+    load_timestamp,
+    CURRENT_TIMESTAMP() AS batched_at
+  FROM nuove_campagne
 )
 
-
-SELECT 
-  campagna_canvass_cd,
-  campagna_canvass_ds,
-  campagna_anno_cd,
-  campagna_anno_ds,
-  tipo_campagna_cd,
-  tipo_campagna_ds,
-  tipo_esercizio_cd,
-  tipo_esercizio_ds,
-  esercizio_cd,
-  esercizio_ds,
-  PARSE_TIMESTAMP('%d/%m/%y', '01/01/99') AS data_aggiornamento_ts,
-  load_timestamp,
-  CURRENT_TIMESTAMP() AS batched_at
-FROM nuove_campagne 
+SELECT *
+FROM campagne_future
+WHERE RIGHT(esercizio_cd,2) > (SELECT DISTINCT RIGHT(esercizio_cd,2)
+FROM ${ref("cur_md_campagna_canvass")}
+WHERE tipo_esercizio_cd ='ECA')

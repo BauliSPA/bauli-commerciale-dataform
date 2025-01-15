@@ -12,7 +12,7 @@ SELECT
   budget.campagna_anno_cd,
   budget.scenario_cd,
   budget.tipo_valuta_cd,
-  budget.processo_cd,
+  IFNULL(budget.processo_cd,"NA") AS processo_cd,
   CAST(budget.mese_cd AS NUMERIC) AS mese_cd,
   COALESCE(CAST(REPLACE(budget.valore, ",", ".") AS NUMERIC),0) AS valore,
   budget.load_timestamp,
