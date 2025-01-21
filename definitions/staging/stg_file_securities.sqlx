@@ -5,4 +5,4 @@ config {
 SELECT
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
-FROM ${ref("securities")}
+FROM ${ref("file_securities")}
