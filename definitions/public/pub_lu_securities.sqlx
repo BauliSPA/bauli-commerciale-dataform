@@ -4,5 +4,11 @@ config {
 }
 
 SELECT 
-  *
+  utente as User,
+  email as Email,
+  dimensione as Dimension,
+  valore_cd as `Value Cod`,
+  valore_ds as `Value`,
+  report as `Report`,
+  load_timestamp AS `Load Timestamp`
 FROM ${ref("cur_lu_securities")}

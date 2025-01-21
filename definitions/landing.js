@@ -101,6 +101,6 @@ declare(
 declare(
   {
    schema:  schema,
-   name:    'securities'
+   name:    'file_securities'
   }
 )

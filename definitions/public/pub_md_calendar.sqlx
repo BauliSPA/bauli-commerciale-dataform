@@ -19,6 +19,7 @@ SELECT
   index_fiscal_day AS `Index Fiscal Day`,
   index_fiscal_month AS `Index Fiscal Month`,
   flag_esercizi_corrente AS `Flag Esercizio Corrente`, 
+  flag_view_date_solar AS `Flag View Date Solar`,
   semester_cd AS `Semester Cod`, 
   semester_ds AS `Semester Desc`,
   trimester_cd AS `Trimester Cod`, 

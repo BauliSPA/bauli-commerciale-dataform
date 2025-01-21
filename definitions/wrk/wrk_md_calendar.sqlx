@@ -96,6 +96,13 @@ SELECT
     THEN 1 
     ELSE 0 
   END AS flag_esercizi_corrente,
+  CASE
+      WHEN CAST(date as DATE) 
+        BETWEEN CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) - 3 as INTEGER) || '-01-01' as DATE) 
+        AND CAST(CAST(EXTRACT(YEAR FROM CURRENT_DATE) as INTEGER) || '-12-31' as DATE)
+      THEN 1
+      ELSE 0
+  END AS flag_view_date_solar, -- 1 per tutte le date dal 1/01/(anno corrente -3) al 31/12/(anno corrente)
   CASE 
      WHEN CAST(month_cd AS NUMERIC) <= 6
      THEN "January-June"
