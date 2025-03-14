@@ -1,5 +1,0 @@
-defaultProject: bli-bi-commerciale-test-001
-defaultLocation: EU
-defaultDataset: dataform
-defaultAssertionDataset: dataform_assertions
-dataformCoreVersion: 3.0.0
