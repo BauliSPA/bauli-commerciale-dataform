@@ -5,4 +5,4 @@ config {
 
 SELECT 
   *
-FROM ${ref("cur_md_sap_prodotto")} 
+FROM ${ref("cur_md_sap_cliente")} 

@@ -1,0 +1,149 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+WITH 
+
+mara as (
+
+  SELECT
+    MATNR AS cod_materiale, 
+    FERTH AS linea,
+    ZZMVGR1 AS marchio,
+    ZZRAGGMARCHIO AS raggr_marchio,
+    MTART AS tipo_materiale,
+    EXTWG AS codice_ricetta,
+    NTGEW AS peso_netto,
+    GEWEI AS unita_peso,
+    MEINS AS udm_base,
+  --  null AS listino_udv,
+    load_timestamp
+  FROM ${ref("stg_sap_mara")}
+
+),
+
+setleaf as (
+
+  SELECT 
+    setname as linea,
+    valfrom as da_val
+  FROM ${ref("stg_sap_setleaf")}
+
+),
+
+setnode as (
+
+  SELECT 
+    subsetname as linea,
+    setname as macro_linea
+  FROM ${ref("stg_sap_setnode")}
+
+),
+
+zvricetta as (
+    SELECT 
+    Codice_ricetta AS codice_ricetta,
+    Raggruppamento_ricetta AS raggruppamento_ricetta
+    FROM ${ref("stg_sap_zvricetta")}
+),
+
+mvke as (
+    SELECT 
+    MATNR as cod_materiale,
+    PMATN as raggr_prodotto,
+    -- VKORG AS organizzazione_di_vendita,
+    -- VTWEG AS canale_di_distribuzione
+    FROM ${ref("stg_sap_mvke")}
+),
+
+raggr_prodotto as (
+    SELECT DISTINCT 
+    mara.cod_materiale AS cod_materiale,
+    mvke.raggr_prodotto AS raggr_prodotto
+    FROM mara
+    LEFT JOIN mvke 
+       ON mara.cod_materiale = mvke.cod_materiale
+), 
+
+raggr_ricetta as (
+    SELECT DISTINCT
+    mara.codice_ricetta AS codice_ricetta,
+    zvricetta.raggruppamento_ricetta AS raggr_ricetta 
+    FROM mara
+    LEFT JOIN zvricetta 
+       ON mara.codice_ricetta = zvricetta.codice_ricetta 
+),
+
+ragg_linea as (
+  
+    SELECT DISTINCT
+      mara.linea AS linea,
+      setleaf.linea AS ragg_linea
+    FROM mara
+    LEFT JOIN setleaf
+      ON mara.linea = setleaf.da_val
+    where setleaf.linea LIKE 'GRP-LN%'
+
+),
+
+macro_linea as (
+
+    SELECT DISTINCT
+      mara.linea AS linea,
+      setnode.macro_linea AS macro_linea
+    FROM mara
+    LEFT JOIN setleaf
+      ON mara.linea = setleaf.da_val
+    LEFT JOIN setnode  
+      ON setleaf.linea = setnode.linea
+    WHERE setnode.macro_linea LIKE 'GRP-MRL%'
+
+),
+
+macro_macro_linea as (
+
+    SELECT DISTINCT
+      mara.linea AS linea, 
+      setnode.macro_linea AS macro_macro_linea
+    FROM mara
+    LEFT JOIN  macro_linea
+      ON mara.linea = macro_linea.linea
+    LEFT JOIN setnode 
+      ON macro_linea.macro_linea = setnode.linea
+    WHERE setnode.macro_linea LIKE 'GRP-MMRL%'
+
+)
+
+
+
+SELECT 
+  mara.cod_materiale AS cod_materiale, 
+  mara.linea AS linea,
+  mara.marchio AS marchio,
+  mara.raggr_marchio AS raggruppamento_marchio,
+  RIGHT (ragg_linea.ragg_linea , 4) AS raggruppamento_linea, 
+  RIGHT (macro_linea.macro_linea, 3) AS macro_raggruppamento_linea ,
+  RIGHT (macro_macro_linea.macro_macro_linea, 2) AS macro_macro_raggruppamento_linea,
+  mara.codice_ricetta AS codice_ricetta,
+  raggr_ricetta.raggr_ricetta AS raggruppamento_ricetta,
+  raggr_prodotto.raggr_prodotto as raggruppamento_prodotto,
+  mara.tipo_materiale AS tipo_materiale,
+  mara.peso_netto AS peso_netto,
+  mara.unita_peso AS unit_weight,
+  mara.udm_base AS udm_base,
+  -- mara.listino_udv AS listino_udv,
+  -- mara.Data_creazione AS data_creazione, 
+  mara.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM mara
+LEFT JOIN raggr_ricetta  
+    ON  mara.codice_ricetta = raggr_ricetta.codice_ricetta
+LEFT JOIN raggr_prodotto 
+    ON mara.cod_materiale = raggr_prodotto.cod_materiale
+LEFT JOIN  ragg_linea 
+    ON mara.linea = ragg_linea.linea 
+LEFT JOIN  macro_linea
+    ON mara.linea  = macro_linea.linea 
+LEFT JOIN  macro_macro_linea 
+    ON mara.linea =  macro_macro_linea.linea

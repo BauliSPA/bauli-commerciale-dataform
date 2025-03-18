@@ -102,21 +102,21 @@ declare(
 declare(
   {
    schema:  schema,
-   name:    'SAP_MARA'
+   name:    'sap_mara'
   }
 )
 
 declare(
   {
    schema:  schema,
-   name:    'SAP_SETLEAF'
+   name:    'sap_setleaf'
   }
 )
 
 declare(
   {
    schema:  schema,
-   name:    'SAP_SETNODE'
+   name:    'sap_setnode'
   }
 )
 
@@ -124,5 +124,40 @@ declare(
   {
    schema:  schema,
    name:    'file_securities'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'sap_kna1'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'sap_knvh'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'sap_knvp'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'sap_zvricetta'
+  }
+)
+
+declare(
+  {
+   schema:  schema,
+   name:    'sap_mvke'
   }
 )

@@ -1,0 +1,54 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+
+WITH cliente_fatturazione AS (
+    SELECT 
+    kna1.kunnr as consegna_merce, 
+    knvp.kunn2 AS cliente_fatturazione
+    FROM ${ref("stg_sap_kna1")} AS kna1
+    INNER JOIN ${ref("stg_sap_knvp")} AS knvp
+    on kna1.kunnr = knvp.kunnr
+    WHERE knvp.PARVW = 'AG'
+),
+
+Nam AS (
+    SELECT
+    kna1.kunnr as consegna_merce, 
+    knvp.kunn2 AS nam
+    FROM ${ref("stg_sap_kna1")} AS kna1
+    INNER JOIN ${ref("stg_sap_knvp")} AS knvp
+    on kna1.kunnr = knvp.kunnr
+    WHERE knvp.PARVW = 'ZA'
+),
+
+Div_affidatario AS (
+    SELECT 
+    kna1.kunnr as consegna_merce, 
+    knvp.kunn2 as div_affidatario
+    FROM ${ref("stg_sap_kna1")} AS kna1
+    INNER JOIN ${ref("stg_sap_knvp")} AS knvp
+    on kna1.kunnr = knvp.kunnr
+    WHERE knvp.PARVW = 'Z2'
+)
+
+
+SELECT
+kna1.kunnr as consegna_merce, 
+Cliente_fatturazione.cliente_fatturazione, 
+Nam.nam, 
+Div_affidatario.div_affidatario,
+kna1.zzlivell as livello_gerarchico_reale
+
+FROM ${ref("stg_sap_kna1")} AS kna1
+LEFT JOIN ${ref("stg_sap_knvp")} as knvp
+on  kna1.kunnr = knvp.kunnr
+LEFT join Cliente_fatturazione
+on kna1.kunnr = Cliente_fatturazione.consegna_merce
+LEFT join Nam
+on kna1.kunnr = Nam.consegna_merce
+LEFT join Div_affidatario
+on kna1.kunnr = Div_affidatario.consegna_merce
+

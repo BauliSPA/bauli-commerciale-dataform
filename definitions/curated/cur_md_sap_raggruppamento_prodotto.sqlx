@@ -1,0 +1,13 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  MATNR as cod_materiale,
+  PMATN as raggr_prodotto,
+    -- VKORG AS organizzazione_di_vendita,
+    -- VTWEG AS canale_di_distribuzione
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_sap_mvke")}

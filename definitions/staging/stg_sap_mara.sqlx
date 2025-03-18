@@ -5,4 +5,4 @@ config {
 SELECT
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
-FROM ${ref("SAP_MARA")}
+FROM ${ref("sap_mara")}

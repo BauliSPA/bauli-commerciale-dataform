@@ -5,4 +5,4 @@ config {
 SELECT
   *,
   CURRENT_TIMESTAMP() AS load_timestamp
-FROM ${ref("sap_setleaf")}
+FROM ${ref("sap_knvp")}

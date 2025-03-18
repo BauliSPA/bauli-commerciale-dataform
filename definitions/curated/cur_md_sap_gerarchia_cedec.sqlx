@@ -1,0 +1,137 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+with 
+
+cedi as (
+
+    select distinct 
+        KUNNR,
+        VKORG, 
+        VTWEG, 
+        SPART,
+        HKUNNR
+    from ${ref("stg_sap_knvh")} 
+    where DATBI >= format_date('%Y%m%d', current_date())
+        and HKUNNR is not null
+
+),
+
+cedec as (
+
+    select distinct 
+        knvh.KUNNR,
+        knvh.VKORG, 
+        knvh.VTWEG, 
+        knvh.SPART,
+        knvh.HKUNNR
+    from ${ref("stg_sap_knvh")} as knvh
+    inner join cedi
+        on knvh.KUNNR = cedi.HKUNNR
+        and knvh.VKORG = cedi.VKORG
+        and knvh.VTWEG = cedi.VTWEG
+        and knvh.SPART = cedi.SPART
+    where DATBI >= format_date('%Y%m%d', current_date())
+
+),
+
+supercedec as (
+
+  select distinct 
+    knvh.KUNNR,
+    knvh.VKORG, 
+    knvh.VTWEG, 
+    knvh.SPART,
+    knvh.HKUNNR
+  from ${ref("stg_sap_knvh")} as knvh
+  inner join cedec
+    on knvh.KUNNR = cedec.HKUNNR
+    and knvh.VKORG = cedec.VKORG
+    and knvh.VTWEG = cedec.VTWEG
+    and knvh.SPART = cedec.SPART
+    where DATBI >= format_date('%Y%m%d', current_date())
+
+),
+
+centrale as (
+
+  select distinct 
+    knvh.KUNNR,
+    knvh.VKORG, 
+    knvh.VTWEG, 
+    knvh.SPART,
+    knvh.HKUNNR
+  from ${ref("stg_sap_knvh")} as knvh
+  inner join supercedec
+    on knvh.KUNNR = supercedec.HKUNNR
+    and knvh.VKORG = supercedec.VKORG
+    and knvh.VTWEG = supercedec.VTWEG
+    and knvh.SPART = supercedec.SPART
+    where DATBI >= format_date('%Y%m%d', current_date())
+
+),
+
+supercentrale as ( -- ultimo livello
+
+  select distinct 
+    knvh.KUNNR,
+    knvh.VKORG, 
+    knvh.VTWEG, 
+    knvh.SPART,
+    knvh.HKUNNR
+  from ${ref("stg_sap_knvh")} as knvh
+  inner join centrale
+    on knvh.KUNNR = centrale.HKUNNR
+    and knvh.VKORG = centrale.VKORG
+    and knvh.VTWEG = centrale.VTWEG
+    and knvh.SPART = centrale.SPART
+    where DATBI >= format_date('%Y%m%d', current_date())
+
+),
+
+final as (
+
+select
+    knvh.KUNNR as punto_vendita,
+    knvh.VKORG, 
+    knvh.VTWEG, 
+    knvh.SPART,
+    cedi.HKUNNR as cedi,
+    cedec.HKUNNR as cedec,
+    supercedec.HKUNNR as supercedec,
+    centrale.HKUNNR as centrale,
+    supercentrale.HKUNNR as supercentrale,
+from ${ref("stg_sap_knvh")} as knvh
+left join cedi 
+    on knvh.KUNNR = cedi.KUNNR
+    and knvh.VKORG = cedi.VKORG
+    and knvh.VTWEG = cedi.VTWEG
+    and knvh.SPART = cedi.SPART
+left join cedec 
+    on cedi.HKUNNR = cedec.KUNNR
+    and knvh.VKORG = cedec.VKORG
+    and knvh.VTWEG = cedec.VTWEG
+    and knvh.SPART = cedec.SPART
+left join supercedec
+    on cedec.HKUNNR = supercedec.KUNNR
+    and knvh.VKORG = supercedec.VKORG
+    and knvh.VTWEG = supercedec.VTWEG
+    and knvh.SPART = supercedec.SPART
+left join centrale 
+    on supercedec.HKUNNR = centrale.KUNNR
+    and knvh.VKORG = centrale.VKORG
+    and knvh.VTWEG = centrale.VTWEG
+    and knvh.SPART = centrale.SPART
+left join supercentrale 
+    on centrale.HKUNNR = supercentrale.KUNNR
+    and knvh.VKORG = supercentrale.VKORG
+    and knvh.VTWEG = supercentrale.VTWEG
+    and knvh.SPART = supercentrale.SPART
+where DATBI >= format_date('%Y%m%d', current_date())
+    and supercentrale.HKUNNR is not null
+)
+
+select *
+from final
