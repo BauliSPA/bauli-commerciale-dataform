@@ -1,2 +1,2 @@
-# bauli-commerciale-dataform-dev
+# bauli-commerciale-dataform
 Repository for Dataform code
