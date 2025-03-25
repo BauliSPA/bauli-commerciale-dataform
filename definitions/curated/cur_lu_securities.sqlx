@@ -1,0 +1,15 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT DISTINCT
+  utente,
+  email,
+  dimensione,
+  valore as valore_cd,
+  valore_desc as valore_ds,
+  report,
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_file_securities")}

@@ -1,0 +1,15 @@
+config {
+  schema: "staging",
+  type: "incremental"
+}
+-- DELETE+INSERT
+pre_operations {
+  ${when(incremental(),
+    `DELETE FROM ${self()} WHERE campagna_canvass_cd IN (SELECT DISTINCT campagna_canvass_cd FROM ${ref("board_consuntivo")})`
+  )}
+}
+
+SELECT
+    *,
+    CURRENT_TIMESTAMP() AS load_timestamp
+FROM ${ref("board_consuntivo")}

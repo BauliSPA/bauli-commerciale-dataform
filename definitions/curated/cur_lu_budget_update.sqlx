@@ -1,0 +1,14 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  CAST(Mese AS NUMERIC) AS mese_cd,
+  Data AS data_dt,
+  PARSE_TIMESTAMP('%Y%m%d', Data) AS data_aggiornamento_ts,
+  operation_flag,
+  recordstamp,
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_datasphere_budget")}

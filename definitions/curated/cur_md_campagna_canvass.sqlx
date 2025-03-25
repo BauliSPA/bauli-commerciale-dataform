@@ -1,0 +1,36 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  campagna_canvass_cd,
+  campagna_canvass_ds,
+  IFNULL(campagna_anno_cd,"NA") AS campagna_anno_cd,
+  campagna_anno_ds,
+  tipo_campagna_cd,
+  tipo_campagna_ds,
+  tipo_esercizio_cd,
+  tipo_esercizio_ds,
+  esercizio_cd,
+  esercizio_ds,
+  CASE
+      WHEN tipo_esercizio_cd = 'EPE' THEN
+          CASE  
+              WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(esercizio_cd,2) AS INT64)) = 1
+              THEN PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(LEFT(esercizio_cd,2) AS STRING)))
+              ELSE PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(CAST(LEFT(esercizio_cd,2) AS INT64) + 1 AS STRING))) 
+          END  -- se (anno corrente - anno esercizio) = 1, usa l'anno di esercizio, altrimenti usa anno + 1
+      
+      WHEN tipo_esercizio_cd = 'ECA' THEN
+          CASE 
+              WHEN (CAST(FORMAT_DATE('%y', CURRENT_DATE()) AS INT64) - CAST(LEFT(esercizio_cd,2) AS INT64)) = 0
+              THEN PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(LEFT(esercizio_cd,2) AS STRING)))
+              ELSE PARSE_TIMESTAMP('%d/%m/%y', CONCAT('01/01/', CAST(CAST(LEFT(esercizio_cd,2) AS INT64) + 1 AS STRING)))
+          END -- se (anno corrente - anno esercizio) = 0, usa l'anno di esercizio, altrimenti usa anno + 1
+      
+      ELSE PARSE_TIMESTAMP('%d/%m/%y', '01/01/99')
+  END AS data_aggiornamento_ts,
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_board_campagna_canvass")}
