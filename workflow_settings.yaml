@@ -1,4 +1,4 @@
-defaultProject: bli-bi-commerciale-prod-001
+defaultProject: bli-bi-commerciale-test-001
 defaultLocation: EU
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
