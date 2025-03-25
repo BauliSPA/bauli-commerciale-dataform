@@ -1,0 +1,19 @@
+config {
+  schema: "public",
+  type: "view"
+}
+
+SELECT 
+  divisione_cd AS `Division Cod`,
+  divisione_ds AS `Division`,
+  tipocampagna_cd AS `Campaign Type`,
+  macromacroraggrlinea_cd AS `Macro Macro Line Grouping Cod`, 
+  business_cd AS `Business Cod`, 
+  business_ds AS `Business`, 
+  businessunit_cd AS `Business Unit Cod`, 
+  businessunit_ds AS `Business Unit`,
+  businesstype_cd AS `Business Type Cod`,
+  businesstype_ds AS `Business Type`,
+  businesstype_desc AS `Business Type Ds`,
+  load_timestamp AS `Load Timestamp`
+FROM ${ref("cur_lu_business_unit")}

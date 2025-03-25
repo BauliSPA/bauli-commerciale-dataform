@@ -1,0 +1,8 @@
+config {
+  schema: "staging",
+  type: "table"}
+
+SELECT 
+    *,
+    CURRENT_TIMESTAMP() AS load_timestamp
+FROM ${ref("country_iso2_iso3")}

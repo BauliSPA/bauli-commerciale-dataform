@@ -1,0 +1,13 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  country AS country_ds,
+  iso_2 AS iso2_cd,
+  iso_3 AS iso3_cd,
+  numeric AS numeric_cd,
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_country_iso")}
