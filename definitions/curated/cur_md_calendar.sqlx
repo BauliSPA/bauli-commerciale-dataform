@@ -1,0 +1,24 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  PARSE_DATE('%d/%m/%Y', date) AS date,
+  CAST(day_of_month AS NUMERIC) AS day_of_month,
+  CAST(weekday_cd AS NUMERIC) AS weekday_cd,
+  weekday_ds,
+  CAST(year AS NUMERIC) AS year,
+  CAST(month_cd AS NUMERIC) AS month_cd,
+  month_ds,
+  CAST(yearmonth_cd AS NUMERIC) AS yearmonth_cd,
+  monthyear_ds,
+  CAST(index_fiscal_day AS NUMERIC) AS index_fiscal_day,
+  CAST(index_fiscal_month AS NUMERIC) AS index_fiscal_month,
+  load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_calendar")}
+ORDER BY 
+  CAST(year AS INT64),
+  CAST(month_cd AS INT64),
+  CAST(day_of_month AS INT64)

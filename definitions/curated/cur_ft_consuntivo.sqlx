@@ -1,0 +1,34 @@
+config {
+  schema: "curated",
+  type: "table"
+}
+
+SELECT
+  cons.div_consegnamerce_cd,
+  cons.referenza_cd,
+  cons.campagna_canvass_cd,
+  cons.nazione_cd,
+  cons.divisione_cd,
+  cons.righe_ce_cd,
+  cons.flag_promo_fl,
+  cons.fuori_catalogo_fl,
+  cons.tipo_valuta_cd,
+  cons.tipo_ce_cd,
+  CAST(cons.mese_cd AS NUMERIC) AS mese_cd,
+  COALESCE(CAST(REPLACE(cons.valore, ",", ".") AS NUMERIC),0) AS valore,
+  cons.load_timestamp,
+  CURRENT_TIMESTAMP() AS batched_at
+FROM ${ref("stg_board_consuntivo")} AS cons
+
+-- filtro ultimo 4 esercizi fiscali
+WHERE cons.campagna_canvass_cd IN (
+    SELECT
+      campagna_canvass_cd
+    FROM ${ref("cur_md_campagna_canvass")}
+    WHERE tipo_esercizio_cd IN ( 
+    'ECA', 
+    'EPE', 
+    'EP1',
+    'EP2' 
+    ) 
+)

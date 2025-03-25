@@ -1,0 +1,13 @@
+config {
+  schema: "staging",
+  type: "table"}
+
+SELECT
+  *,
+  CURRENT_TIMESTAMP() AS load_timestamp
+
+FROM ${ref("calendar")}
+ORDER BY 
+  CAST(year AS INT64),
+  CAST(month_cd AS INT64),
+  CAST(day_of_month AS INT64)
